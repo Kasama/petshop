@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html>
+		<head>
+				<meta charset="utf-8">
+				<title>Petshop - Registrar</title>
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+
+				<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+				<link rel="stylesheet" href="/style/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		</head>
+		<body>
+				<div class="navbar-fixed">
+						<nav>
+								<div class="nav-wrapper green lighten-2">
+										<a href="/" class="brand-logo">PetShop</a>
+										<ul id="nav-mobile" class="right hide-on-med-and-down">
+												<li><a href="/login.html">Login</a></li>
+												<li><a href="/register.html" class="active">Registrar</a></li>
+										</ul>
+								</div>
+						</nav>
+				</div>
+				<div class="container">
+						<div class="row">
+								<div class="col s12">
+										<div class="card">
+												<div class="card-content">
+														<span class="card-title">Cadastrar Administrador</span>
+														<form class="container" action="register_admin" method="post" accept-charset="utf-8">
+																<div class="row">
+																		<div class="row">
+																				<div class="input-field col s6">
+																						<label class="active" for="Name">Nome</label>
+																						<input type="text" name="Nome" value="" id="Name">
+																				</div>
+																				<div class="input-field col s6">
+																						<label class="active" for="Surname">Sobrenome</label>
+																						<input type="text" name="Surname" value="" id="Sobrenome">
+																				</div>
+																		</div>
+																		<div class="row">
+																				<div class="input-field col s12">
+																						<label class="active" for="Birthday">Data de Nascimento</label>
+																						<input type="text" value="" name="Birthday" id="Birthday"/>
+																				</div>
+																		</div>
+																		<div class="row">
+																				<div class="input-field col s12">
+																						<label class="active" for="Phone">Telefone</label>
+																						<input type="number" name="Phone" value="" id="Phone">
+																				</div>
+																		</div>
+																		<div class="row">
+																				<div class="input-field col s12">
+																						<label class="active" for="Email">Email</label>
+																						<input type="text" name="Email" value="" id="Email">
+																				</div>
+																		</div>
+																		<div class="row">
+																				<div class="input-field col s12">
+																						<label class="active" for="Password">Senha</label>
+																						<input type="password" name="Password" value="" id="Password">
+																				</div>
+																		</div>
+																		<div class="row">
+																				<div class="file-field input-field col s3">
+																						<div class="btn">
+																								<span>Foto</span>
+																								<input type="file"/>
+																						</div>
+																				</div>
+																				<div class="file-path-wrapper col s9">
+																						<input type="text" class="file-path validate" />
+																				</div>
+																		</div>
+																		<div class="input-field s3 left">
+																				<a class="" href="/register.html">Ainda não é cadastrado? Registrar</a>
+																		</div>
+																		<div class="input-field s3 right">
+																				<input class="btn" type="submit" value="Cadastrar →">
+																		</div>
+																</div>
+														</form>
+												</div>
+										</div>
+								</div>
+						</div>
+				</div>
+		</body>
+</html>

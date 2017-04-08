@@ -1,59 +1,61 @@
 <!DOCTYPE html>
 
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Petshop - Login</title>
-		<!-- Compiled and minified CSS -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
-		<!-- Compiled and minified JavaScript -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+		<head>
+				<meta charset="utf-8">
+				<title>Petshop - Login</title>
+				<!-- Compiled and minified CSS -->
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+				<!-- Compiled and minified JavaScript -->
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<link rel="stylesheet" href="/style/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
-	</head>
-	<body>
-		<div class="navbar-fixed">
-			<nav>
-				<div class="nav-wrapper green lighten-2">
-					<a href="/" class="brand-logo">PetShop</a>
-					<ul id="nav-mobile" class="right hide-on-med-and-down">
-						<li><a href="/login.html">Login</a></li>
-					</ul>
-				</div>
-			</nav>
-		</div>
-		<div class="row">
-			<div class="container">
-				<div class="row">
-					<div class="col s12">
-						<div class="card">
-							<div class="card-content">
-								<span class="card-title">Petshop</span>
-								<div class="col s12">
-									<form class="login" action="index_submit" method="post" accept-charset="utf-8">
-										<div class="row">
-											<div class="input-field col s4">
-												<label class="login" for="Email">Email</label>
-												<input type="text" name="Email" value="" id="Email">
-											</div>
-											<div class="input-field col s4">
-												<label class="login" for="Password">Password</label>
-												<input type="password" name="Password" value="" id="Password">
-											</div>
-											<div class="input-field col s4">
-												<input class="btn" type="submit" value="Login →">
-											</div>
-										</div>
-									</form>
+				<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+				<link rel="stylesheet" href="/style/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		</head>
+		<body>
+				<div class="navbar-fixed">
+						<nav>
+								<div class="nav-wrapper green lighten-2">
+										<a href="/" class="brand-logo">PetShop</a>
+										<ul id="nav-mobile" class="right hide-on-med-and-down">
+												<li><a href="/login.html" class="active">Login</a></li>
+												<li><a href="/register.html">Registrar</a></li>
+										</ul>
 								</div>
-							</div>
-						</div>
-					</div>
+						</nav>
 				</div>
-			</div>
-		</div>
-
-	</body>
-
+				<div class="container">
+						<div class="row">
+								<div class="col s12 m12">
+										<div class="card">
+												<div class="card-content">
+														<span class="card-title">Petshop</span>
+														<form class="container" action="login" method="post" accept-charset="utf-8">
+																<div class="row">
+																		<div class="row">
+																				<div class="input-field s3">
+																						<label class="login" for="Email">Email</label>
+																						<input type="text" name="Email" value="" id="Email">
+																				</div>
+																		</div>
+																		<div class="row">
+																				<div class="input-field s3">
+																						<label class="login" for="Password">Password</label>
+																						<input type="password" name="Password" value="" id="Password">
+																				</div>
+																		</div>
+																		<div class="input-field s3 left">
+																				<a class="" href="/register.html">Ainda não é cadastrado? Registrar</a>
+																		</div>
+																		<div class="input-field s3 right">
+																				<input class="btn" type="submit" value="Login →">
+																		</div>
+																</div>
+														</form>
+												</div>
+										</div>
+								</div>
+						</div>
+				</div>
+		</body>
 </html>
