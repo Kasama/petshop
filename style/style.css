@@ -24,7 +24,7 @@ html {
 	right: 0;
 	position: fixed;
 	width: 100%;
-	margin-bottom 20px;
+	margin-bottom: 20px;
 	z-index: 999;
 }
 
@@ -172,6 +172,18 @@ nav ul li:hover {
 	color: #888;
 }
 
+.input-field.file-field label {
+	border: none;
+	display: inline-block;
+	height: 3rem;
+	line-height: 3rem;
+	padding: 0 2rem;
+	color: #fff;
+	background-color: #26a69a;
+	text-align: center;
+	cursor: pointer;
+}
+
 input {
 	background-color: transparent;
 	border: none;
@@ -180,6 +192,10 @@ input {
 	font-size: 1.2rem;
 	font-style: bold;
 	margin: 0 0 1rem 0;
+}
+
+input[type=file] {
+	display: none;
 }
 
 .btn {
