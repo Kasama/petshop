@@ -64,7 +64,9 @@ nav ul a {
 	height: 100%;
 	cursor: pointer;
 }
-nav ul li:hover {
+
+nav ul li:hover,
+nav ul li.active {
 	background-color: rgba(0,0,0,0.1);
 }
 
@@ -172,18 +174,6 @@ nav ul li:hover {
 	color: #888;
 }
 
-.input-field.file-field label {
-	border: none;
-	display: inline-block;
-	height: 3rem;
-	line-height: 3rem;
-	padding: 0 2rem;
-	color: #fff;
-	background-color: #26a69a;
-	text-align: center;
-	cursor: pointer;
-}
-
 input {
 	background-color: transparent;
 	border: none;
@@ -198,7 +188,7 @@ input[type=file] {
 	display: none;
 }
 
-.btn {
+.btn, .input-field.file-field label {
 	border: none;
 	display: inline-block;
 	height: 3rem;
