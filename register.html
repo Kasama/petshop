@@ -11,7 +11,7 @@
 				<link rel="stylesheet" href="/style/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
 		</head>
 		<body>
-				<div class="navbar-fixed">
+				<header class="navbar-fixed">
 						<nav>
 								<div class="nav-wrapper green lighten-2">
 										<a href="/" class="brand-logo">PetShop</a>
@@ -21,67 +21,67 @@
 										</ul>
 								</div>
 						</nav>
-				</div>
-				<div class="container">
-						<div class="row">
-								<div class="col s12">
-										<div class="card">
-												<div class="card-content">
-														<span class="card-title">Cadastrar Administrador</span>
-														<form class="container" action="register_admin" method="post" accept-charset="utf-8">
+				</header>
+				<main class="container">
+				<section class="row">
+						<div class="col s12">
+								<article class="card">
+										<div class="card-content">
+												<header class="card-title">Cadastrar Administrador</header>
+												<form class="container" action="register_admin" method="post" accept-charset="utf-8">
+														<div class="row">
 																<div class="row">
-																		<div class="row">
-																				<div class="input-field col s6">
-																						<label class="active" for="Name">Nome</label>
-																						<input type="text" name="Nome" value="" id="Name">
-																				</div>
-																				<div class="input-field col s6">
-																						<label class="active" for="Surname">Sobrenome</label>
-																						<input type="text" name="Surname" value="" id="Sobrenome">
-																				</div>
+																		<div class="input-field col s6">
+																				<label class="active" for="Name">Nome</label>
+																				<input type="text" name="Nome" value="" id="Name">
 																		</div>
-																		<div class="row">
-																				<div class="input-field col s12">
-																						<label class="active" for="Birthday">Data de Nascimento</label>
-																						<input type="text" value="" name="Birthday" id="Birthday"/>
-																				</div>
-																		</div>
-																		<div class="row">
-																				<div class="input-field col s12">
-																						<label class="active" for="Phone">Telefone</label>
-																						<input type="number" name="Phone" value="" id="Phone">
-																				</div>
-																		</div>
-																		<div class="row">
-																				<div class="input-field col s12">
-																						<label class="active" for="Email">Email</label>
-																						<input type="text" name="Email" value="" id="Email">
-																				</div>
-																		</div>
-																		<div class="row">
-																				<div class="input-field col s12">
-																						<label class="active" for="Password">Senha</label>
-																						<input type="password" name="Password" value="" id="Password">
-																				</div>
-																		</div>
-																		<div class="row">
-																				<div class="file-field input-field col s3">
-																						<label for="Photo">Foto</label>
-																						<input type="file" id="Photo" accept="image/*" />
-																				</div>
-																				<!-- <div class="file-path-wrapper col s9">
-																						<input type="text" class="file-path validate" />
-																				</div> -->
-																		</div>
-																		<div class="input-field s6 right">
-																				<input class="btn" type="submit" value="Cadastrar →">
+																		<div class="input-field col s6">
+																				<label class="active" for="Surname">Sobrenome</label>
+																				<input type="text" name="Surname" value="" id="Sobrenome">
 																		</div>
 																</div>
-														</form>
-												</div>
+																<div class="row">
+																		<div class="input-field col s12">
+																				<label class="active" for="Birthday">Data de Nascimento</label>
+																				<input type="text" value="" name="Birthday" id="Birthday"/>
+																		</div>
+																</div>
+																<div class="row">
+																		<div class="input-field col s12">
+																				<label class="active" for="Phone">Telefone</label>
+																				<input type="number" name="Phone" value="" id="Phone">
+																		</div>
+																</div>
+																<div class="row">
+																		<div class="input-field col s12">
+																				<label class="active" for="Email">Email</label>
+																				<input type="text" name="Email" value="" id="Email">
+																		</div>
+																</div>
+																<div class="row">
+																		<div class="input-field col s12">
+																				<label class="active" for="Password">Senha</label>
+																				<input type="password" name="Password" value="" id="Password">
+																		</div>
+																</div>
+																<div class="row">
+																		<div class="file-field input-field col s3">
+																				<label for="Photo">Foto</label>
+																				<input type="file" id="Photo" accept="image/*" />
+																		</div>
+																		<!-- <div class="file-path-wrapper col s9">
+																			<input type="text" class="file-path validate" />
+																			</div> -->
+																</div>
+																<div class="input-field s6 right">
+																		<input class="btn" type="submit" value="Cadastrar →">
+																</div>
+														</div>
+												</form>
 										</div>
-								</div>
+								</article>
 						</div>
-				</div>
+				</section>
+				</main>
 		</body>
 </html>
