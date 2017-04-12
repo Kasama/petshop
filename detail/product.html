@@ -4,7 +4,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Petshop</title>
+	<title>Petshop Animal</title>
 
 	<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
 				<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script> -->
@@ -17,7 +17,7 @@
 	<header class="navbar-fixed">
 		<nav>
 			<div class="nav-wrapper green lighten-2">
-				<a href="/" class="brand-logo">PetShop</a>
+				<a href="/" class="brand-logo">PetShop Animal</a>
 				<ul id="nav-mobile" class="right hide-on-med-and-down">
 					<li><a href="/login.html">Login</a></li>
 					<li><a href="/register.html">Registrar</a></li>
@@ -25,6 +25,7 @@
 			</div>
 		</nav>
 	</header>
+
 	<main class="container">
 		<section class="row">
 			<div class="col s12">
@@ -38,8 +39,16 @@
 							<p>Para cães adultos é um alimento completo e balanceado que proporciona aos cães adultos o nível ideal de todos os ingredientes
 								que eles necessitam para uma vida longa e saudável, proteína de origem animal, para cães mais fortes e saudáveis,
 								sendo indicado para cães adultos de todas as raças.</p>
-								<h2>R$ 110,00</h2>
-							<input type="button" class="btn" value="Adicionar ao Carrinho" />
+							<h2>R$ 110,00</h2>
+							<div class="row">
+								<div class="input-field col s3">
+									<label class="active" for="Quantity">Qtd</label>
+									<input type="number" min="1" id="quantity" name="Quantity" value="1" class="btn-sized" />
+								</div>
+								<div class="input-field col s9">
+									<input type="button" class="btn col" value="Adicionar ao Carrinho" />
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="card-action">
