@@ -71,11 +71,7 @@ nav ul a {
 	cursor: pointer;
 }
 
-nav ul li:hover, .active {
-	background-color: rgba(0, 0, 0, 0.1);
-}
-
-.side-nav li:hover {
+nav ul li:hover, .side-nav li:hover, .active {
 	background-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -89,17 +85,18 @@ nav ul li:hover, .active {
 	height: 100%;
 }
 
-@media (max-width: 1700px) {
-	.side-nav {
-		display: none;
-	}
-}
-
 .side-nav li {
 	float: none;
 	list-style-type: none;
 	padding: 0 32px;
 	line-height: 44px;
+}
+
+.side-nav a {
+	display: block;
+	text-decoration: none;
+	cursor: pointer;
+	color: inherit;
 }
 
 .brand-logo {
@@ -143,8 +140,12 @@ main.container {
 	min-height: 1px;
 }
 
+.row .col.s2 {
+	width: calc(100% / 6);
+}
+
 .row .col.s3 {
-	width: 25%;
+	width: calc(100% / 4);
 }
 
 .row .col.s4 {
@@ -152,15 +153,19 @@ main.container {
 }
 
 .row .col.s6 {
-	width: 50%;
+	width: calc(100% / 2);
 }
 
 .row .col.s8 {
-	width: calc(200% / 3);
+	width: calc(100% * 2 / 3);
+}
+
+.row .col.s10 {
+	width: calc(100% * 5 / 6);
 }
 
 .row .col.s9 {
-	width: 75%;
+	width: calc(100% * 3 / 4);
 }
 
 .row .col.s12 {
@@ -331,6 +336,7 @@ footer {
 	width: 100%;
 	background: #DFDCE3;
 	min-height: 4.5rem;
+	z-index: 996;
 }
 
 footer ul {
