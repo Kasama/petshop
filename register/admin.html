@@ -2,27 +2,32 @@
 
 <html>
 
-<head>
-	<meta charset="utf-8">
-	<title>Petshop Animal - Registrar Administrador</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link rel="stylesheet" href="/style/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
-</head>
+	<head>
+		<meta charset="utf-8">
+		<title>Petshop Animal - Registrar Administrador</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="/style/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	</head>
 
-<body>
-	<header class="navbar-fixed">
-		<nav>
-			<div class="nav-wrapper">
-				<a href="/" class="brand-logo">PetShop Animal</a>
-				<ul id="nav-mobile" class="right">
-					<li><a href="/about.html">Sobre</a></li>
-					<li><a href="/login.html">Login</a></li>
-					<li><a href="/register/client.html">Registrar</a></li>
-				</ul>
-			</div>
-		</nav>
-	</header>
-	<main class="container">
+	<body>
+		<header class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper row">
+					<a href="/" class="brand-logo left col s3">PetShop Animal</a>
+					<ul id="nav-mobile" class="right col s3">
+						<li><a href="/about.html">Sobre</a></li>
+						<li><a href="/login.html">Login</a></li>
+						<li><a href="/register/client.html">Registrar</a></li>
+					</ul>
+					<form class="col s6 right">
+						<div class="input-field search-bar">
+							<input id="search" type="search" placeholder="Pesquisa" />
+						</div>
+					</form>
+				</div>
+			</nav>
+		</header>
+		<main class="container">
 		<section class="row">
 			<div class="col s12">
 				<article class="card">
@@ -65,6 +70,12 @@
 									</div>
 								</div>
 								<div class="row">
+									<div class="input-field col s12">
+										<label for="PasswordConfirm">Confirmar Senha</label>
+										<input type="password" name="PasswordConfirm" value="" id="PasswordConfirm" />
+									</div>
+								</div>
+								<div class="row">
 									<div class="file-field input-field col s3">
 										<label for="Photo">Foto</label>
 										<input type="file" id="Photo" accept="image/*" />
@@ -79,9 +90,11 @@
 				</article>
 			</div>
 		</section>
-	</main>
-	<footer></footer>
-
-</body>
+		</main>
+		<footer>
+			<p>Copyright &copy; PetShop Animal 2017</p>
+			<p>Contato: <a href="mailto:ajuda@petshopanimal.com.br?subject=Ajuda">ajuda@petshopanimal.com.br</a></p>
+		</footer>
+	</body>
 
 </html>

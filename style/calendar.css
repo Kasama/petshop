@@ -7,38 +7,38 @@ table.week-calendar {
 }
 
 table.week-calendar thead tr th{
-				background: #626E7E;
-				color: #d1d5db;
+				background: #81C784;
+				color: #fff;
 				padding: 0.5em;
 				overflow: hidden;
 }
 
 table tbody tr {
-				background: #d1d5db;
+				background: #d1efdb;
 }
 table tbody tr:nth-child(odd) {
-				background: #c8cdd4;
+				background: #c8edd4;
 }
 table tbody tr:nth-child(4n+0) td {
-				border-bottom: 1px solid #626E7E;
+				border-bottom: 1px solid #81C784;
 }
 table tbody tr td {
 				text-align: center;
 				vertical-align: middle;
-				border-left: 1px solid #626E7E;
+				border-left: 1px solid #81C784;
 				position: relative;
 				height: 32px;
 				cursor: pointer;
 }
 table tbody tr td:last-child {
-				border-right: 1px solid #626E7E;
+				border-right: 1px solid #81C784;
 }
 table tbody tr td.hour {
 				font-size: 2em;
 				padding: 0;
-				color: #626E7E;
+				color: #81C784;
 				background: #fff;
-				border-bottom: 1px solid #626E7E;
+				border-bottom: 1px solid #81C784;
 				border-collapse: separate;
 				min-width: 100px;
 				cursor: default;

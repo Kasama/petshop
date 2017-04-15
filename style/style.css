@@ -87,6 +87,17 @@ nav ul li:hover,.side-nav li:hover,.active
   background:rgba(0,0,0,0.1);
 }
 
+.search-bar input
+{
+	display: block;
+	height: 100%;
+	border-bottom: 1px solid #ccc;
+	color: #fff;
+	background-color: rgba(0,0,0,0);
+	margin: 0 0 1rem;
+	font-size: 1.7rem;
+}
+
 .side-nav
 {
   box-shadow:0 2px 2px 0;
@@ -298,6 +309,10 @@ main.container
   padding:.5rem 1rem;
 }
 
+.manage-image {
+	max-height: 300px;
+}
+
 .input-field
 {
   margin-top:1rem;
@@ -376,7 +391,7 @@ input[type=file]
 
 footer
 {
-  background:#DFDCE3;
+  background:#AEFFB1;
   bottom:0;
   display:flex;
   justify-content:space-around;
@@ -384,6 +399,17 @@ footer
   min-height:4.5rem;
   width:100%;
   z-index:996;
+}
+
+footer p
+{
+	text-decoration: none;
+	color: #838383;
+}
+
+footer a
+{
+	color: #4b4b4b;
 }
 
 footer ul

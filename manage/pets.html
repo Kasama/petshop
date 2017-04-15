@@ -12,13 +12,18 @@
 <body>
 	<header>
 		<nav class="navbar-fixed row">
-			<div class="nav-wrapper">
-				<a href="/" class="brand-logo">PetShop Animal</a>
-				<ul id="nav-mobile" class="right">
+			<div class="nav-wrapper row">
+				<a href="/" class="brand-logo left col s3">PetShop Animal</a>
+				<ul id="nav-mobile" class="right col s3">
 					<li><a href="/about.html">Sobre</a></li>
 					<li><a href="/login.html">Login</a></li>
 					<li><a href="/register/client.html">Registrar</a></li>
 				</ul>
+				<form class="col s6 right">
+					<div class="input-field search-bar">
+						<input id="search" type="search" placeholder="Pesquisa" />
+					</div>
+				</form>
 			</div>
 		</nav>
 	</header>
@@ -41,20 +46,22 @@
 					<div class="row card-content">
 						<header class="card-title">Gerenciar Pets</header>
 						<div class="row">
-							<img src="/img/pets.jpg" alt="Product" class="col s12" />
+							<img src="/img/pets.jpg" alt="Pets" class="col s12 manage-image" />
 						</div>
 						<div class="row">
-							<div class="col s3"><a class="btn col s12" href="">Registrar</a></div>
-							<div class="col s3"><a class="btn col s12" href="">Remover</a></div>
-							<div class="col s3"><a class="btn col s12" href="">Editar Registro</a></div>
-							<div class="col s3"><a class="btn col s12" href="">Agendar Consulta</a></div>
+							<div class="col s4"><a class="btn col s12" href="/register/pet.html">Registrar</a></div>
+							<div class="col s4"><a class="btn col s12" href="">Remover</a></div>
+							<div class="col s4"><a class="btn col s12" href="">Editar Registro</a></div>
 						</div>
 					</div>
 				</article>
 			</div>
 		</section>
 	</main>
-	<footer></footer>
+	<footer>
+		<p>Copyright &copy; PetShop Animal 2017</p>
+		<p>Contato: <a href="mailto:ajuda@petshopanimal.com.br?subject=Ajuda">ajuda@petshopanimal.com.br</a></p>
+	</footer>
 
 </body>
 
