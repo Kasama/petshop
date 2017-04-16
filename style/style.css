@@ -214,7 +214,7 @@ main.container
 .card
 {
   background:#fff;
-  box-shadow:0 2px 2px 0 rgba(0,0,0,0.14);
+  box-shadow:1px 2px 2px 0 rgba(0,0,0,0.14);
   margin:1rem 0;
   position:relative;
 }
@@ -336,15 +336,8 @@ main.container
 
 .input-field.file-field label
 {
-  background:#26a69a;
-  border:none;
-  color:#fff;
-  cursor:pointer;
-  display:inline-block;
   height:3rem;
   line-height:3rem;
-  padding:0 2rem;
-  text-align:center;
 }
 
 input,textarea
@@ -371,7 +364,7 @@ select
 	width: 100%;
 }
 
-.btn
+.btn, .input-field.file-field label
 {
   background:#26a69a;
   border:none;
@@ -380,6 +373,7 @@ select
   display:inline-block;
   padding:0 2rem;
   text-align:center;
+  box-shadow: 1px 2px 2px 0 rgba(0, 0, 0, 0.14)
 }
 
 .btn,.btn-sized
