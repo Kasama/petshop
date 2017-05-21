@@ -1,0 +1,46 @@
+<dom-module id="store-header">
+  <!-- Materialize -->
+  
+  <template>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+    <nav class="light-red" role="navigation">
+      <div class="nav-wrapper container">
+        <a href="/" id="logo-container" class="brand-logo">PetShop Animal</a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="/about.html">Sobre</a></li>
+          <li><a href="/login.html">Login</a></li>
+          <li><a href="/register/client.html">Registrar</a></li>
+        </ul>
+
+        <form class="col s6 right">
+          <div class="input-field search-bar">
+            <input id="search" type="search" placeholder="Pesquisa" />
+          </div>
+        </form>
+
+        <ul id="nav-mobile" class="side-nav" style="transform:translateX(-100%);">
+          <li><a href="/about.html">Sobre</a></li>
+          <li><a href="/login.html">Login</a></li>
+          <li><a href="/register/client.html">Registrar</a></li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse">
+          <i class="material-icons">menu</i>
+        </a>
+        
+      </div>
+    </nav>
+
+  </template>
+
+
+  <script>
+    Polymer({
+      is: 'store-header'
+    });
+  </script>
+  
+</dom-module>
+
+
