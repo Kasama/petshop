@@ -1,0 +1,44 @@
+<dom-module id="init-page-card">
+  <!-- Materialize -->
+  
+  <template>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <link rel="stylesheet" href="style/init_page_card_style.css">
+
+
+    <div>
+      <div class="card">
+        <div class="product-card-content">
+          <div class="card-image">
+            <img src="[[image]]" alt="Product" />
+          </div>
+          <div class="card-content">
+            <span class="card-title"> [[title]] </span>
+            <p>[[text]]</p>
+          </div>
+        </div>
+        <div class="card-action">
+          <a href="/detail/product.html">Detalhes</a>
+          <a href="#" class="right">Adicionar</a>
+        </div>
+      </div>
+    </div>
+
+  </template>
+
+
+  <script>
+    Polymer({
+      is: 'init-page-card',
+      properties: {
+        image: String,
+        title: String,
+        text: String,
+      }
+    });
+  </script>
+  
+</dom-module>
+
+

@@ -19,6 +19,7 @@
 	<link rel="import" href="/bower_components/polymer/polymer.html">
 	<link rel="import" href="/custom_components/footer.html">
 	<link rel="import" href="/custom_components/header.html">
+	<link rel="import" href="/custom_components/init_page_card.html">
 
 	<!-- Our CSS and JS -->
 	<link href="mystyle.css" rel="stylesheet">
@@ -50,111 +51,15 @@
 
 	<main class="container">
 		<section class="row">
-			<div class="col s4">
-				<div class="card">
-					<div class="product-card-content">
-						<div class="card-image">
-							<img src="/img/dog-food.jpg" alt="Product" />
-						</div>
-						<div class="card-content">
-							<span class="card-title">Ração de Cachorro</span>
-							<p>Para cães adultos é um alimento completo e balanceado</p>
-						</div>
-					</div>
-					<div class="card-action">
-						<a href="/detail/product.html">Detalhes</a>
-						<a href="#" class="right">Adicionar</a>
-					</div>
-				</div>
-			</div>
-			<div class="col s4">
-				<div class="card">
-					<div class="product-card-content">
-						<div class="card-image">
-							<img src="/img/dog-bath.jpg" alt="Product" />
-						</div>
-						<div class="card-content">
-							<span class="card-title">Banho e Tosa</span>
-							<p>Retoques e acabamentos para animais sensíveis ao barulho</p>
-						</div>
-					</div>
-					<div class="card-action">
-						<a href="/detail/product.html">Detalhes</a>
-						<a href="#" class="right">Adicionar</a>
-					</div>
-				</div>
-			</div>
-			<div class="col s4">
-				<div class="card">
-					<div class="product-card-content">
-						<div class="card-image">
-							<img src="/img/dog-leash.jpg" alt="Product" />
-						</div>
-						<div class="card-content">
-							<span class="card-title">Coleira de Cachorro</span>
-							<p>Nova coleira para cães feita de um material flexível inovador</p>
-						</div>
-					</div>
-					<div class="card-action">
-						<a href="/detail/product.html">Detalhes</a>
-						<a href="#" class="right">Adicionar</a>
-					</div>
-				</div>
-			</div>
+			<init-page-card class="col s4" image="/img/dog-food.jpg" title="Ração de Cachorro" text="Para cães adultos é um alimento completo e balanceado"></init-page-card>
+			<init-page-card class="col s4" image="/img/dog-bath.jpg" title="Banho e Tosa" text="Retoques e acabamentos para animais sensíveis ao barulho"></init-page-card>
+			<init-page-card class="col s4" image="/img/dog-leash.jpg" title="Coleira de Cachorro" text="Nova coleira para cães feita de um material flexível inovador"></init-page-card>
 		</section>
-
 		<section class="row">
-			<div class="col s4">
-				<div class="card">
-					<div class="product-card-content">
-						<div class="card-image">
-							<img src="/img/dog-vet.jpg" alt="Product" />
-						</div>
-						<div class="card-content">
-							<span class="card-title">Consulta Veterin&aacute;ria</span>
-							<p>Nossa equipe veterinária faz um checkup em seu companheiro</p>
-						</div>
-					</div>
-					<div class="card-action">
-						<a href="/detail/product.html">Detalhes</a>
-						<a href="#" class="right">Adicionar</a>
-					</div>
-				</div>
-			</div>
-			<div class="col s4">
-				<div class="card">
-					<div class="product-card-content">
-						<div class="card-image">
-							<img src="/img/dog-leash.jpg" alt="Product" />
-						</div>
-						<div class="card-content">
-							<span class="card-title">Coleira de Cachorro</span>
-							<p>Nova coleira para cães feita de um material flexível inovador</p>
-						</div>
-					</div>
-					<div class="card-action">
-						<a href="/detail/product.html">Detalhes</a>
-						<a href="#" class="right">Adicionar</a>
-					</div>
-				</div>
-			</div>
-			<div class="col s4">
-				<div class="card">
-					<div class="product-card-content">
-						<div class="card-image">
-							<img src="/img/pets.jpg" alt="Product" />
-						</div>
-						<div class="card-content">
-							<span class="card-title">Terapia Ocupacional</span>
-							<p>Contamos histórias para seu pet dormir</p>
-						</div>
-					</div>
-					<div class="card-action bottom">
-						<a href="/detail/product.html">Detalhes</a>
-						<a href="#" class="right">Adicionar</a>
-					</div>
-				</div>
-			</div>
+		<init-page-card class="col s4" image="/img/dog-vet.jpg" title="Consulta Veterin&aacute;ria" text="Nossa equipe veterinária faz um checkup em seu companheiro"></init-page-card>
+			<init-page-card class="col s4" image="/img/dog-leash.jpg" title="Coleira de Cachorro" text="Nova coleira para cães feita de um material flexível inovador"></init-page-card>
+			<init-page-card class="col s4" image="/img/pets.jpg" title="Terapia Ocupacional" text="Contamos histórias para seu pet dormir"></init-page-card>
+			
 		</section>
 	</main>
 	<store-footer></store-footer>
