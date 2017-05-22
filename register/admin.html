@@ -4,29 +4,30 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Petshop Animal - Registrar Administrador</title>
+	<title>PetShop Animal</title>
+
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link rel="stylesheet" href="/style/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<!-- Materialize -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+
+	<!--Polymer-->
+	<script src="/bower_components/webcomponentsjs/webcomponents-lite.js" type="text/javascript"></script>
+	<link rel="import" href="/bower_components/polymer/polymer.html">
+	<link rel="import" href="/custom_components/footer.html">
+	<link rel="import" href="/custom_components/header.html">
+
+	<!-- Our CSS and JS -->
+	<link href="mystyle.css" rel="stylesheet">
+	<script src="init.js"></script>
 </head>
 
 <body>
-	<header class="navbar-fixed">
-		<nav>
-			<div class="nav-wrapper row">
-				<a href="/" class="brand-logo left col s3">PetShop Animal</a>
-				<ul id="nav-mobile" class="right col s3">
-					<li><a href="/about.html">Sobre</a></li>
-					<li><a href="/login.html">Login</a></li>
-					<li><a href="/register/client.html">Registrar</a></li>
-				</ul>
-				<form class="col s6 right">
-					<div class="input-field search-bar">
-						<input id="search" type="search" placeholder="Pesquisa" />
-					</div>
-				</form>
-			</div>
-		</nav>
-	</header>
+	<store-header></store-header>
+
 	<main class="container">
 		<section class="row">
 			<div class="col s12">
@@ -92,8 +93,7 @@
 		</section>
 	</main>
 	<footer>
-		<p>Copyright &copy; PetShop Animal 2017</p>
-		<p>Contato: <a href="mailto:ajuda@petshopanimal.com.br?subject=Ajuda">ajuda@petshopanimal.com.br</a></p>
+		<store-footer></store-footer>
 	</footer>
 </body>
 

@@ -4,49 +4,29 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Petshop Animal - Login</title>
+	<title>PetShop Animal</title>
+
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<!-- Materialize -->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+
+	<!--Polymer-->
+	<script src="/bower_components/webcomponentsjs/webcomponents-lite.js" type="text/javascript"></script>
+	<link rel="import" href="/bower_components/polymer/polymer.html">
+	<link rel="import" href="/custom_components/footer.html">
+	<link rel="import" href="/custom_components/header.html">
+
+	<!-- Our CSS and JS -->
 	<link href="mystyle.css" rel="stylesheet">
+	<script src="init.js"></script>
 </head>
 
 <body>
-	<!-- Compiled and minified JavaScript -->
-	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-	<script src="init.js"></script>
-
-	<!-- MUH HEADER -->
-	<nav class="light-red" role="navigation">
-		<div class="nav-wrapper container">
-			<a href="/" id="logo-container" class="brand-logo">PetShop Animal</a>
-			<ul class="right hide-on-med-and-down">
-				<li><a href="/about.html">Sobre</a></li>
-				<li><a href="/login.html">Login</a></li>
-				<li><a href="/register/client.html">Registrar</a></li>
-			</ul>
-
-			<form class="col s6 right">
-				<div class="input-field search-bar">
-					<input id="search" type="search" placeholder="Pesquisa" />
-				</div>
-			</form>
-
-			<ul id="nav-mobile" class="side-nav" style="transform:translateX(-100%);">
-				<li><a href="/about.html">Sobre</a></li>
-				<li><a href="/login.html">Login</a></li>
-				<li><a href="/register/client.html">Registrar</a></li>
-			</ul>
-			<a href="#" data-activates="nav-mobile" class="button-collapse">
-				<i class="material-icons">menu</i>
-			</a>
-			
-		</div>
-	</nav>
-	<!-- END MUH HEADER -->
+	<store-header></store-header>
 	
 	<main class="container">
 		<section class="row">
@@ -82,13 +62,8 @@
 		</section>
 	</main>
 
-	<footer class="page-footer red">
-		<div class="footer-copyright">
-			<div class="container">
-				<span class="left">Copyright &copy; PetShop Animal 2017</span>
-				<span class="right">Contato: <a href="mailto:ajuda@petshopanimal.com.br?subject=Ajuda">ajuda@petshopanimal.com.br</a></span>
-			</div>
-		</div>
+	<footer>
+		<store-footer></store-footer>
 	</footer>
 </body>
 
