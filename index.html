@@ -6,63 +6,49 @@
 	<meta charset="utf-8">
 	<title>PetShop Animal</title>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<!-- Materialize -->
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-
-	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-
-	<!--Polymer-->
-	<script src="/bower_components/webcomponentsjs/webcomponents-lite.js" type="text/javascript"></script>
-	<link rel="import" href="/bower_components/polymer/polymer.html">
-	<link rel="import" href="/custom_components/footer.html">
-	<link rel="import" href="/custom_components/header.html">
-	<link rel="import" href="/custom_components/init_page_card.html">
-
-	<!-- Our CSS and JS -->
-	<link href="mystyle.css" rel="stylesheet">
-	<script src="init.js"></script>
+	<link rel="import" href="/custom_components/my_include.html">
+	<link rel="import" href="/init_page.html">
+	<link rel="import" href="/login.html">
+	<link rel="import" href="/about.html">
+	<link rel="import" href="/admin.html">
 </head>
 
 <body>
-	<store-header></store-header>
+	<header>
+		<nav class="light-red" role="navigation">
+		    <div class="nav-wrapper container">
+		      <a href="/" id="logo-container" class="brand-logo">PetShop Animal</a>
+		      <ul class="right hide-on-med-and-down">
+		        <li>
+		            <input id="search" type="search" placeholder="Pesquisa" />
+		        </li>
+		        <li><a href="/about.html">Sobre</a></li>
+		        <li><a href="/login.html">Login</a></li>
+		        <li><a href="/register/client.html">Registrar</a></li>
+		      </ul>
 
-	<!-- MUH BANNER -->
-	<div id="index-banner" class="parallax-container">
-		<div class="section no-pad-bot">
-			<div class="container">
-				<br><br>
-				<h1 class="header center red-text text-lighten-2">PetShop Animal</h1>
-				<div class="row center">
-					<h5 class="header col s12 light">O lugar certo para o seu animal de estimação! </h5>
-				</div>
-				<br><br>
-			</div>
-		</div>
+		      <ul id="nav-mobile" class="side-nav" style="transform:translateX(-100%);">
+		        <li>
+		            <input id="search-hidden" type="search" placeholder="Pesquisa" />
+		        </li>
+		        <li><a href="/about.html">Sobre</a></li>
+		        <li><a href="/login.html">Login</a></li>
+		        <li><a href="/register/client.html">Registrar</a></li>
+		      </ul>
+		      <a href="#" data-activates="nav-mobile" class="button-collapse">
+		        <i class="material-icons">menu</i>
+		      </a>
+		    </div>
+		</nav>
+	</header>
 
-
-		<div class="parallax col s6">
-			<img src="/img/this-town-needs-a-hero.jpg" alt="Banner" style="display: block; transform: translate3d(-50%, 172px, 0px);">
-		</div>
-	</div>
-	<!-- END MUH BANNER -->
-
-	<main class="container">
-		<section class="row">
-			<init-page-card class="col s4" image="/img/dog-food.jpg" title="Ração de Cachorro" text="Para cães adultos é um alimento completo e balanceado"></init-page-card>
-			<init-page-card class="col s4" image="/img/dog-bath.jpg" title="Banho e Tosa" text="Retoques e acabamentos para animais sensíveis ao barulho"></init-page-card>
-			<init-page-card class="col s4" image="/img/dog-leash.jpg" title="Coleira de Cachorro" text="Nova coleira para cães feita de um material flexível inovador"></init-page-card>
-		</section>
-		<section class="row">
-		<init-page-card class="col s4" image="/img/dog-vet.jpg" title="Consulta Veterin&aacute;ria" text="Nossa equipe veterinária faz um checkup em seu companheiro"></init-page-card>
-			<init-page-card class="col s4" image="/img/dog-leash.jpg" title="Coleira de Cachorro" text="Nova coleira para cães feita de um material flexível inovador"></init-page-card>
-			<init-page-card class="col s4" image="/img/pets.jpg" title="Terapia Ocupacional" text="Contamos histórias para seu pet dormir"></init-page-card>
-			
-		</section>
+	<main>
+		<init-page/>
 	</main>
-	<store-footer></store-footer>
+
+	<footer>
+		<store-footer></store-footer>
+	</footer>
 </body>
 
 </html>
