@@ -1,0 +1,68 @@
+<dom-module id="register-service-page">
+  	<template> 
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+	    <link href="../mystyle.css" rel="stylesheet">
+
+		<main class="container">
+			<div class="row">
+				<div class="col s12">
+					<div class="card">
+						<div class="card-content">
+							<span class="card-title">Cadastrar Serviço</span>
+							<form class="container" action="register_pet" method="post" accept-charset="utf-8">
+								<div class="row">
+									<div class="row">
+										<div class="input-field col s12">
+											<input placeholder="Nome do Serviço" type="text" name="Nome" value="" id="Name">
+										</div>
+									</div>
+									<div class="row">
+										<div class="input-field col s12">
+											<input placeholder="Preço" type="number" value="" name="Price" id="Price" />
+										</div>
+									</div>
+									<div class="row">
+										<div class="input-field col s12">
+											<textarea placeholder="Descrição" rows=6 name="Description" value="" id="Description"></textarea>
+										</div>
+									</div>
+									<div class="row">
+										<form>
+											<div class="file-field input-field col s9">
+												<div class="btn">
+													<span>Foto</span>
+													<input id="image_button" type="file" accept="image/x-png,image/jpeg, image/jpg">
+												</div>
+												<div class="file-path-wrapper">
+													<input id="image_path" class="file-path validate" placeholder="Arquivo" type="text" style="color:black">
+												</div>
+											</div>
+										</form>
+									</div>
+									<div class="input-field s6 right">
+										<input class="btn" type="submit" value="Cadastrar →">
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+	</template>
+
+  	<script>
+	    Polymer({
+	      is: 'register-service-page',
+	      ready: function() {
+	      	imb = $(this.$.image_button);
+	      	imp = $(this.$.image_path);
+
+	        imb.change(function(){
+	        	imp[0].value = imb[0].value.substring(imb[0].value.lastIndexOf("\\") + 1)
+	        });
+	      }
+	    });
+  	</script>
+</dom-module>

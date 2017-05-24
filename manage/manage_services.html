@@ -1,0 +1,32 @@
+<dom-module id="manage-service-page">
+  	<template> 
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+	    <link href="../mystyle.css" rel="stylesheet">
+
+		<main class="container row">
+			<div class="col s12">
+				<article class="card">
+					<div class="row card-content">
+						<header class="card-title">Gerenciar Servi&ccedil;os</header>
+						<div class="row">
+							<img src="/img/dog-vet.jpg" alt="Servi&ccedil;os" class="col s12 manage-image" />
+						</div>
+						<div class="row">
+							<div class="col s3"><a class="btn col s12" href="/register/service.html">Registrar</a></div>
+							<div class="col s3"><a class="btn col s12" href="">Remover</a></div>
+							<div class="col s3"><a class="btn col s12" href="">Editar Registro</a></div>
+							<div class="col s3"><a class="btn col s12" href="/admin.html#add">Agendar Consulta</a></div>
+						</div>
+					</div>
+				</article>
+			</div>
+		</main>
+	</template>
+
+  	<script>
+	    Polymer({
+	      is: 'manage-service-page'
+	    });
+  	</script>
+</dom-module>

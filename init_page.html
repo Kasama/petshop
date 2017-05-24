@@ -1,56 +1,56 @@
-<template>
+<dom-module id="init-page">
   <link rel="import" href="/custom_components/init_page_card.html">
 
-  <!-- MUH BANNER -->
-  <div id="index-banner" class="parallax-container">
-    <div class="section no-pad-bot">
-      <div class="container">
-        <br><br>
-        <h1 class="header center red-text text-lighten-2">PetShop Animal</h1>
-        <div class="row center">
-          <h5 class="header col s12 light">O lugar certo para o seu animal de estimação! </h5>
+  <template>
+    <!-- Materialize -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+    <!-- Our CSS and JS -->
+    <link href="../mystyle.css" rel="stylesheet">
+
+    <!-- MUH BANNER -->
+    <div id="index-banner" class="parallax-container">
+      <div class="section no-pad-bot">
+        <div class="container">
+          <br><br>
+          <h1 class="header center red-text text-lighten-2">PetShop Animal</h1>
+          <div class="row center">
+            <h5 class="header col s12 light">O lugar certo para o seu animal de estimação! </h5>
+          </div>
+          <br><br>
         </div>
-        <br><br>
+      </div>
+
+      <div class="parallax col s6" id="the_banner">
+        <img src="/img/this-town-needs-a-hero.jpg" id="the_banner_image" alt="Banner" style="display: block; transform: translate3d(-50%, 306px, 0px);">
       </div>
     </div>
+    <!-- END MUH BANNER -->
 
-    <div class="parallax col s6">
-      <img src="/img/this-town-needs-a-hero.jpg" alt="Banner" style="display: block; transform: translate3d(-50%, 172px, 0px);">
-    </div>
-  </div>
-  <!-- END MUH BANNER -->
+    <main class="container">
+      <section class="row">
+        <init-page-card class="col s4" image="/img/dog-food.jpg" title="Ração de Cachorro" text="Para cães adultos é um alimento completo e balanceado"></init-page-card>
+        <init-page-card class="col s4" image="/img/dog-bath.jpg" title="Banho e Tosa" text="Retoques e acabamentos para animais sensíveis ao barulho"></init-page-card>
+        <init-page-card class="col s4" image="/img/dog-leash.jpg" title="Coleira de Cachorro" text="Nova coleira para cães feita de um material flexível inovador"></init-page-card>
+      </section>
+      <section class="row">
+        <init-page-card class="col s4" image="/img/dog-vet.jpg" title="Consulta Veterin&aacute;ria" text="Nossa equipe veterinária faz um checkup em seu companheiro"></init-page-card>
+        <init-page-card class="col s4" image="/img/dog-leash.jpg" title="Coleira de Cachorro" text="Nova coleira para cães feita de um material flexível inovador"></init-page-card>
+        <init-page-card class="col s4" image="/img/pets.jpg" title="Terapia Ocupacional" text="Contamos histórias para seu pet dormir"></init-page-card>
+      </section>
+    </main>
+  </template>
 
-  <main class="container">
-    <section class="row">
-      <init-page-card class="col s4" image="/img/dog-food.jpg" title="Ração de Cachorro" text="Para cães adultos é um alimento completo e balanceado"></init-page-card>
-      <init-page-card class="col s4" image="/img/dog-bath.jpg" title="Banho e Tosa" text="Retoques e acabamentos para animais sensíveis ao barulho"></init-page-card>
-      <init-page-card class="col s4" image="/img/dog-leash.jpg" title="Coleira de Cachorro" text="Nova coleira para cães feita de um material flexível inovador"></init-page-card>
-    </section>
-    <section class="row">
-    <init-page-card class="col s4" image="/img/dog-vet.jpg" title="Consulta Veterin&aacute;ria" text="Nossa equipe veterinária faz um checkup em seu companheiro"></init-page-card>
-      <init-page-card class="col s4" image="/img/dog-leash.jpg" title="Coleira de Cachorro" text="Nova coleira para cães feita de um material flexível inovador"></init-page-card>
-      <init-page-card class="col s4" image="/img/pets.jpg" title="Terapia Ocupacional" text="Contamos histórias para seu pet dormir"></init-page-card>
-      
-    </section>
-  </main>
-
-</template>
-
-<script>
-{
-  let thisDocument = document.currentScript.ownerDocument;
-  let proto = Object.create(HTMLElement.prototype, {
-    createdCallback: {
-      value: function() {
-        let t = thisDocument.querySelector('template');
-        let clone = document.importNode(t.content, true);
-        this.appendChild(clone);
+  <script>
+    Polymer({
+      is: 'init-page',
+      ready: function() {
+        $(this.$.the_banner).parallax();
+        $("html, body").animate({ scrollTop: "1px" });
+        $("html, body").animate({ scrollTop: "0px" });
       }
-    }
-  });
-  document.registerElement('init-page', {prototype: proto});
-}
-</script>
-  
-
+    });
+  </script>
+</dom-module>
 

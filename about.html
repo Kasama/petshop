@@ -1,6 +1,16 @@
-<template>
-	<main class="container">
-	<section class="row">
+<dom-module id="about-page">
+  <template>  
+    <!-- Materialize -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+
+    <!-- Our CSS and JS -->
+    <link href="../mystyle.css" rel="stylesheet">
+
+    <main class="container">
+    <section class="row">
 		<div class="col s12">
 			<article class="card">
 				<div class="card-content">
@@ -59,21 +69,13 @@
 			</article>
 		</div>
 	</section>
-	</main>
-</template>
+    </main>
+  </template>
 
-<script>
-{
-  let thisDocument = document.currentScript.ownerDocument;
-  let proto = Object.create(HTMLElement.prototype, {
-    createdCallback: {
-      value: function() {
-        let t = thisDocument.querySelector('template');
-        let clone = document.importNode(t.content, true);
-        this.appendChild(clone);
-      }
-    }
-  });
-  document.registerElement('about-page', {prototype: proto});
-}
-</script>
+  <script>
+    Polymer({
+      is: 'about-page'
+    });
+  </script>
+</dom-module>
+
