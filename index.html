@@ -20,13 +20,62 @@
 	<link rel="import" href="/manage/manage_services.html">
 </head>
 
+<script type="text/javascript">
+	function changeMainElement(tag){
+		console.log("loading " + tag);
+		$("#main_element").remove();
+    	let elem = document.createElement(tag)
+    	elem.id = "main_element";
+    	document.getElementById("main").appendChild(elem);
+	}
+
+	(function($){
+		$(function(){
+			$('.button-collapse').sideNav();
+			document.addEventListener('iron-signal', event => {
+				if(event.detail.name === "change-signal"){
+		       		changeMainElement( event.detail.data );
+		   		}
+		    });
+		    $('.page-changing-button').click((e) => {
+		    	changeMainElement($(e.target).data("target"));
+		    })
+		});
+	})(jQuery);
+
+</script>
+
 <body>
 	<header>
-		<store-header></store-header>
+		<nav class="light-red" role="navigation">
+			<div class="nav-wrapper container">
+				<a data-target="init-page" id="logo-container" class="brand-logo page-changing-button" href="#">PetShop Animal</a>
+				<ul class="right hide-on-med-and-down">
+					<li>
+						<input id="search" type="search" placeholder="Pesquisa" />
+					</li>
+					<li><a class="page-changing-button" data-target="about-page">Sobre</a></li>
+					<li><a class="page-changing-button" data-target="login-page">Login</a></li>
+					<li><a class="page-changing-button" data-target="register-client-page">Registrar</a></li>
+				</ul>
+
+				<ul id="nav-mobile" class="side-nav" style="transform:translateX(-100%);">
+					<li>
+						<input id="search-hidden" type="search" placeholder="Pesquisa" />
+					</li>
+					<li><a class="page-changing-button" data-target="about-page">Sobre</a></li>
+					<li><a class="page-changing-button" data-target="login-page">Login</a></li>
+					<li><a class="page-changing-button" data-target="register-client-page">Registrar</a></li>
+				</ul>
+				<a href="#" data-activates="nav-mobile" class="button-collapse">
+					<i class="material-icons">menu</i>
+				</a>
+			</div>
+		</nav>
 	</header>
 
-	<main>
-		<manage-service-page/>
+	<main id="main">
+		<init-page id="main_element" />
 	</main>
 
 	<footer>

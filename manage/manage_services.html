@@ -1,8 +1,11 @@
 <dom-module id="manage-service-page">
+
   	<template> 
 	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-	    <link href="../mystyle.css" rel="stylesheet">
+	    <script src="important_js.js"></script>
+	    <link rel="stylesheet" href="../mystyle.css">
+
 
 		<main class="container row">
 			<div class="col s12">
@@ -13,7 +16,7 @@
 							<img src="/img/dog-vet.jpg" alt="Servi&ccedil;os" class="col s12 manage-image" />
 						</div>
 						<div class="row">
-							<div class="col s3"><a class="btn col s12" href="/register/service.html">Registrar</a></div>
+							<div class="col s3"><button class="btn col s12" on-click="_handleRegistrarClick">Registrar</button></div>
 							<div class="col s3"><a class="btn col s12" href="">Remover</a></div>
 							<div class="col s3"><a class="btn col s12" href="">Editar Registro</a></div>
 							<div class="col s3"><a class="btn col s12" href="/admin.html#add">Agendar Consulta</a></div>
@@ -26,7 +29,11 @@
 
   	<script>
 	    Polymer({
-	      is: 'manage-service-page'
+			is: 'manage-service-page',
+			
+		    _handleRegistrarClick: function(e, detail){
+		    	changePage(this, "init-page");
+			}
 	    });
   	</script>
 </dom-module>
