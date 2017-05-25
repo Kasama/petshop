@@ -9,7 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<!-- JQuery -->
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-	<script type="text/javascript" href="/bower_components/js-cookie/src/js.cookie.js"></script>
+	<script src="/bower_components/js-cookie/src/js.cookie.js"></script>
 
 	<!-- Materialize -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -56,7 +56,7 @@
     	return elem;
 	}
 
-	function changeMainElement(tag, attributes = null){
+	function changeMainElement(tag, attributes = null, addToHistory = true){
 		console.log("loading " + tag);
 		$("#main_element").remove();
     	
@@ -66,6 +66,10 @@
 
 		let elem = createElement(tag, attributes);
     	document.getElementById("main").appendChild(elem);
+
+    	if(addToHistory){
+    		history.pushState(page_description, null, "/" + tag.replace("-","_"));
+    	}
 	}
 
 	(function($){
@@ -80,13 +84,19 @@
 
 		   		}
 		    });
+
 		    $('.page-changing-button').click((e) => {
 		    	changeMainElement($(e.target).data("target"));
 		    })
 
-		    let curr_page = Cookies.get("current-page-description")
-		    if(curr_page){
-		    	changeMainElement(curr_page.tag, curr_page.attributes);
+		    window.addEventListener("popstate", function(e) {
+				console.log(e.state);
+				changeMainElement(e.state.tag.replace("#", ""), e.state.attributes, false);
+			});
+
+		    let curr_page = Cookies.getJSON("current-page-description");
+		    if(curr_page && curr_page.tag){
+		    	changeMainElement(curr_page.tag.replace("#", ""), curr_page.attributes);
 		    }
 		});
 	})(jQuery);
@@ -97,7 +107,7 @@
 	<header>
 		<nav class="light-red" role="navigation">
 			<div class="nav-wrapper container">
-				<a data-target="init-page" id="logo-container" class="brand-logo page-changing-button" href="#">PetShop Animal</a>
+				<a data-target="init-page" id="logo-container" class="brand-logo page-changing-button" href="">PetShop Animal</a>
 				<ul class="right hide-on-med-and-down">
 					<li>
 						<input id="search" type="search" placeholder="Pesquisa" />
@@ -123,7 +133,7 @@
 	</header>
 
 	<main id="main">
-		<detail-product-page id="main_element" product_id="345cae88b2a70130c996b4449101be32"/>
+		<init-page id="main_element"/>
 	</main>
 
 	<footer>

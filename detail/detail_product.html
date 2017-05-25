@@ -55,14 +55,13 @@
 			},
 
 			ready: function(){
-				this.description = "description";
-				this.name = "Nome do Produto";
-				this.price = "00.00";
-				this.stock = "1";
+				this.description = "";
+				this.name = "";
+				this.price = "";
+				this.stock = "";
 				this.picture = "";
 
 				$.get("http://172.26.166.14:3000/products/" + this.product_id, function(data, status){
-					console.log(data);
 					this.description = data.description;
 					this.name = data.name;
 					this.price = data.price.toFixed(2);
