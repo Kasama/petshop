@@ -6,7 +6,26 @@
 	<meta charset="utf-8">
 	<title>PetShop Animal</title>
 
-	<link rel="import" href="/custom_components/my_include.html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<!-- JQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" href="/bower_components/js-cookie/src/js.cookie.js"></script>
+
+	<!-- Materialize -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+
+	<!--Polymer-->
+	<script type="text/javascript" src="/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+	<link rel="import" href="/../bower_components/polymer/polymer.html">
+	<link rel="import" href="/../custom_components/footer.html">
+	<link rel="import" href="/../custom_components/header.html">
+
+	<!-- Our CSS and JS -->
+	<link rel="stylesheet" href="../mystyle.css">
+
+	<!-- Pages -->
 	<link rel="import" href="/init_page.html">
 	<link rel="import" href="/login.html">
 	<link rel="import" href="/about.html">
@@ -18,14 +37,34 @@
 	<link rel="import" href="/register/register_service.html">
 	<link rel="import" href="/manage/manage_pets.html">
 	<link rel="import" href="/manage/manage_services.html">
+	<link rel="import" href="/detail/detail_product.html">
+	<link rel="import" href="/detail/detail_pet.html">
+	<link rel="import" href="/detail/detail_service.html">
 </head>
 
 <script type="text/javascript">
-	function changeMainElement(tag){
+	function createElement(tag, attributes){
+		let elem = document.createElement(tag)
+    	elem.id = "main_element";
+    	
+    	if(!attributes){
+	    	for(att in attributes){
+	    		elem[att.name] = att.value;
+	    	}
+    	}
+
+    	return elem;
+	}
+
+	function changeMainElement(tag, attributes = null){
 		console.log("loading " + tag);
 		$("#main_element").remove();
-    	let elem = document.createElement(tag)
-    	elem.id = "main_element";
+    	
+		let page_description = {tag:tag, attributes:attributes}
+
+		Cookies.set("current-page-description", page_description, { expires: 1 });
+
+		let elem = createElement(tag, attributes);
     	document.getElementById("main").appendChild(elem);
 	}
 
@@ -35,11 +74,20 @@
 			document.addEventListener('iron-signal', event => {
 				if(event.detail.name === "change-signal"){
 		       		changeMainElement( event.detail.data );
+		   		}else if(event.detail.name === "set-variable-value"){
+
+		   		}else if(event.detail.name === "get-variable-value"){
+
 		   		}
 		    });
 		    $('.page-changing-button').click((e) => {
 		    	changeMainElement($(e.target).data("target"));
 		    })
+
+		    let curr_page = Cookies.get("current-page-description")
+		    if(curr_page){
+		    	changeMainElement(curr_page.tag, curr_page.attributes);
+		    }
 		});
 	})(jQuery);
 
@@ -75,7 +123,7 @@
 	</header>
 
 	<main id="main">
-		<init-page id="main_element" />
+		<detail-product-page id="main_element" product_id="345cae88b2a70130c996b4449101be32"/>
 	</main>
 
 	<footer>

@@ -1,0 +1,51 @@
+<dom-module id="detail-service-page">
+  	<template> 
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+	    <script src="important_js.js"></script>
+	    <link rel="stylesheet" href="../mystyle.css">
+
+		<main class="container">
+			<section class="row">
+				<div class="col s12">
+					<article class="card">
+						<div class="row card-content">
+							<div class="img-container col s6">
+								<img src="/img/dog-bath.jpg" alt="Servi&ccedil;o" class="col s12" />
+							</div>
+							<div class="col s6">
+								<header class="card-title">Banho e Tosa</header>
+								<p>Um banho completo para seu cachorro de todos os tamanhos e um novo corte de cabelo</p>
+								<p>Inclui banho, secagem e tosa</p>
+								<h2>R$ 140,00</h2>
+								<div class="row">
+									<div class="col s6 input-field">
+										<select name="some_name" id="some_name" size="1">
+											<option value="SelectValue">-- Selecione um Pet --</option>
+											<option value="Max">Max</option>
+											<option value="Rex">Rex</option>
+										</select>
+									</div>
+								</div>
+								<div class="row">
+									<a class="btn" href="/register/pet.html">Outro Pet</a>
+									<a class="btn" href="/calendar.html">Agendar Horario</a>
+								</div>
+							</div>
+						</div>
+					</article>
+				</div>
+			</section>
+		</main>
+	</template>
+
+  	<script>
+	    Polymer({
+			is: 'detail-service-page',
+			
+		    _handleRegistrarClick: function(e, detail){
+		    	changePage(this, "init-page");
+			}
+	    });
+  	</script>
+</dom-module>

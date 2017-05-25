@@ -1,0 +1,75 @@
+<dom-module id="detail-product-page">
+  	<template> 
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+	    <script src="important_js.js"></script>
+	    <link rel="stylesheet" href="../mystyle.css">
+
+		<main class="container">
+			<section class="row">
+				<div class="col s12">
+					<article class="card">
+						<div class="row card-content">
+							<div class="img-container col s6">
+								<img src="http://172.26.166.14:3000/{{picture}}" alt="Product" class="col s12" />
+							</div>
+							<div class="col s6">
+								<header class="card-title" style="word-wrap: break-word;">{{name}}</header>
+								<p style="word-wrap: break-word;">{{description}}</p>
+								<h2>R$ {{price}}</h2>
+								<form class="row" action="add_cart" method="post" accept-charset="utf-8">
+									<div class="input-field col s3">
+										<input placeholder="Qtd" type="number" min="1" max="{{stock}}" id="quantity" name="Quantity" value="1" class="btn-sized" />
+									</div>
+									<div class="input-field col s9">
+										<input type="submit" class="btn col" value="Adicionar ao Carrinho" />
+									</div>
+								</form>
+							</div>
+						</div>
+					</article>
+				</div>
+			</section>
+		</main>
+	</template>
+
+	<script type="text/javascript">
+		function initialize(){
+
+		}
+	</script>
+  	<script>
+	    Polymer({
+			is: 'detail-product-page',
+			properties:{
+				product_id: String,
+				description: String,
+				name: String,
+				price: String,
+				stock: String,
+				image: String,
+			},
+			
+		    _handleRegistrarClick: function(e, detail){
+		    	changePage(this, "init-page");
+			},
+
+			ready: function(){
+				this.description = "description";
+				this.name = "Nome do Produto";
+				this.price = "00.00";
+				this.stock = "1";
+				this.picture = "";
+
+				$.get("http://172.26.166.14:3000/products/" + this.product_id, function(data, status){
+					console.log(data);
+					this.description = data.description;
+					this.name = data.name;
+					this.price = data.price.toFixed(2);
+					this.stock = data.stock;
+					this.picture = data.picture;
+			    }.bind(this));
+			}
+	    });
+  	</script>
+</dom-module>

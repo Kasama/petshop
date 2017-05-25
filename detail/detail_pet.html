@@ -1,0 +1,84 @@
+<dom-module id="detail-pet-page">
+  	<template> 
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+	    <script src="important_js.js"></script>
+	    <link rel="stylesheet" href="../mystyle.css">
+
+		<main class="container">
+			<section class="row">
+				<div class="col s12">
+					<article class="card">
+						<div class="card-content">
+							<div class="row">
+								<div class="img-container col s12">
+									<img src="/img/pets.jpg" alt="Max" class="col s12" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									<header class="card-title">Max</header>
+									<p><strong>Ra&ccedil;a</strong> Pitbull</p>
+									<p><strong>Idade</strong> 3 anos</p>
+									<div class="row">
+										<div class="col s6">
+											<a class="btn col s12" href="/register/pet.html">Alterar Informa&ccedil;ões</a>
+										</div>
+										<div class="col s6">
+											<a class="btn col s12" href="#">Remover Pet</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</article>
+				</div>
+			</section>
+			<section class="row">
+				<header class="card-title">Servi&ccedil;os Agendados para Max</header>
+				<div class="col s12">
+					<article class="card">
+						<div class="card-content">
+							<div class="row">
+								<div class="img-container col s6">
+									<img src="/img/dog-leash.jpg" alt="Servi&ccedil;o" class="col s12" />
+								</div>
+								<div class="col s6">
+									<header class="card-title">Passeio com Max</header>
+									<p><strong>Data</strong> 01/03/2017 - Sexta Feira</p>
+									<p><strong>Hora</strong> 14:00</p>
+									<p><strong>Custo</strong> R$ 40.00</p>
+									<div class="col s12">
+										<a class="btn col s12" href="/calendar.html">Alterar</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</article>
+				</div>
+				<div class="col s12">
+					<article class="card">
+						<div class="row">
+							<div class="col s10">
+								<header class="card-title">Custo Total dos Servi&ccedil;os Agendados</header>
+							</div>
+							<div class="col s2">
+								<p>R$ 40.00</p>
+							</div>
+						</div>
+					</article>
+				</div>
+			</section>
+		</main>
+	</template>
+
+  	<script>
+	    Polymer({
+			is: 'detail-pet-page',
+			
+		    _handleRegistrarClick: function(e, detail){
+		    	changePage(this, "init-page");
+			}
+	    });
+  	</script>
+</dom-module>
