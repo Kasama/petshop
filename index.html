@@ -77,7 +77,7 @@
 			$('.button-collapse').sideNav();
 			document.addEventListener('iron-signal', event => {
 				if(event.detail.name === "change-signal"){
-		       		changeMainElement( event.detail.data );
+		       		changeMainElement( event.detail.tag, event.detail.data );
 		   		}else if(event.detail.name === "set-variable-value"){
 
 		   		}else if(event.detail.name === "get-variable-value"){
