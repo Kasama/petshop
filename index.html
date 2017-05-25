@@ -68,7 +68,7 @@
     	document.getElementById("main").appendChild(elem);
 
     	if(addToHistory){
-    		history.pushState(page_description, null, "/" + tag.replace("-","_"));
+    		history.pushState(page_description, null, "/" + tag);
     	}
 	}
 
@@ -87,6 +87,7 @@
 
 		    $('.page-changing-button').click((e) => {
 		    	changeMainElement($(e.target).data("target"));
+		    	return false;
 		    })
 
 		    window.addEventListener("popstate", function(e) {
@@ -107,7 +108,7 @@
 	<header>
 		<nav class="light-red" role="navigation">
 			<div class="nav-wrapper container">
-				<a data-target="init-page" id="logo-container" class="brand-logo page-changing-button" href="">PetShop Animal</a>
+				<a data-target="init-page" id="logo-container" class="brand-logo page-changing-button" href="#">PetShop Animal</a>
 				<ul class="right hide-on-med-and-down">
 					<li>
 						<input id="search" type="search" placeholder="Pesquisa" />
@@ -133,7 +134,7 @@
 	</header>
 
 	<main id="main">
-		<init-page id="main_element"/>
+		<manage-service-page id="main_element"/>
 	</main>
 
 	<footer>
