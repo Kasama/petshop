@@ -1,0 +1,23 @@
+{
+  "name": "petshop",
+  "homepage": "https://github.com/Kasama/petshop",
+  "authors": [
+    "Gabriel Bicalho",
+    "Roberto Alegro",
+    "Victor Moneratto"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "js-cookie": "^2.1.4",
+    "polymer": "Polymer/polymer#2.0.0"
+  }
+}
