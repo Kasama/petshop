@@ -56,6 +56,8 @@
     	return elem;
 	}
 
+		const serverURL = 'http://localhost:3000/';
+
 	function changeMainElement(tag, attributes = null, addToHistory = true){
 		console.log("loading " + tag);
 		$("#main_element").remove();
@@ -140,9 +142,11 @@
 			});
 		    
 		    let curr_page = Cookies.getJSON("current-page-description");
+				/*
 		    if(curr_page && curr_page.tag){
 		    	changeMainElement(curr_page.tag.replace("#", ""), curr_page.attributes);
 		    }
+				*/
 		    
 		});
 	})(jQuery);
@@ -183,7 +187,7 @@
 	</header>
 
 	<main id="main">
-		<manage-service-page id="main_element"/>
+		<register-product-page id="main_element"/>
 	</main>
 
 	<footer>

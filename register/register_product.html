@@ -1,5 +1,6 @@
 <dom-module id="register-product-page">
-  	<template> 
+		<script src="../important_js.js"></script>
+  	<template>
 	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 	    <link href="../mystyle.css" rel="stylesheet">
@@ -11,7 +12,7 @@
 					<article class="card">
 						<div class="card-content">
 							<header class="card-title">Registrar Produto</header>
-							<form class="container">
+							<div class="container" id="productForm">
 								<div class="row">
 
 									<div class="row">
@@ -51,13 +52,12 @@
 									</div>
 
 									<div class="input-field s6 right">
-											<button class="btn" type="submit" id="submit" >Cadastrar →</button>
+											<button class="btn submit" type="submit" id="submit">Cadastrar →</button>
 									</div>
 								</div>
-							</form>
+							</div>
 						</div>
 					</article>
-					<
 				</div>
 			</section>
 		</main>
@@ -80,8 +80,15 @@
 								imp[0].value = imb[0].value.substring(imb[0].value.lastIndexOf("\\") + 1)
 						});
 
+						/*
+						$(this.$.productForm).submit(createModel(
+								'product',
+								$(this.$.image_button)
+						));
+						*/
+
 						$(this.$.submit).click(e => {
-								$.ajax('http://172.26.166.14:3000/products/add', {
+								$.ajax('http://localhost:3000/products/add', {
 										cache: false,
 										data: {
 												name: name.val(),
@@ -95,7 +102,7 @@
 												const file = image[0].files[0];
 												const data = new FormData();
 												data.append('image', file, file.name);
-												$.ajax('http://172.26.166.14:3000/products/' + id + '/picture', {
+												$.ajax('http://localhost:3000/products/' + id + '/picture', {
 														cache: false,
 														method: 'POST',
 														processData: false,
