@@ -79,7 +79,6 @@
 		$('#register_page_button').toggle();
 		$('#user_home_page_button').toggle();
 		$('#logout_button').toggle();
-		//$('#search').attr("size", 52);
 		
 		$('#login_page_side_button').toggle();
 		$('#register_page_side_button').toggle();
@@ -111,6 +110,7 @@
 	(function($){
 		$(function(){
 			$('.button-collapse').sideNav();
+			
 			$('#user_home_page_button').hide();
 			$('#logout_button').hide();
 			$('#user_home_page_side_button').hide();
@@ -138,12 +138,12 @@
 				console.log(e.state);
 				changeMainElement(e.state.tag.replace("#", ""), e.state.attributes, false);
 			});
-		    /*
+		    
 		    let curr_page = Cookies.getJSON("current-page-description");
 		    if(curr_page && curr_page.tag){
 		    	changeMainElement(curr_page.tag.replace("#", ""), curr_page.attributes);
 		    }
-		    */
+		    
 		});
 	})(jQuery);
 
