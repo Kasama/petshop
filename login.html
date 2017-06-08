@@ -1,12 +1,9 @@
 <dom-module id="login-page">
 	<template>
-		<!-- Materialize -->
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-
-		<!-- Our CSS and JS -->
-		<link href="../mystyle.css" rel="stylesheet">
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+	    <link href="../mystyle.css" rel="stylesheet">
+		<script src="important_js.js"></script>
 
 		<main class="container">
 			<section class="row">
@@ -14,7 +11,7 @@
 					<article class="card">
 						<div class="card-content">
 							<header class="card-title">Login</header>
-							<form class="container" action="admin.html" method="get" accept-charset="utf-8">
+							<form class="container" accept-charset="utf-8">
 								<div class="row">
 									<div class="row">
 										<div class="input-field s3">
@@ -29,7 +26,7 @@
 											<a class="btn" href="/register/client.html">Ainda não é cadastrado?</a>
 										</div>
 										<div class="input-field s3 right">
-											<input class="btn" type="submit" value="Login →" />
+											<a class="btn" id="submit">Login →</a>
 										</div>
 									</div>
 								</div>
@@ -43,7 +40,12 @@
 
 	<script>
 		Polymer({
-			is: 'login-page'
+			is: 'login-page',
+			ready: function() {
+				$(this.$.submit).click(e => {
+					sendMessage(this, "do-login", {user_id:"asd"})
+				})
+			}
 		});
 	</script>
 </dom-module>

@@ -71,17 +71,61 @@
     		history.pushState(page_description, null, "/" + tag);
     	}
 	}
-
+	
+	function doLogin(user_id){
+		Cookies.set("user-id", event.detail.data.user_id);
+		
+		$('#login_page_button').toggle();
+		$('#register_page_button').toggle();
+		$('#user_home_page_button').toggle();
+		$('#logout_button').toggle();
+		//$('#search').attr("size", 52);
+		
+		$('#login_page_side_button').toggle();
+		$('#register_page_side_button').toggle();
+		$('#user_home_page_side_button').toggle();
+		$('#logout_side_button').toggle();
+		
+		//ideally this would go to the user's homepage
+		//we don't have one yet, so it sends to the main
+		// TODO: send to user's homepage
+		changeMainElement("init-page");
+	}
+	
+	function doLogout(){
+		Cookies.set("user-id", "");
+		
+		$('#login_page_button').toggle();
+		$('#register_page_button').toggle();
+		$('#user_home_page_button').toggle();
+		$('#logout_button').toggle();
+		
+		$('#login_page_side_button').toggle();
+		$('#register_page_side_button').toggle();
+		$('#user_home_page_side_button').toggle();
+		$('#logout_side_button').toggle();
+		
+		changeMainElement("init-page");
+	}
+	
 	(function($){
 		$(function(){
 			$('.button-collapse').sideNav();
+			$('#user_home_page_button').hide();
+			$('#logout_button').hide();
+			$('#user_home_page_side_button').hide();
+			$('#logout_side_button').hide();
+			
 			document.addEventListener('iron-signal', event => {
 				if(event.detail.name === "change-signal"){
 		       		changeMainElement( event.detail.tag, event.detail.data );
 		   		}else if(event.detail.name === "set-variable-value"){
-
+		   			// will it be used?
 		   		}else if(event.detail.name === "get-variable-value"){
-
+		   			// will it be used?
+		   		}else if(event.detail.name === "do-login"){
+		   			doLogin(event.detail.data.user_id);
+		   			
 		   		}
 		    });
 
@@ -94,11 +138,12 @@
 				console.log(e.state);
 				changeMainElement(e.state.tag.replace("#", ""), e.state.attributes, false);
 			});
-
+		    /*
 		    let curr_page = Cookies.getJSON("current-page-description");
 		    if(curr_page && curr_page.tag){
 		    	changeMainElement(curr_page.tag.replace("#", ""), curr_page.attributes);
 		    }
+		    */
 		});
 	})(jQuery);
 
@@ -109,22 +154,26 @@
 		<nav class="light-red" role="navigation">
 			<div class="nav-wrapper container">
 				<a data-target="init-page" id="logo-container" class="brand-logo page-changing-button" href="#">PetShop Animal</a>
-				<ul class="right hide-on-med-and-down">
+				<ul id="header_inner_container" class="right hide-on-med-and-down">
 					<li>
-						<input id="search" type="search" placeholder="Pesquisa" />
+						<input id="search" type="search" size=40 placeholder="Pesquisa" />
 					</li>
-					<li><a class="page-changing-button" data-target="about-page">Sobre</a></li>
-					<li><a class="page-changing-button" data-target="login-page">Login</a></li>
-					<li><a class="page-changing-button" data-target="register-client-page">Registrar</a></li>
+					<li id="login_page_button"><a class="page-changing-button" data-target="login-page">Login</a></li>
+					<li id="register_page_button"><a class="page-changing-button" data-target="register-client-page">Registrar</a></li>
+					<li id="user_home_page_button"><a class="page-changing-button" data-target="init-page">Home</a></li>
+					<li id="logout_button"><a onclick="doLogout()">Logout</a></li>
+					<li id="about_page_button"><a class="page-changing-button" data-target="about-page">Sobre</a></li>
 				</ul>
 
 				<ul id="nav-mobile" class="side-nav" style="transform:translateX(-100%);">
 					<li>
 						<input id="search-hidden" type="search" placeholder="Pesquisa" />
 					</li>
-					<li><a class="page-changing-button" data-target="about-page">Sobre</a></li>
-					<li><a class="page-changing-button" data-target="login-page">Login</a></li>
-					<li><a class="page-changing-button" data-target="register-client-page">Registrar</a></li>
+					<li id="login_page_side_button"><a class="page-changing-button" data-target="login-page">Login</a></li>
+					<li id="register_page_side_button"><a class="page-changing-button" data-target="register-client-page">Registrar</a></li>
+					<li id="user_home_page_side_button"><a class="page-changing-button" data-target="init-page">Home</a></li>
+					<li id="logout_side_button"><a onclick="doLogout()">Logout</a></li>
+					<li id="about_page_side_button"><a class="page-changing-button" data-target="about-page">Sobre</a></li>
 				</ul>
 				<a href="#" data-activates="nav-mobile" class="button-collapse">
 					<i class="material-icons">menu</i>
