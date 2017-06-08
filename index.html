@@ -20,7 +20,6 @@
 	<script type="text/javascript" src="/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 	<link rel="import" href="/../bower_components/polymer/polymer.html">
 	<link rel="import" href="/../custom_components/footer.html">
-	<link rel="import" href="/../custom_components/header.html">
 
 	<!-- Our CSS and JS -->
 	<link rel="stylesheet" href="../mystyle.css">
@@ -47,9 +46,9 @@
 		let elem = document.createElement(tag)
     	elem.id = "main_element";
     	
-    	if(!attributes){
+    	if(attributes){
 	    	for(att in attributes){
-	    		elem[att.name] = att.value;
+	    		elem[att] = attributes[att];
 	    	}
     	}
 
@@ -136,7 +135,9 @@
 
 		    window.addEventListener("popstate", function(e) {
 				console.log(e.state);
-				changeMainElement(e.state.tag.replace("#", ""), e.state.attributes, false);
+				if(e.state){
+					changeMainElement(e.state.tag.replace("#", ""), e.state.attributes, false);
+				}
 			});
 		    
 		    let curr_page = Cookies.getJSON("current-page-description");
@@ -144,6 +145,8 @@
 		    	changeMainElement(curr_page.tag.replace("#", ""), curr_page.attributes);
 		    }
 		    
+		    
+		    Cookies.set("server", "http://172.28.146.124:3000");
 		});
 	})(jQuery);
 
@@ -183,7 +186,7 @@
 	</header>
 
 	<main id="main">
-		<manage-service-page id="main_element"/>
+		<init-page id="main_element"/>
 	</main>
 
 	<footer>

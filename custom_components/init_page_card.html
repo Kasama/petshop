@@ -1,8 +1,8 @@
 <dom-module id="init-page-card">
-
   <template>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <script src="important_js.js"></script>
 
     <style>
       .card-content {
@@ -20,15 +20,14 @@
 
     <div class="card">
       <div class="card-image">
-        <img src="[[image]]" alt="Product" />
+        <img src="{{picture}}" alt="Product" />
       </div>
       <div class="card-content">
-        <span class="card-title"> [[title]] </span>
-        <p>[[text]]</p>
+        <span class="card-title"> {{name}} </span>
+        <p>{{description}}</p>
       </div>
       <div class="card-action">
-        <a href="/detail/product.html">Detalhes</a>
-        <a href="#">Adicionar</a>
+        <a href="#" id="details">Detalhes</a>
       </div>
     </div>
 
@@ -39,9 +38,27 @@
     Polymer({
       is: 'init-page-card',
       properties: {
-        image: String,
-        title: String,
-        text: String,
+        product_id: String,
+        picture: String,
+        name: String,
+        description: String,
+      },
+      
+      ready: function(){
+        this.description = "";
+        this.name = "";
+        this.picture = "";
+        
+        
+        $.get(Cookies.get("server") + "/products/" + this.product_id, function(data, status){
+          this.description = data.description;
+          this.name = data.name;
+          this.picture = Cookies.get("server") + "/" + data.picture;
+          }.bind(this));
+        
+        $(this.$.details).click(e => {
+          changePage(this, "detail-product-page", { product_id: this.product_id })
+        })
       }
     });
   </script>

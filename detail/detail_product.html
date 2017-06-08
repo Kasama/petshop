@@ -11,20 +11,20 @@
 					<article class="card">
 						<div class="row card-content">
 							<div class="img-container col s6">
-								<img src="http://172.26.166.14:3000/{{picture}}" alt="Product" class="col s12" />
+								<img src="{{picture}}" alt="Product" class="col s12" />
 							</div>
 							<div class="col s6">
 								<header class="card-title" style="word-wrap: break-word;">{{name}}</header>
 								<p style="word-wrap: break-word;">{{description}}</p>
 								<h2>R$ {{price}}</h2>
-								<form class="row" action="add_cart" method="post" accept-charset="utf-8">
+								<div class="row" >
 									<div class="input-field col s3">
 										<input placeholder="Qtd" type="number" min="1" max="{{stock}}" id="quantity" name="Quantity" value="1" class="btn-sized" />
 									</div>
 									<div class="input-field col s9">
-										<input type="submit" class="btn col" value="Adicionar ao Carrinho" />
+										<a id="add_button" class="btn col">Adicionar ao Carrinho</a>
 									</div>
-								</form>
+								</div>
 							</div>
 						</div>
 					</article>
@@ -57,12 +57,12 @@
 				this.stock = "";
 				this.picture = "";
 
-				$.get("http://172.26.166.14:3000/products/" + this.product_id, function(data, status){
+				$.get(Cookies.get("server") + "/products/" + this.product_id, function(data, status){
 					this.description = data.description;
 					this.name = data.name;
-					this.price = data.price.toFixed(2);
+					this.price = parseFloat(data.price).toFixed(2);
 					this.stock = data.stock;
-					this.picture = data.picture;
+					this.picture = Cookies.get("server") + "/" + data.picture;
 			    }.bind(this));
 			}
 	    });
