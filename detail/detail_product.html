@@ -75,7 +75,7 @@
 				    	addToCart(this.product_id, parseInt($(this.$.quantity).val()));
 				    	Materialize.toast("Produto adicionado com sucesso!", 1000);
 				    }else{
-				    	obj = {};
+				    	let obj = {};
 				    	obj.after_login_page = "detail-product-page";
 				    	obj.after_login_data = {product_id:this.product_id, quantity:this.quantity};
 				    	changePage(this, "login-page", obj);

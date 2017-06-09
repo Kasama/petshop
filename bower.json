@@ -18,6 +18,9 @@
   ],
   "dependencies": {
     "js-cookie": "^2.1.4",
-    "polymer": "Polymer/polymer#2.0.0"
+    "polymer": "Polymer/polymer#2.0.0",
+    "fullcalendar-calendar": "^1.1.2",
+    "fullcalendar": "^3.4.0",
+    "paper-date-picker": "polymer-paper-date-picker#^1.2.0"
   }
 }
