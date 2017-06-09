@@ -36,10 +36,10 @@ function createPicture(where, result, file) {
 			contentType: false,
 			data: data,
 			success: (result, status, xhr) => {
-				alert("Got success " + JSON.stringify(result) + " and " + JSON.stringify(res));
+				Materialize.toast('Successfully created', 1000);
 			},
 			error: (xhr, status, error) => {
-				alert("Got error " + JSON.stringify(error));
+				Materialize.toast('Unexpected error: ' + JSON.stringify(error), 2000);
 			},
 		});
 	}
@@ -52,11 +52,16 @@ function createModel(where, form, fileButton) {
 			method: 'POST',
 			data: form.serialize(),
 			success: (result, status, xhr) => {
-				createPicture(where, result, fileButton[0].files[0]);
+				if (result.error){
+					Materialize.toast(result.error, 1000);
+				} else {
+					createPicture(where, result, fileButton[0].files[0]);
+				}
 			},
 			error: (xhr, status, error) => {
-				alert("Got error " + JSON.stringify(error));
+				Materialize.toast('Unexpected error: ' + JSON.stringify(error), 2000);
 			},
 		});
+		return false;
 	};
 }

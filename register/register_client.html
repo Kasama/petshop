@@ -10,39 +10,39 @@
 					<article class="card">
 						<div class="card-content">
 							<header class="card-title">Registrar Cliente</header>
-							<form class="container" action="register_admin" method="post" accept-charset="utf-8">
+							<form id="form" class="container">
 								<div class="row">
 									<div class="row">
 										<div class="input-field col s6">
-											<input placeholder="Nome" type="text" name="Nome" value="" id="Name" />
+											<input placeholder="Nome" type="text" name="name" value="" id="Name" />
 										</div>
 										<div class="input-field col s6">
-											<input placeholder="Sobrenome" type="text" name="Surname" value="" id="Sobrenome" />
+											<input placeholder="Sobrenome" type="text" name="surename" value="" id="Sobrenome" />
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input placeholder="Endereço" type="text" value="" name="Address" id="Address" />
+											<input placeholder="Endereço" type="text" value="" name="address" id="Address" />
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input placeholder="Telefone" type="tel" name="Phone" value="" id="Phone" />
+											<input placeholder="Telefone" type="tel" name="phone" value="" id="Phone" />
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input placeholder="Email" type="text" name="Email" value="" id="Email" />
+											<input placeholder="Email" type="text" name="email" value="" id="Email" />
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input placeholder="Senha" type="password" name="Password" value="" id="Password" />
+											<input placeholder="Senha" type="password" name="password" value="" id="Password" />
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input placeholder="Confirmar Senha" type="password" name="PasswordConfirm" value="" id="PasswordConfirm" />
+											<input placeholder="Confirmar Senha" type="password" name="password_confirmation" value="" id="PasswordConfirm" />
 										</div>
 									</div>
 									<div class="row">
@@ -59,7 +59,7 @@
 										</form>
 									</div>
 									<div class="input-field s6 right">
-										<input class="btn" type="submit" value="Cadastrar →" />
+											<button class="btn submit" id="submit" type="submit" >Cadastrar →</button>
 									</div>
 								</div>
 							</form>
@@ -71,16 +71,21 @@
 	</template>
 
   	<script>
-	    Polymer({
-	      is: 'register-client-page',
-	      ready: function() {
-	      	imb = $(this.$.image_button);
-	      	imp = $(this.$.image_path);
+		Polymer({
+				is: 'register-client-page',
+				ready: function() {
+						imb = $(this.$.image_button);
+						imp = $(this.$.image_path);
 
-	        imb.change(function(){
-	        	imp[0].value = imb[0].value.substring(imb[0].value.lastIndexOf("\\") + 1)
-	        });
-	      }
-	    });
+						imb.change(function(){
+								imp[0].value = imb[0].value.substring(imb[0].value.lastIndexOf("\\") + 1)
+						});
+						$(this.$.form).submit(createModel(
+								'clients',
+								$(this.$.form),
+								imb
+						));
+				}
+		});
   	</script>
 </dom-module>
