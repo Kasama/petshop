@@ -19,10 +19,10 @@
 								<h2>R$ {{price}}</h2>
 								<div class="row" >
 									<div class="input-field col s3">
-										<input placeholder="Qtd" type="number" min="1" max="{{stock}}" id="quantity" name="Quantity" value="1" class="btn-sized" />
+										<input placeholder="Qtd" type="number" min="1" max="{{stock}}" id="quantity" name="Quantity" value="{{quantity}}" class="btn-sized" />
 									</div>
 									<div class="input-field col s9">
-										<a id="add_button" class="btn col">Adicionar ao Carrinho</a>
+										<a id="add_button" class="btn col s12">Adicionar</a>
 									</div>
 								</div>
 							</div>
@@ -48,6 +48,7 @@
 				price: String,
 				stock: String,
 				image: String,
+				quantity: String,
 			},
 
 			ready: function(){
@@ -57,13 +58,29 @@
 				this.stock = "";
 				this.picture = "";
 
-				$.get(Cookies.get("server") + "/products/" + this.product_id, function(data, status){
+				if(!this.quantity){
+					this.quantity = "1";
+				}
+
+				$.get(serverURL + "products/" + this.product_id, function(data, status){
 					this.description = data.description;
 					this.name = data.name;
 					this.price = parseFloat(data.price).toFixed(2);
 					this.stock = data.stock;
-					this.picture = Cookies.get("server") + "/" + data.picture;
+					this.picture = serverURL + data.picture;
 			    }.bind(this));
+			    
+			    $(this.$.add_button).click(e => {
+			    	if(Cookies.get("user-id")){
+				    	addToCart(this.product_id, parseInt($(this.$.quantity).val()));
+				    	Materialize.toast("Produto adicionado com sucesso!", 1000);
+				    }else{
+				    	obj = {};
+				    	obj.after_login_page = "detail-product-page";
+				    	obj.after_login_data = {product_id:this.product_id, quantity:this.quantity};
+				    	changePage(this, "login-page", obj);
+				    }
+		        })
 			}
 	    });
   	</script>

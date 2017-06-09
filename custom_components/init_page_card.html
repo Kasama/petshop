@@ -51,10 +51,10 @@
         this.picture = "";
         
         
-        $.get(Cookies.get("server") + "/products/" + this.product_id, function(data, status){
+        $.get(serverURL + "products/" + this.product_id, function(data, status){
           this.description = data.description;
           this.name = data.name;
-          this.picture = Cookies.get("server") + "/" + data.picture;
+          this.picture = serverURL + data.picture;
           }.bind(this));
         
         $(this.$.details).click(e => {

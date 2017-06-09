@@ -8,12 +8,18 @@ function sendMessage(that, name, additional_data = null){
 }
 
 function addToCart(product_id, quantity){
-	cart = Cookies.get("cart");
+	cart = Cookies.getJSON("cart");
+	
+	if(!cart){
+		cart = {};
+	}
+	
 	if(cart[product_id]){
 		cart[product_id] += quantity;
 	}else{
 		cart[product_id] = quantity;
 	}
+	
 	Cookies.set("cart", cart);
 }
 
@@ -21,7 +27,6 @@ function createPicture(where, result, file) {
 	if (file) {
 		const res = result;
 		const id = result.data._id;
-		// const file = image[0].files[0];
 		const data = new FormData();
 		data.append('image', file, file.name);
 		$.ajax(serverURL + where + '/' + id + '/picture', {
@@ -39,19 +44,19 @@ function createPicture(where, result, file) {
 		});
 	}
 }
-function createModel(where, fileButton) {
+function createModel(where, form, fileButton) {
 	return (e) => {
+		e.preventDefault();
 		$.ajax(serverURL + where + '/add', {
 			cache: false,
-			data: $('form').serialize(),
+			method: 'POST',
+			data: form.serialize(),
 			success: (result, status, xhr) => {
-				console.log("created model");
-				createPicture(where, result, fileButton[0].file[0]);
+				createPicture(where, result, fileButton[0].files[0]);
 			},
 			error: (xhr, status, error) => {
 				alert("Got error " + JSON.stringify(error));
 			},
-			method: 'POST',
 		});
 	};
 }
