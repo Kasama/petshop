@@ -22,7 +22,7 @@
 										<input placeholder="Qtd" type="number" min="1" max="{{stock}}" id="quantity" name="Quantity" value="{{quantity}}" class="btn-sized" />
 									</div>
 									<div class="input-field col s9">
-										<a id="add_button" class="btn">Adicionar ao Carrinho</a>
+										<a id="add_button" class="btn col s12">Adicionar</a>
 									</div>
 								</div>
 							</div>
@@ -57,7 +57,10 @@
 				this.price = "";
 				this.stock = "";
 				this.picture = "";
-				this.quantity = "1";
+
+				if(!this.quantity){
+					this.quantity = "1";
+				}
 
 				$.get(serverURL + "products/" + this.product_id, function(data, status){
 					this.description = data.description;
@@ -68,8 +71,15 @@
 			    }.bind(this));
 			    
 			    $(this.$.add_button).click(e => {
-			    	addToCart(this.product_id, parseInt($(this.$.quantity).val()));
-			    	alert("Produto adicionado com sucesso!")
+			    	if(Cookies.get("user-id")){
+				    	addToCart(this.product_id, parseInt($(this.$.quantity).val()));
+				    	Materialize.toast("Produto adicionado com sucesso!", 1000);
+				    }else{
+				    	obj = {};
+				    	obj.after_login_page = "detail-product-page";
+				    	obj.after_login_data = {product_id:this.product_id, quantity:this.quantity};
+				    	changePage(this, "login-page", obj);
+				    }
 		        })
 			}
 	    });

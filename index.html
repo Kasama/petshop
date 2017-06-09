@@ -74,7 +74,7 @@
 	}
 	
 	function doLogin(user_id){
-		Cookies.set("user-id", event.detail.data.user_id);
+		Cookies.set("user-id", user_id);
 		
 		$('#login_page_button').toggle();
 		$('#register_page_button').toggle();
@@ -89,7 +89,7 @@
 		//ideally this would go to the user's homepage
 		//we don't have one yet, so it sends to the main
 		// TODO: send to user's homepage
-		changeMainElement("init-page");
+		//changeMainElement("init-page");
 	}
 	
 	function doLogout(){
@@ -141,6 +141,10 @@
 					changeMainElement(e.state.tag.replace("#", ""), e.state.attributes, false);
 				}
 			});
+		    
+		    if(Cookies.get("user-id")){
+		    	doLogin(Cookies.get("user-id"));
+		    }
 		    
 		    let curr_page = Cookies.getJSON("current-page-description");
 			

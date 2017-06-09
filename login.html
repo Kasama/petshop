@@ -41,9 +41,18 @@
 	<script>
 		Polymer({
 			is: 'login-page',
+			properties:{
+				after_login_page: String,
+				after_login_data: Object,
+			},
 			ready: function() {
 				$(this.$.submit).click(e => {
 					sendMessage(this, "do-login", {user_id:"asd"})
+					if(this.after_login_page){
+						changePage(this, this.after_login_page, this.after_login_data)
+					}else{
+						changePage(this, "init-page")
+					}
 				})
 			}
 		});
