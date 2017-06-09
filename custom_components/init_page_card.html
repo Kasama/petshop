@@ -13,14 +13,15 @@
         overflow: hidden;
       }
       .card-image img {
-        max-width: 100%;
         height: 100%;
+        width: 100%;
+        object-fit: contain;
       }
     </style>
 
     <div class="card">
       <div class="card-image">
-        <img src="{{picture}}" alt="Product" />
+        <img src="{{picture}}" alt="{name}" />
       </div>
       <div class="card-content">
         <span class="card-title"> {{name}} </span>

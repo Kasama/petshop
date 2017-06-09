@@ -26,29 +26,36 @@
       </div>
     </div>
 
-    <main class="container">
-      <section class="row">
-        <init-page-card product_id="efd28a6cfe963e671cea290504000464" class="col s4"></init-page-card>
-        <init-page-card product_id="efd28a6cfe963e671cea2905040020af" class="col s4"></init-page-card>
-        <init-page-card product_id="efd28a6cfe963e671cea290504002189" class="col s4"></init-page-card>
-      </section>
-      <section class="row">
-        <init-page-card product_id="efd28a6cfe963e671cea290504000464" class="col s4"></init-page-card>
-        <init-page-card product_id="efd28a6cfe963e671cea290504000464" class="col s4"></init-page-card>
-        <init-page-card product_id="efd28a6cfe963e671cea290504000464" class="col s4"></init-page-card>
-      </section>
+    <main id="the_content" class="container">
     </main>
   </template>
 
   <script>
+
+  </script>
+
+  <script>
     Polymer({
       is: 'init-page',
-      ready: function() {
+      ready: function () {
         $(this.$.the_banner).parallax();
         $("html, body").animate({ scrollTop: "1px" });
         $("html, body").animate({ scrollTop: "0px" });
+        $.get(Cookies.get("server") + "/products", (products, status) => {
+          let main = $(this.$.the_content);
+          let row = undefined;
+          for (let [i, product] of products.entries()) {
+            if (i % 3 === 0) {
+              row = $("<section>").addClass("row");
+              main.append(row);
+            }
+
+            let card = $("<init-page-card>").addClass("col s4");
+            card.prop("product_id", product._id);
+            row.append(card);
+          }
+        });
       }
     });
   </script>
 </dom-module>
-
