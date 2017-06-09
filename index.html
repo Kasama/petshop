@@ -46,15 +46,15 @@
 <script type="text/javascript">
 	function createElement(tag, attributes){
 		let elem = document.createElement(tag)
-    	elem.id = "main_element";
-    	
-    	if(attributes){
-	    	for(att in attributes){
-	    		elem[att] = attributes[att];
-	    	}
-    	}
+		elem.id = "main_element";
+		
+		if(attributes){
+			for(att in attributes){
+				elem[att] = attributes[att];
+			}
+		}
 
-    	return elem;
+		return elem;
 	}
 
 	const serverURL = 'http://172.28.146.124:3000/';
@@ -62,17 +62,17 @@
 	function changeMainElement(tag, attributes = null, addToHistory = true){
 		console.log("loading " + tag);
 		$("#main_element").remove();
-    	
+		
 		let page_description = {tag:tag, attributes:attributes}
 
 		Cookies.set("current-page-description", page_description, { expires: 1 });
 
 		let elem = createElement(tag, attributes);
-    	document.getElementById("main").appendChild(elem);
+		document.getElementById("main").appendChild(elem);
 
-    	if(addToHistory){
-    		history.pushState(page_description, null, "/" + tag);
-    	}
+		if(addToHistory){
+			history.pushState(page_description, null, "/" + tag);
+		}
 	}
 	
 	function doLogin(user_id){
@@ -121,42 +121,41 @@
 			
 			document.addEventListener('iron-signal', event => {
 				if(event.detail.name === "change-signal"){
-		       		changeMainElement( event.detail.tag, event.detail.data );
+					changeMainElement( event.detail.tag, event.detail.data );
 		   		}else if(event.detail.name === "set-variable-value"){
-		   			// will it be used?
+					// will it be used?
 		   		}else if(event.detail.name === "get-variable-value"){
-		   			// will it be used?
+					// will it be used?
 		   		}else if(event.detail.name === "do-login"){
 		   			doLogin(event.detail.data.user_id);
-		   			
 		   		}
-		    });
-
-		    $('.page-changing-button').click((e) => {
-		    	changeMainElement($(e.target).data("target"));
-		    	return false;
-		    })
-
-		    window.addEventListener("popstate", function(e) {
+			});
+			
+			$('.page-changing-button').click((e) => {
+				changeMainElement($(e.target).data("target"));
+				return false;
+			})
+			
+			window.addEventListener("popstate", function(e) {
 				// console.log(e.state);
 				if(e.state){
 					changeMainElement(e.state.tag.replace("#", ""), e.state.attributes, false);
 				}
 			});
-		    
-		    if(Cookies.get("user-id")){
-		    	doLogin(Cookies.get("user-id"));
-		    }
-		    
-		    let curr_page = Cookies.getJSON("current-page-description");
+			
+			if(Cookies.get("user-id")){
+				doLogin(Cookies.get("user-id"));
+			}
+			
+			let curr_page = Cookies.getJSON("current-page-description");
 			
 			// TODO: remove this comment to reactivate pagecookie
 			/*
-		    if(curr_page && curr_page.tag){
-		    	changeMainElement(curr_page.tag.replace("#", ""), curr_page.attributes);
-		    }
+			if(curr_page && curr_page.tag){
+				changeMainElement(curr_page.tag.replace("#", ""), curr_page.attributes);
+			}
 			*/
-		    
+			
 		});
 	})(jQuery);
 
