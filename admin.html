@@ -120,7 +120,7 @@
       is: 'admin-page',
       ready: function () {
         $(Polymer.dom(this.root).querySelectorAll(".action-anchor")).click(e => {
-          changePage(this, $(e.target).data("target"), {});
+          changePage(this, $(e.target).data("target"), {client_id: Cookies.get("user-id")});
         })
       }
     });

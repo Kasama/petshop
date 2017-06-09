@@ -36,10 +36,10 @@ function createPicture(where, result, file) {
 			contentType: false,
 			data: data,
 			success: (result, status, xhr) => {
-				Materialize.toast('Successfully created', 1000);
+				Materialize.toast('Successfully created', 3000);
 			},
 			error: (xhr, status, error) => {
-				Materialize.toast('Unexpected error: ' + JSON.stringify(error), 2000);
+				Materialize.toast('Unexpected error: ' + JSON.stringify(error), 3000);
 			},
 		});
 	}
@@ -53,13 +53,13 @@ function createModel(where, form, fileButton) {
 			data: form.serialize(),
 			success: (result, status, xhr) => {
 				if (result.error){
-					Materialize.toast(result.error, 1000);
+					Materialize.toast(result.error, 3000);
 				} else {
 					createPicture(where, result, fileButton[0].files[0]);
 				}
 			},
 			error: (xhr, status, error) => {
-				Materialize.toast('Unexpected error: ' + JSON.stringify(error), 2000);
+				Materialize.toast('Unexpected error: ' + JSON.stringify(error), 3000);
 			},
 		});
 		return false;
