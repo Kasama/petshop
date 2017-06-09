@@ -8,12 +8,18 @@ function sendMessage(that, name, additional_data = null){
 }
 
 function addToCart(product_id, quantity){
-	cart = Cookies.get("cart");
+	cart = Cookies.getJSON("cart");
+	
+	if(!cart){
+		cart = {};
+	}
+	
 	if(cart[product_id]){
 		cart[product_id] += quantity;
 	}else{
 		cart[product_id] = quantity;
 	}
+	
 	Cookies.set("cart", cart);
 }
 
