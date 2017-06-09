@@ -1,0 +1,92 @@
+<dom-module id="calendar-page">
+	<link rel="import" href="/bower_components/paper-date-picker/paper-date-picker.html">
+
+	<template>
+		<script src="important_js.js"></script>
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+	    <link href="../mystyle.css" rel="stylesheet">
+	    
+	    
+	    
+	    
+
+		<main class="container">
+			<section class="row">
+				<div class="col s12 m12">
+					<article class="card">
+						<div class="card-content">
+							<div class="row">
+								<paper-date-picker id="date_picker" min-date="July 3, 2017" max-date="August 20, 2017" date="{{selected_date}}"></paper-date-picker>
+							</div>
+							<div class="row">
+								<p id="batata"></p>
+							</div>
+						</div>
+					</article>
+				</div>
+			</section>
+		</main>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'calendar-page',
+			properties:{
+				selected_date:{
+					type:String,
+					observer: "_dateObserver"
+				},
+				isFirstUpdateOfDate:{
+					type:Boolean,
+					value:true,
+				},
+			},
+			_dateObserver: function(newValue, oldValue){
+				if(oldValue){
+					if(!this.isFirstUpdateOfDate){
+						this.updateList(newValue);
+					}else{
+						this.isFirstUpdateOfDate = false;
+					}
+				}
+			},
+			dateToString: function(days_from_today){
+				let objToday = new Date();
+				objToday.setDate(new Date().getDate() + days_from_today);
+				
+				let dayOfMonth = objToday + ( objToday.getDate() < 10) ? '0' + objToday.getDate() : objToday.getDate(),
+					months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'),
+					curMonth = months[objToday.getMonth()],
+					curYear = objToday.getFullYear();
+				
+				let str = curMonth + " " + dayOfMonth + ", " + curYear;
+				return str;
+			},
+			getDayFromString: function(str){
+					str = (str.toString());
+					str = str.substring(str.indexOf(" ") + 1);
+					str = str.substring(0, str.lastIndexOf(":"));
+					str = str.substring(0, str.lastIndexOf(" "));
+					return str;
+			},
+			updateList: function(date){
+				$.get(serverURL + "events?date=" + this.getDayFromString(date), (events, status) => {
+					this.$.batata.innerHTML = JSON.stringify(events);
+					console.log(events);
+				});
+			},
+			ready: function() {
+				//document.querySelector("#calendar").changeView("agendaWeek");
+				
+				let datepicker = $(this.$.date_picker);
+				datepicker.attr("min-date", this.dateToString(0));
+				datepicker.attr("max-date", this.dateToString(100) + ", 23:59:59");
+				datepicker.attr("date", this.dateToString(0));
+				
+				this.updateList(new Date());
+			}
+		});
+	</script>
+</dom-module>
