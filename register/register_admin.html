@@ -1,48 +1,48 @@
 <dom-module id="register-admin-page">
-  	<template> 
-	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-	    <link href="../mystyle.css" rel="stylesheet">
-	    
-	    <main class="container">
-	    	<section class="row">
+	<template>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+		<link href="../mystyle.css" rel="stylesheet">
+
+		<main class="container">
+			<section class="row">
 				<div class="col s12">
 					<article class="card">
 						<div class="card-content">
 							<header class="card-title">Cadastrar Administrador</header>
-							<form class="container" action="register_admin" method="post" accept-charset="utf-8">
+							<form class="container" id="form">
 								<div class="row">
 									<div class="row">
 										<div class="input-field col s6">
-											<input placeholder="Nome" type="text" name="Nome" value="" id="Name" />
+											<input placeholder="Nome" type="text" name="name" value="" id="Name" />
 										</div>
 										<div class="input-field col s6">
-											<input placeholder="Sobrenome" type="text" name="Surname" value="" id="Sobrenome" />
+											<input placeholder="Sobrenome" type="text" name="surname" value="" id="Sobrenome" />
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input placeholder="Data de Nascimento" type="text" value="" name="Birthday" id="Birthday" />
+											<input placeholder="Data de Nascimento" type="text" value="" name="birthday" id="Birthday" />
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input placeholder="Telefone" type="tel" name="Phone" value="" id="Phone" />
+											<input placeholder="Telefone" type="tel" name="phone" value="" id="Phone" />
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input placeholder="Email" type="text" name="Email" value="" id="Email" />
+											<input placeholder="Email" type="text" name="email" value="" id="Email" />
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input placeholder="Senha" type="password" name="Password" value="" id="Password" />
+											<input placeholder="Senha" type="password" name="password" value="" id="Password" />
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input placeholder="Confirmar Senha" type="password" name="PasswordConfirm" value="" id="PasswordConfirm" />
+											<input placeholder="Confirmar Senha" type="password" name="password_confirmation" value="" id="PasswordConfirm" />
 										</div>
 									</div>
 									<div class="row">
@@ -67,20 +67,26 @@
 					</article>
 				</div>
 			</section>
-	    </main>
-  	</template>
+		</main>
+	</template>
 
-  	<script>
-	    Polymer({
-	      is: 'register-admin-page',
-	      ready: function() {
-	      	imb = $(this.$.image_button);
-	      	imp = $(this.$.image_path);
+	<script>
+		Polymer({
+			is: 'register-admin-page',
+			ready: function () {
+				imb = $(this.$.image_button);
+				imp = $(this.$.image_path);
 
-	        imb.change(function(){
-	        	imp[0].value = imb[0].value.substring(imb[0].value.lastIndexOf("\\") + 1)
-	        });
-	      }
-	    });
-  	</script>
+				imb.change(function () {
+					imp[0].value = imb[0].value.substring(imb[0].value.lastIndexOf("\\") + 1)
+				});
+
+				$(this.$.form).submit(createModel(
+					'admins',
+					$(this.$.form),
+					$(this.$.image_button)
+				));
+			}
+		});
+	</script>
 </dom-module>

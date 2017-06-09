@@ -1,8 +1,8 @@
 <dom-module id="register-service-page">
-  	<template> 
-	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-	    <link href="../mystyle.css" rel="stylesheet">
+	<template>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+		<link href="../mystyle.css" rel="stylesheet">
 
 		<main class="container">
 			<div class="row">
@@ -10,21 +10,21 @@
 					<div class="card">
 						<div class="card-content">
 							<span class="card-title">Cadastrar Serviço</span>
-							<form class="container" action="register_pet" method="post" accept-charset="utf-8">
+							<form class="container" id="form">
 								<div class="row">
 									<div class="row">
 										<div class="input-field col s12">
-											<input placeholder="Nome do Serviço" type="text" name="Nome" value="" id="Name">
+											<input placeholder="Nome do Serviço" type="text" name="name" value="" id="Name">
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input placeholder="Preço" type="number" value="" name="Price" id="Price" />
+											<input placeholder="Preço" type="number" value="" name="price" id="Price" />
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
-											<textarea placeholder="Descrição" rows=6 name="Description" value="" id="Description"></textarea>
+											<textarea placeholder="Descrição" rows=6 name="description" value="" id="Description"></textarea>
 										</div>
 									</div>
 									<div class="row">
@@ -52,17 +52,23 @@
 		</main>
 	</template>
 
-  	<script>
-	    Polymer({
-	      is: 'register-service-page',
-	      ready: function() {
-	      	imb = $(this.$.image_button);
-	      	imp = $(this.$.image_path);
+	<script>
+		Polymer({
+			is: 'register-service-page',
+			ready: function () {
+				imb = $(this.$.image_button);
+				imp = $(this.$.image_path);
 
-	        imb.change(function(){
-	        	imp[0].value = imb[0].value.substring(imb[0].value.lastIndexOf("\\") + 1)
-	        });
-	      }
-	    });
-  	</script>
+				imb.change(function () {
+					imp[0].value = imb[0].value.substring(imb[0].value.lastIndexOf("\\") + 1)
+				});
+
+				$(this.$.form).submit(createModel(
+					'services',
+					$(this.$.form),
+					$(this.$.image_button)
+				));
+			}
+		});
+	</script>
 </dom-module>

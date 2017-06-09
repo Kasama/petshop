@@ -1,8 +1,8 @@
 <dom-module id="register-pet-page">
-  	<template> 
-	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-	    <link href="../mystyle.css" rel="stylesheet">
+	<template>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+		<link href="../mystyle.css" rel="stylesheet">
 
 		<main class="container">
 			<div class="row">
@@ -10,35 +10,36 @@
 					<div class="card">
 						<div class="card-content">
 							<span class="card-title">Cadastrar Pet</span>
-							<form class="container" action="register_pet" method="post" accept-charset="utf-8">
+							<form class="container" id="form">
+								<input id="client_input" type="hidden" name="client_id" />
 								<div class="row">
 									<div class="row">
 										<div class="input-field col s12">
-											<input placeholder="Nome" type="text" name="Nome" value="" id="Name">
+											<input placeholder="Nome" type="text" name="name" value="" id="Name">
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input placeholder="Idade" type="text" value="" name="Age" id="Age" />
+											<input placeholder="Idade" type="number" value="" name="age" id="Age" />
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input placeholder="Raça" type="text" name="Race" value="" id="Race">
+											<input placeholder="Raça" type="text" name="race" value="" id="Race">
 										</div>
 									</div>
 									<div class="row">
 										<form>
-										<div class="file-field input-field col s9">
-											<div class="btn">
-												<span>Foto</span>
-												<input id="image_button" type="file" accept="image/x-png,image/jpeg, image/jpg">
+											<div class="file-field input-field col s9">
+												<div class="btn">
+													<span>Foto</span>
+													<input id="image_button" type="file" accept="image/x-png,image/jpeg, image/jpg">
+												</div>
+												<div class="file-path-wrapper">
+													<input id="image_path" class="file-path validate" placeholder="Arquivo" type="text" style="color:black">
+												</div>
 											</div>
-											<div class="file-path-wrapper">
-												<input id="image_path" class="file-path validate" placeholder="Arquivo" type="text" style="color:black">
-											</div>
-										</div>
-									</form>
+										</form>
 									</div>
 								</div>
 								<div class="row">
@@ -54,17 +55,28 @@
 		</main>
 	</template>
 
-  	<script>
-	    Polymer({
-	      is: 'register-pet-page',
-	      ready: function() {
-	      	imb = $(this.$.image_button);
-	      	imp = $(this.$.image_path);
+	<script>
+		Polymer({
+			is: 'register-pet-page',
+			properties: {
+				client_id: String,
+			},
+			ready: function () {
+				$(this.$.client_input).val(this.client_id);
 
-	        imb.change(function(){
-	        	imp[0].value = imb[0].value.substring(imb[0].value.lastIndexOf("\\") + 1)
-	        });
-	      }
-	    });
-  	</script>
+				imb = $(this.$.image_button);
+				imp = $(this.$.image_path);
+
+				imb.change(function () {
+					imp[0].value = imb[0].value.substring(imb[0].value.lastIndexOf("\\") + 1)
+				});
+
+				$(this.$.form).submit(createModel(
+					'pets',
+					$(this.$.form),
+					$(this.$.image_button)
+				));
+			}
+		});
+	</script>
 </dom-module>
