@@ -43,7 +43,7 @@
 
 <script type="text/javascript">
 	function createElement(tag, attributes){
-		let elem = document.createElement(tag)
+		let elem = document.createElement(tag);
     	elem.id = "main_element";
     	
     	if(attributes){
@@ -149,11 +149,9 @@
 		    let curr_page = Cookies.getJSON("current-page-description");
 			
 			// TODO: remove this comment to reactivate pagecookie
-			/*
-		    if(curr_page && curr_page.tag){
-		    	changeMainElement(curr_page.tag.replace("#", ""), curr_page.attributes);
-		    }
-			*/
+		    // if(curr_page && curr_page.tag){
+		    // 	changeMainElement(curr_page.tag.replace("#", ""), curr_page.attributes);
+		    // }
 		    
 		});
 	})(jQuery);
@@ -194,7 +192,7 @@
 	</header>
 
 	<main id="main">
-		<register-product-page id="main_element"/>
+		<admin-page id="main_element"/>
 	</main>
 
 	<footer>
