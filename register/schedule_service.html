@@ -104,7 +104,6 @@
 				$.get(serverURL + "events?date=" + this.getDayFromString(date), (events, status) => {
 					let elem_list = this.$.event_list;
 					
-					Materialize.toast("asdasdasdasd", 2000);
 					for(let i = 0; i < 12; i++){
 						let event = null;
 						for(let j = 0; j < events.length; j++){
@@ -117,15 +116,12 @@
 						if(event){
 							let elem = document.createElement("event-card");
 							elem["name"] = event.name;
-							elem["picture"] = serverURL + event.picture;
+							elem["picture"] = serverURL + event.service.picture;
 							elem["slot"] = parseInt(event.slot);
 							elem["date"] = event.date;
 							
 							elem["hide_schedule_button"] = true;
-							//TODO: fix this line, since backend will change
-							elem["service_id"] = event.service_id;
-							
-							console.log(elem)
+							elem["service_id"] = event.service._id;
 							
 							elem_list.appendChild(elem);
 						}else{
@@ -143,7 +139,6 @@
 							elem["pet_id"] = this.pet_id;
 							elem["pet_name"] = this.pet_name;
 							
-							console.log(elem);
 							elem_list.appendChild(elem);
 						}
 					}
@@ -162,7 +157,7 @@
 				});
 				
 				let datepicker = $(this.$.date_picker);
-				datepicker.attr("min-date", this.dateToString(1));
+				datepicker.attr("min-date", this.dateToString(0));
 				datepicker.attr("max-date", this.dateToString(200) + ", 23:59:59");
 				datepicker.attr("date", this.dateToString(0));
 				
