@@ -77,6 +77,7 @@
 							//let str = $(this.$.pet_select).val();
 							let str = Polymer.dom(this.root).querySelector("input[name='pet_group']:checked").value;////this.$$("input[name='pet_group']:checked").val();
 							changePage(this, "schedule-service-page", {
+								_id: this._id,
 								pet_id: str.substring(0, str.indexOf(":")),
 								pet_name: str.substring(str.indexOf(":") + 1)
 							})
