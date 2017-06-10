@@ -1,0 +1,67 @@
+<dom-module id="event-card">
+  <template>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+    <style>
+      .card-content {
+        min-height: 100px;
+      }
+      .card-image {
+        height: 150px;
+        overflow: hidden;
+      }
+      .card-image img {
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+      }
+    </style>
+
+    <div class="card horizontal">
+      <div class="card-image">
+        <img src="{{picture}}" alt="picture" />
+      </div>
+      <div class="card-stacked">
+        <div class="card-content">
+          <span class="card-title"> {{name}} </span>
+          <p id="time_label"></p>
+        </div>
+        <div class="card-action" hidden="{{hide_schedule_button}}">
+          <a href="#" id="schedule">Agendar</a>
+        </div>
+      </div>
+    </div>
+
+  </template>
+
+
+  <script>
+    Polymer({
+      is: 'event-card',
+      properties: {
+        product_id: String,
+        picture: String,
+        name: String,
+        slot: {
+          type:Number,
+          observer:"_slotObserver"
+        },
+        hide_schedule_button:{
+          type:Boolean,
+          value:false
+        },
+        service_id: String,
+      },
+      _slotObserver: function(newValue, oldValue){
+        this.$.time_label.innerHTML = (newValue + 6) + ":00";
+      },
+      ready: function(){
+        $(this.$.schedule).click(e => {
+          changePage(this, "schedule-event-page", { service_id: this.service_id, slot:this.slot });
+        })
+      }
+    });
+  </script>
+
+</dom-module>
