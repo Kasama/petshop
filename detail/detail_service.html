@@ -13,14 +13,30 @@
 								<div class="img-container col s6">
 									<img src="{{picture}}" alt="Servi&ccedil;o" class="col s12" />
 								</div>
+								
 								<div class="col s6">
 									<header class="card-title">{{name}}</header>
 									<p>{{description}}</p>
 									<h2>R$ {{price}}</h2>
 								</div>
-								<div class="col s6 input-field">
-									<select id="pet_select">
-									</select>
+								
+								<div class="col s6 input-field" id="pet_radio">
+									<p>
+										<input name="group1" type="radio" id="test1" />
+										<label for="test1">Red</label>
+									</p>
+									<p>
+										<input name="group1" type="radio" id="test2" />
+										<label for="test2">Yellow</label>
+									</p>
+									<p>
+										<input class="with-gap" name="group1" type="radio" id="test3"  />
+										<label for="test3">Green</label>
+									</p>
+									<p>
+										<input name="group1" type="radio" id="test4" disabled="disabled" />
+										<label for="test4">Brown</label>
+									</p>
 								</div>
 							</div>
 							<div class="row">
@@ -45,28 +61,22 @@
 				price: Number,
 				picture: String
 			},
-			ready: function () {
-				this.picture = serverURL + this.picture;
-				this.price = parseFloat(this.price).toFixed(2);
-				/*$.get(serverURL + "services/" + _id, (service, status) => {
-					this.name = service.name;
-					this.description = service.description;
-					this.price = service.price;
-					this.picture = serverURL + service.picture;
-				});*/
-
+			ready: function(){
 				let user_id = Cookies.get("user-id");
-				if (user_id) {
+				if(user_id){
+					//console.log(serverURL + "pets?client_id=" + user_id)
 					$.get(serverURL + "pets?client_id=" + user_id, (pets, status) => {
-						this.$.pet_select.innerHTML = "";
-						for (let i = 0; i < pets.length; i++) {
-							this.$.pet_select.innerHTML += "<option value=\"" + pets[i]._id + ":" + pets[i].name + "\">" + pets[i].name + "</option>\n";
+						this.$.pet_radio.innerHTML = "";
+						for(let i = 0; i < pets.length; i++){
+							this.$.pet_radio.innerHTML += "<p>\n";
+							this.$.pet_radio.innerHTML += "<input name='pet_group' value='" + pets[i]._id + ":" + pets[i].name + "' type='radio' " + (i == 0 ? " checked" : "") + " id='" + "radio_pet_" + i + "' />\n";
+							this.$.pet_radio.innerHTML += "<label for='" + "radio_pet_" + i + "'>" + pets[i].name + "</label>\n";
+							this.$.pet_radio.innerHTML += "</p>\n";
 						}
-
-						$(this.$.pet_select).material_select();
-
+						
 						$(this.$.schedule).click(e => {
-							let str = $(this.$.pet_select).val();
+							//let str = $(this.$.pet_select).val();
+							let str = Polymer.dom(this.root).querySelector("input[name='pet_group']:checked").value;////this.$$("input[name='pet_group']:checked").val();
 							console.log(str);
 							changePage(this, "schedule-service-page", {
 								pet_id: str.substring(0, str.indexOf(":")),
@@ -82,15 +92,18 @@
 						obj.after_login_page = "detail-service-page";
 
 						let str = $(this.$.pet_select).attr("value");
-						obj.after_login_data = { service_id: this._id };
+						obj.after_login_data = { _id: this._id };
 						changePage(this, "login-page", obj);
 					})
 				}
-
-
 			},
-			_handleRegistrarClick: function (e, detail) {
-				changePage(this, "init-page");
+		    attached: function(){
+		    	$.get(serverURL + "services/" + this._id, (service, status) => {
+					this.name = service.name;
+					this.description = service.description;
+					this.price = parseFloat(service.price).toFixed(2);
+					this.picture = serverURL + service.picture;
+		    	})
 			}
 		});
 	</script>
