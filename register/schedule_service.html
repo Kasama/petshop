@@ -64,9 +64,9 @@
 					type:Boolean,
 					value:true,
 				},
-				service_id:String,
-				service_name:String,
-				service_picture:String,
+				_id:String,
+				name:String,
+				picture:String,
 				pet_id:String,
 				pet_name:String,
 			},
@@ -133,9 +133,9 @@
 							
 							elem["hide_schedule_button"] = false;
 							
-							elem["service_id"] = this.service_id;
-							elem["service_name"] = this.service_name;
-							elem["service_picture"] = this.service_picture;
+							elem["service_id"] = this._id;
+							elem["service_name"] = this.name;
+							elem["service_picture"] = this.picture;
 							elem["pet_id"] = this.pet_id;
 							elem["pet_name"] = this.pet_name;
 							
@@ -158,17 +158,35 @@
 				//
 				//this.updateList(date);
 				
-				$(this.$.date_picker).pickadate({
+				let tomorrow = new Date();
+				tomorrow.setDate(tomorrow.getDate() + 1);
+				
+				let maxDate = new Date();
+				maxDate.setDate(maxDate.getDate() + 200);
+				
+				let that = this;
+				
+				let picker = $(this.$.date_picker).pickadate({
 					selectMonths: true, // Creates a dropdown to control month
-					selectYears: 15 // Creates a dropdown of 15 years to control year
-				});
+					selectYears: 15, // Creates a dropdown of 15 years to control year
+					min: tomorrow,
+  					max: maxDate,
+				}).pickadate('picker');
+				//a.set("select", tomorrow);
+				picker.set("select", tomorrow);
+				picker.on("set", (thingSet)=>{
+					if(thingSet.select){
+						newDate = new Date(thingSet.select);
+						that.updateList(newDate);
+					}
+				})
+				
+				this.updateList(tomorrow);
 			},
 			attached: function() {
-				//TODO: remove the line below
-				this.service_id = "2987e89c938c281d3d9733356f002db7";
-				$.get(serverURL + "services/" + this.service_id, (service, status) => {
-					this.service_name = service.name;
-					this.service_picture = service.picture;
+				$.get(serverURL + "services/" + this._id, (service, status) => {
+					this.name = service.name;
+					this.picture = service.picture;
 					this.$.event_title.innerHTML = this.pet_name + " - " + service.name;
 					$(this.$.event_image).attr("src", serverURL + service.picture);
 					this.$.event_description.innerHTML = service.description;
