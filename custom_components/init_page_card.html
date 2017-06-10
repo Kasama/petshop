@@ -9,10 +9,12 @@
         height: 200px;
         overflow: hidden;
       }
+
       .card-image {
         height: 200px;
         overflow: hidden;
       }
+
       .card-image img {
         height: 100%;
         width: 100%;
@@ -22,7 +24,7 @@
 
     <div class="card">
       <div class="card-image">
-        <img src="{{picture}}" alt="picture" />
+        <img src="{{serverURL}}{{picture}}" alt="picture" />
       </div>
       <div class="card-content">
         <span class="card-title"> {{name}} </span>
@@ -40,25 +42,38 @@
     Polymer({
       is: 'init-page-card',
       properties: {
-        product_id: String,
-        picture: String,
-        name: String,
+        _id: String,
         description: String,
+        name: String,
+        price: String,
+        stock: String,
+        picture: String,
+        quantity: String,
+        serverURL: String
       },
-      
-      ready: function(){
-        this.description = "";
-        this.name = "";
-        this.picture = "";
-        
-        $.get(serverURL + "products/" + this.product_id, function(data, status){
+
+      ready: function () {
+        $.get(serverURL + "products/" + this._id, function (data, status) {
+          this._id = data._id;
           this.description = data.description;
           this.name = data.name;
-          this.picture = serverURL + data.picture;
-          }.bind(this));
-        
+          this.price = data.price;
+          this.stock = data.stock;
+          this.picture = data.picture;
+          this.quantity = data.quantity;
+          this.serverURL = serverURL;
+        }.bind(this));
+
         $(this.$.details).click(e => {
-          changePage(this, "detail-product-page", { _id: this.product_id })
+          changePage(this, "detail-product-page", {
+            _id: this._id,
+            description: this.description,
+            name: this.name,
+            price: this.price,
+            stock: this.stock,
+            picture: this.picture,
+            quantity: this.quantity,
+          })
         })
       }
     });
