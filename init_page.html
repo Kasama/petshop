@@ -27,7 +27,7 @@
     </div>
 
     <main id="the_content" class="container">
-      <h2 class="header">OS MAIS COMPRADOS</h2>
+      <h2 class="header red-text">OS MAIS COMPRADOS</h2>
     </main>
   </template>
 
@@ -43,8 +43,6 @@
         $("html, body").animate({ scrollTop: "1px" });
         $("html, body").animate({ scrollTop: "0px" });
         $.get(serverURL + "products", (products, status) => {
-          console.log(status);
-          console.log(products);
           let main = $(this.$.the_content);
           let row = undefined;
           for (let [i, product] of products.entries()) {

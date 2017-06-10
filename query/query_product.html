@@ -1,0 +1,70 @@
+<dom-module id="query-product-page">
+    <template>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+        <link href="../mystyle.css" rel="stylesheet">                            
+
+        <style>
+            li.collection-item p {
+                padding-right: 80px;
+            }
+        </style>
+
+        <main class="container">
+            <section class="row">
+                <ul id="list" class="collection with-header">
+                     <li class="collection-header"><h4>Produtos</h4></li>
+                </ul>
+            </section>
+        </main>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'query-product-page',
+            ready: function () {
+                let list = $(this.$.list);;
+                $.get(serverURL + "products", (products, status) => {
+                    for (let [i, product] of products.entries()) {
+                        let item = $("<li>").addClass("collection-item avatar");
+                        list.append(item);
+
+                        let avatar = $("<img>").addClass("circle").prop("src", serverURL + product.picture);
+                        item.append(avatar);
+                        
+                        let name = $("<a href=\"#\">").text(product.name).click(e => {
+                            changePage(this, "detail-product-page", {/*PRODUCT ID*/});
+                        });
+                        item.append(name);
+
+                        let description = $("<p>").text(product.description);
+                        item.append(description);
+
+                        let secondary = $("<div>").addClass("secondary-content");
+                        item.append(secondary);
+
+                        let edit =  $("<a href=\"#\">").html("<i class=\"material-icons\">mode-edit</i>");
+                        secondary.append(edit);
+                        edit.click(e => {
+                            changePage(this, "detail-product-page", product);
+                        });
+
+                        let remove =  $("<a href=\"#\">").html("<i class=\"material-icons\">delete</i>");
+                        secondary.append(remove);
+                        remove.click(e => {
+                            $.ajax({
+                                url: serverURL+"products/" + product._id,
+                                type: 'DELETE',
+                                success: function(result) {
+                                    Materialize.toast(product.name + ' foi removido!', 4000);
+                                    item.remove();
+                                }
+                            });
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+</dom-module>

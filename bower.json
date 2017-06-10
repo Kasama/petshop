@@ -22,5 +22,10 @@
     "fullcalendar-calendar": "^1.1.2",
     "fullcalendar": "^3.4.0",
     "paper-date-picker": "polymer-paper-date-picker#^1.2.0"
+  },
+  "resolutions": {
+    "fullcalendar": "^3.4.0",
+    "webcomponentsjs": "^v1.0.0",
+    "polymer": "2.0.0"
   }
 }

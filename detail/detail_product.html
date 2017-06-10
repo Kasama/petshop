@@ -42,7 +42,7 @@
 	    Polymer({
 			is: 'detail-product-page',
 			properties:{
-				product_id: String,
+				_id: String,
 				description: String,
 				name: String,
 				price: String,
@@ -62,7 +62,7 @@
 					this.quantity = "1";
 				}
 
-				$.get(serverURL + "products/" + this.product_id, function(data, status){
+				$.get(serverURL + "products/" + this._id, function(data, status){
 					this.description = data.description;
 					this.name = data.name;
 					this.price = parseFloat(data.price).toFixed(2);
@@ -72,12 +72,12 @@
 			    
 			    $(this.$.add_button).click(e => {
 			    	if(Cookies.get("user-id")){
-				    	addToCart(this.product_id, parseInt($(this.$.quantity).val()));
+				    	addToCart(this._id, parseInt($(this.$.quantity).val()));
 				    	Materialize.toast("Produto adicionado com sucesso!", 1000);
 				    }else{
 				    	let obj = {};
 				    	obj.after_login_page = "detail-product-page";
-				    	obj.after_login_data = {product_id:this.product_id, quantity:this.quantity};
+				    	obj.after_login_data = {_id:this._id, quantity:this.quantity};
 				    	changePage(this, "login-page", obj);
 				    }
 		        })

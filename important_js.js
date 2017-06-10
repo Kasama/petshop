@@ -36,10 +36,10 @@ function createPicture(where, result, file) {
 			contentType: false,
 			data: data,
 			success: (result, status, xhr) => {
-				Materialize.toast('Successfully created', 3000);
+				Materialize.toast('Criado com sucesso', 3000);
 			},
 			error: (xhr, status, error) => {
-				Materialize.toast('Unexpected error: ' + JSON.stringify(error), 3000);
+				Materialize.toast('Erro inesperado: ' + JSON.stringify(error), 3000);
 			},
 		});
 	}
@@ -59,7 +59,7 @@ function createModel(where, form, fileButton) {
 				}
 			},
 			error: (xhr, status, error) => {
-				Materialize.toast('Unexpected error: ' + JSON.stringify(error), 3000);
+				Materialize.toast('Erro inesperado: ' + JSON.stringify(error), 3000);
 			},
 		});
 		return false;

@@ -2,11 +2,12 @@
   <template>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-    <script src="important_js.js"></script>
+    <script src="/important_js.js"></script>
 
     <style>
       .card-content {
-        min-height: 160px;
+        height: 200px;
+        overflow: hidden;
       }
       .card-image {
         height: 200px;
@@ -50,7 +51,6 @@
         this.name = "";
         this.picture = "";
         
-        
         $.get(serverURL + "products/" + this.product_id, function(data, status){
           this.description = data.description;
           this.name = data.name;
@@ -58,7 +58,7 @@
           }.bind(this));
         
         $(this.$.details).click(e => {
-          changePage(this, "detail-product-page", { product_id: this.product_id })
+          changePage(this, "detail-product-page", { _id: this.product_id })
         })
       }
     });
