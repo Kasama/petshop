@@ -40,7 +40,7 @@
 							</div>
 							
 							<div class="row card-content">
-								<paper-date-picker id="date_picker" min-date="July 3, 2017" max-date="August 20, 2017" date="{{selected_date}}"></paper-date-picker>
+								<paper-date-picker id="date_picker"></paper-date-picker>
 							</div>
 							<div class="row">
 								<div class="card-content" id=event_list>
@@ -72,13 +72,14 @@
 				pet_name:String,
 			},
 			_dateObserver: function(newValue, oldValue){
-				if(oldValue){
+				if(oldValue && newValue){
 					if(!this.isFirstUpdateOfDate){
 						this.updateList(newValue);
 					}else{
 						this.isFirstUpdateOfDate = false;
 					}
 				}
+				selected_date = new Date();
 			},
 			dateToString: function(days_from_today){
 				let objToday = new Date();
@@ -145,7 +146,20 @@
 					
 				});
 			},
-			ready: function() {
+			ready: function(){
+				let datepicker = $(this.$.date_picker);
+				datepicker.attr("min-date", this.dateToString(-100));
+				datepicker.attr("max-date", this.dateToString(200) + ", 23:59:59");
+				datepicker.attr("date", this.dateToString(0));
+				
+				//this.selected_date = this.dateToString(0);
+				
+				let date = new Date();
+				date.setHours(0);
+				
+				this.updateList(date);
+			},
+			attached: function() {
 				//TODO: remove the line below
 				this.service_id = "2987e89c938c281d3d9733356f002db7";
 				$.get(serverURL + "services/" + this.service_id, (service, status) => {
@@ -156,12 +170,6 @@
 					this.$.event_description.innerHTML = service.description;
 				});
 				
-				let datepicker = $(this.$.date_picker);
-				datepicker.attr("min-date", this.dateToString(0));
-				datepicker.attr("max-date", this.dateToString(200) + ", 23:59:59");
-				datepicker.attr("date", this.dateToString(0));
-				
-				this.updateList(new Date());
 			}
 		});
 	</script>

@@ -1,8 +1,9 @@
 <dom-module id="detail-service-page">
   	<template> 
-	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-	    <link rel="stylesheet" href="../mystyle.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+		<link rel="stylesheet" href="../mystyle.css">
+	    
 
 		<main class="container">
 			<section class="row">
@@ -11,20 +12,34 @@
 						<div class="card-content">
 							<div class="row">
 								<div class="img-container col s6">
-									<img src="/img/dog-bath.jpg" alt="Servi&ccedil;o" class="col s12" />
+									<img src="{{service_picture}}" alt="Servi&ccedil;o" class="col s12" />
 								</div>
+								
 								<div class="col s6">
-									<header class="card-title">Banho e Tosa</header>
-									<p>Um banho completo para seu cachorro de todos os tamanhos e um novo corte de cabelo</p>
-									<p>Inclui banho, secagem e tosa</p>
-									<h2>R$ 140,00</h2>
+									<header class="card-title">{{service_name}}</header>
+									<p>{{service_description}}</p>
+									<h2>{{service_price}}</h2>
 								</div>
-								<div class="col s6 input-field">
-									<select id="pet_select">
-										<option value="Max">Max</option>
-										<option value="Rex">Rex</option>
-									</select>
+								
+								<div class="col s6 input-field" id="pet_radio">
+									<p>
+										<input name="group1" type="radio" id="test1" />
+										<label for="test1">Red</label>
+									</p>
+									<p>
+										<input name="group1" type="radio" id="test2" />
+										<label for="test2">Yellow</label>
+									</p>
+									<p>
+										<input class="with-gap" name="group1" type="radio" id="test3"  />
+										<label for="test3">Green</label>
+									</p>
+									<p>
+										<input name="group1" type="radio" id="test4" disabled="disabled" />
+										<label for="test4">Brown</label>
+									</p>
 								</div>
+								
 							</div>
 							<div class="row">
 								<div class="col s12">
@@ -43,21 +58,30 @@
 			is: 'detail-service-page',
 			properties: {
 				service_id:String,
+				service_name:String,
+				service_description:String,
+				service_price:String,
+				service_picture:String,
 			},
 			ready: function(){
+				// TODO: remove line below
+				this.service_id = "2987e89c938c281d3d9733356f002db7";
 				
 				let user_id = Cookies.get("user-id");
 				if(user_id){
+					//console.log(serverURL + "pets?client_id=" + user_id)
 					$.get(serverURL + "pets?client_id=" + user_id, (pets, status) => {
-						this.$.pet_select.innerHTML = "";
+						this.$.pet_radio.innerHTML = "";
 						for(let i = 0; i < pets.length; i++){
-							this.$.pet_select.innerHTML += "<option value=\"" + pets[i]._id + ":" + pets[i].name + "\">" + pets[i].name + "</option>\n";
+							this.$.pet_radio.innerHTML += "<p>\n";
+							this.$.pet_radio.innerHTML += "<input name='pet_group' value='" + pets[i]._id + ":" + pets[i].name + "' type='radio' " + (i == 0 ? " checked" : "") + " id='" + "radio_pet_" + i + "' />\n";
+							this.$.pet_radio.innerHTML += "<label for='" + "radio_pet_" + i + "'>" + pets[i].name + "</label>\n";
+							this.$.pet_radio.innerHTML += "</p>\n";
 						}
 						
-						$(this.$.pet_select).material_select();
-						
 						$(this.$.schedule).click(e => {
-							let str = $(this.$.pet_select).val();
+							//let str = $(this.$.pet_select).val();
+							let str = Polymer.dom(this.root).querySelector("input[name='pet_group']:checked").value;////this.$$("input[name='pet_group']:checked").val();
 							console.log(str);
 							changePage(this, "schedule-service-page", { pet_id: str.substring(0, str.indexOf(":")), 
 																		pet_name: str.substring(str.indexOf(":") + 1) })
@@ -75,11 +99,14 @@
 						changePage(this, "login-page", obj);
 					})
 				}
-				
-				
 			},
-		    _handleRegistrarClick: function(e, detail){
-		    	changePage(this, "init-page");
+		    attached: function(){
+		    	$.get(serverURL + "services/" + this.service_id, (service, status) => {
+					this.service_name = service.name;
+					this.service_description = service.description;
+					this.service_price = "R$ " + service.price + ",00";
+					this.service_picture = serverURL + service.picture;
+		    	})
 			}
 	    });
   	</script>
