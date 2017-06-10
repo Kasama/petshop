@@ -1,4 +1,4 @@
-<dom-module id="query-service-page">
+<dom-module id="query-admin-page">
     <template>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
@@ -14,7 +14,7 @@
         <main class="container">
             <section class="row">
                 <ul id="list" class="collection with-header">
-                     <li class="collection-header"><h4>Servi&ccedil;os</h4></li>
+                     <li class="collection-header"><h4>Administradores</h4></li>
                 </ul>
             </section>
         </main>
@@ -22,24 +22,24 @@
 
     <script>
         Polymer({
-            is: 'query-service-page',
+            is: 'query-admin-page',
             ready: function () {
-                let list = $(this.$.list);
-                $.get(serverURL + "services", (services, status) => {
-                    for (let [i, service] of services.entries()) {
+                let list = $(this.$.list);;
+                $.get(serverURL + "admins", (admins, status) => {
+                    for (let [i, admin] of admins.entries()) {
                         let item = $("<li>").addClass("collection-item avatar");
                         list.append(item);
 
-                        let avatar = $("<img>").addClass("circle").prop("src", serverURL + service.picture);
+                        let avatar = $("<img>").addClass("circle").prop("src", serverURL + admin.picture);
                         item.append(avatar);
                         
-                        let name = $("<a href=\"#\">").text(service.name).click(e => {
-                            changePage(this, "detail-service-page", service);
+                        let name = $("<a href=\"#\">").text(admin.name + " " + admin.surname).click(e => {
+                            changePage(this, "detail-admin-page", admin);
                         });
                         item.append(name);
 
-                        let description = $("<p>").text(service.description);
-                        item.append(description);
+                        let email = $("<p>").text(admin.email);
+                        item.append(email);
 
                         let secondary = $("<div>").addClass("secondary-content");
                         item.append(secondary);
@@ -47,17 +47,17 @@
                         let edit =  $("<a href=\"#\">").html("<i class=\"material-icons\">mode-edit</i>");
                         secondary.append(edit);
                         edit.click(e => {
-                            changePage(this, "register-service-page", service);
+                            changePage(this, "register-admin-page", admin);
                         });
 
                         let remove =  $("<a href=\"#\">").html("<i class=\"material-icons\">delete</i>");
                         secondary.append(remove);
                         remove.click(e => {
                             $.ajax({
-                                url: serverURL+"services/" + service._id,
+                                url: serverURL+"admins/" + admin._id,
                                 type: 'DELETE',
                                 success: function(result) {
-                                    Materialize.toast(service.name + ' foi removido!', 4000);
+                                    Materialize.toast(admin.name + ' foi removido!', 4000);
                                     item.remove();
                                 }
                             });

@@ -1,0 +1,55 @@
+<dom-module id="detail-admin-page">
+  	<template> 
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+	    <script src="important_js.js"></script>
+	    <link rel="stylesheet" href="../mystyle.css">
+
+		<main class="container">
+			<section class="row">
+				<div class="col s12">
+					<article class="card">
+						<div class="card-content">
+							<div class="row">
+								<div class="img-container col s12">
+									<img src="{{picture}}" alt="foto de {{name}}" class="col s12" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									<header class="card-title">{{name}} {{surname}}</header>
+									<p><strong>E-mail:</strong> {{email}}</p>
+									<p><strong>Data de nascimento:</strong> {{birthday}}</p>
+                                    <p><strong>Telefone:</strong> {{phone}}</p>
+								</div>
+							</div>
+						</div>
+					</article>
+				</div>
+			</section>
+		</main>
+	</template>
+
+  	<script>
+	    Polymer({
+			is: 'detail-admin-page',
+			properties:{
+				_id: String,
+				name: String,
+				surname: String,
+                birthday: String,
+				phone: String,
+                email: String,
+				picture: String,
+			},
+
+			ready: function() {
+				this.picture = serverURL + this.picture;
+			},
+			
+		    _handleRegistrarClick: function(e, detail){
+		    	changePage(this, "init-page");
+			}
+	    });
+  	</script>
+</dom-module>

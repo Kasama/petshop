@@ -34,7 +34,7 @@
                         item.append(avatar);
                         
                         let name = $("<a href=\"#\">").text(product.name).click(e => {
-                            changePage(this, "detail-product-page", {/*PRODUCT ID*/});
+                            changePage(this, "detail-product-page", product);
                         });
                         item.append(name);
 
@@ -47,7 +47,7 @@
                         let edit =  $("<a href=\"#\">").html("<i class=\"material-icons\">mode-edit</i>");
                         secondary.append(edit);
                         edit.click(e => {
-                            changePage(this, "detail-product-page", product);
+                            changePage(this, "register-product-page", product);
                         });
 
                         let remove =  $("<a href=\"#\">").html("<i class=\"material-icons\">delete</i>");
