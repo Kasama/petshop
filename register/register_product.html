@@ -1,9 +1,9 @@
 <dom-module id="register-product-page">
-		<script src="../important_js.js"></script>
-  	<template>
-	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-	    <link href="../mystyle.css" rel="stylesheet">
+	<script src="../important_js.js"></script>
+	<template>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+		<link href="../mystyle.css" rel="stylesheet">
 
 		<!-- Main -->
 		<main class="container">
@@ -23,7 +23,7 @@
 
 									<div class="row">
 										<div class="input-field col s4">
-											<input placeholder="Preço" type="number" min="0.01" step="any" name="price" value="" id="price" />
+											<input placeholder="Preço" type="number" min="0.00" step="0.01" name="price" value="" id="price" />
 										</div>
 
 										<div class="input-field col s4">
@@ -37,7 +37,7 @@
 										</div>
 									</div>
 
-									<div class="row">
+									<div id="pictureRow" class="row">
 										<div>
 											<div class="file-field input-field col s9">
 												<div class="btn">
@@ -52,7 +52,7 @@
 									</div>
 
 									<div class="input-field s6 right">
-											<button class="btn submit" type="submit" id="submit">Cadastrar →</button>
+										<button class="btn submit" type="submit" id="submit">Cadastrar →</button>
 									</div>
 								</div>
 							</form>
@@ -65,68 +65,46 @@
 
 	<script>
 		Polymer({
-				is: 'register-product-page',
-				ready: function() {
-						const imb = $(this.$.image_button);
-						const imp = $(this.$.image_path);
+			is: 'register-product-page',
+			properties: {
+				product: {
+					_id: String,
+					description: String,
+					name: String,
+					price: String,
+					stock: String,
+					picture: String,
+					quantity: String,
+				},
+				mode: String,
+			},
+			ready: function () {
+				if (this.mode !== "edit") {
+					const imb = $(this.$.image_button);
+					const imp = $(this.$.image_path);
+					const image = $(this.$.image_button);
 
-						// const name = $(this.$.name);
-						// const description = $(this.$.description);
-						// const price = $(this.$.price);
-						// const stock = $(this.$.stock);
-						const image = $(this.$.image_button);
+					imb.change(function () {
+						imp[0].value = imb[0].value.substring(imb[0].value.lastIndexOf("\\") + 1)
+					});
 
-						imb.change(function(){
-								imp[0].value = imb[0].value.substring(imb[0].value.lastIndexOf("\\") + 1)
-						});
+					$(this.$.form).submit(createModel(
+						'products',
+						$(this.$.form),
+						$(this.$.image_button)
+					));
+				} else {
+					$(this.$.pictureRow).remove();
 
-						$(this.$.form).submit(createModel(
-								'products',
-								$(this.$.form),
-								$(this.$.image_button)
-						));
+					$(this.$.name).val(this.product.name);
+					$(this.$.description).val(this.product.description);
+					$(this.$.price).val(this.product.price);
+					$(this.$.stock).val(this.product.stock);
+					$(this.$.quantity).val(this.product.quantity);
 
-						/*
-						$(this.$.form).submit(e => {
-								e.preventDefault();
-								$.ajax('http://localhost:3000/products/add', {
-										cache: false,
-										data: $(this.$.form).serialize(),
-										{
-												name: name.val(),
-												description: description.val(),
-												stock: stock.val(),
-												price: price.val(),
-										},
-										success: (result, status, xhr) => {
-												const res = result;
-												const id = result.data._id;
-												const file = image[0].files[0];
-												const data = new FormData();
-												data.append('image', file, file.name);
-												$.ajax('http://localhost:3000/products/' + id + '/picture', {
-														cache: false,
-														method: 'POST',
-														processData: false,
-														contentType: false,
-														data: data,
-														success: (result, status, xhr) => {
-																alert("Got success " + JSON.stringify(result) + " and " + JSON.stringify(res));
-														},
-														error: (xhr, status, error) => {
-																alert("Got error " + JSON.stringify(error));
-														},
-												});
-										},
-										error: (xhr, status, error) => {
-												alert("Got error " + JSON.stringify(error));
-										},
-										method: 'POST',
-								});
-								return false;
-						});
-						*/
+					$(this.$.form).submit(editModel('products', this.product._id, $(this.$.form)));
 				}
+			}
 		});
 	</script>
 </dom-module>

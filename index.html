@@ -66,7 +66,7 @@
 		return elem;
 	}
 
-	const serverURL = 'http://172.28.146.124:3000/';
+	const serverURL = 'http://25.97.187.219:3000/';
 
 	function changeMainElement(tag, attributes = null, addToHistory = true){
 		console.log("loading " + tag);
@@ -146,7 +146,6 @@
 			})
 			
 			window.addEventListener("popstate", function(e) {
-				// console.log(e.state);
 				if(e.state){
 					changeMainElement(e.state.tag.replace("#", ""), e.state.attributes, false);
 				}
@@ -204,7 +203,7 @@
 	</header>
 
 	<main id="main">
-		<admin-page id="main_element"/>
+		<query-service-page id="main_element"/>
 	</main>
 
 	<footer>
