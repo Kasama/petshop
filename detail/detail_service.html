@@ -98,6 +98,9 @@
 				}
 			},
 		    attached: function(){
+		    	// TODO: remove this line
+		    	this._id = "2987e89c938c281d3d9733356f002db7";
+		    	
 		    	$.get(serverURL + "services/" + this._id, (service, status) => {
 					this.name = service.name;
 					this.description = service.description;

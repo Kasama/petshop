@@ -1,5 +1,4 @@
 <dom-module id="schedule-service-page">
-	<link rel="import" href="/bower_components/paper-date-picker/paper-date-picker.html">
 	<link rel="import" href="/custom_components/event_card.html">
 
 	<template>
@@ -40,7 +39,7 @@
 							</div>
 							
 							<div class="row card-content">
-								<paper-date-picker id="date_picker"></paper-date-picker>
+								<input id="date_picker" type="date" class="datepicker">
 							</div>
 							<div class="row">
 								<div class="card-content" id=event_list>
@@ -147,17 +146,22 @@
 				});
 			},
 			ready: function(){
-				let datepicker = $(this.$.date_picker);
-				datepicker.attr("min-date", this.dateToString(-100));
-				datepicker.attr("max-date", this.dateToString(200) + ", 23:59:59");
-				datepicker.attr("date", this.dateToString(0));
+				//let datepicker = $(this.$.date_picker);
+				//datepicker.attr("min-date", this.dateToString(-100));
+				//datepicker.attr("max-date", this.dateToString(200) + ", 23:59:59");
+				//datepicker.attr("date", this.dateToString(0));
+				//
+				////this.selected_date = this.dateToString(0);
+				//
+				//let date = new Date();
+				//date.setHours(0);
+				//
+				//this.updateList(date);
 				
-				//this.selected_date = this.dateToString(0);
-				
-				let date = new Date();
-				date.setHours(0);
-				
-				this.updateList(date);
+				$(this.$.date_picker).pickadate({
+					selectMonths: true, // Creates a dropdown to control month
+					selectYears: 15 // Creates a dropdown of 15 years to control year
+				});
 			},
 			attached: function() {
 				//TODO: remove the line below
