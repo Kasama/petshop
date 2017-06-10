@@ -47,29 +47,13 @@
 				name: String,
 				price: String,
 				stock: String,
-				image: String,
+				picture: String,
 				quantity: String,
 			},
 
 			ready: function(){
-				this.description = "";
-				this.name = "";
-				this.price = "";
-				this.stock = "";
-				this.picture = "";
-
-				if(!this.quantity){
-					this.quantity = "1";
-				}
-
-				$.get(serverURL + "products/" + this._id, function(data, status){
-					this.description = data.description;
-					this.name = data.name;
-					this.price = parseFloat(data.price).toFixed(2);
-					this.stock = data.stock;
-					this.picture = serverURL + data.picture;
-			    }.bind(this));
-			    
+			    this.picture = serverURL + this.picture;
+				this.price = parseFloat(this.price).toFixed(2);
 			    $(this.$.add_button).click(e => {
 			    	if(Cookies.get("user-id")){
 				    	addToCart(this._id, parseInt($(this.$.quantity).val()));

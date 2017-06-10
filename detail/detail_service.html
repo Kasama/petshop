@@ -1,8 +1,8 @@
 <dom-module id="detail-service-page">
-  	<template> 
-	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-	    <link rel="stylesheet" href="../mystyle.css">
+	<template>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+		<link rel="stylesheet" href="../mystyle.css">
 
 		<main class="container">
 			<section class="row">
@@ -11,18 +11,15 @@
 						<div class="card-content">
 							<div class="row">
 								<div class="img-container col s6">
-									<img src="/img/dog-bath.jpg" alt="Servi&ccedil;o" class="col s12" />
+									<img src="{{picture}}" alt="Servi&ccedil;o" class="col s12" />
 								</div>
 								<div class="col s6">
-									<header class="card-title">Banho e Tosa</header>
-									<p>Um banho completo para seu cachorro de todos os tamanhos e um novo corte de cabelo</p>
-									<p>Inclui banho, secagem e tosa</p>
-									<h2>R$ 140,00</h2>
+									<header class="card-title">{{name}}</header>
+									<p>{{description}}</p>
+									<h2>R$ {{price}}</h2>
 								</div>
 								<div class="col s6 input-field">
 									<select id="pet_select">
-										<option value="Max">Max</option>
-										<option value="Rex">Rex</option>
 									</select>
 								</div>
 							</div>
@@ -38,49 +35,63 @@
 		</main>
 	</template>
 
-  	<script>
-	    Polymer({
+	<script>
+		Polymer({
 			is: 'detail-service-page',
 			properties: {
-				service_id:String,
+				_id: String,
+				name: String,
+				description: String,
+				price: Number,
+				picture: String
 			},
-			ready: function(){
-				
+			ready: function () {
+				this.picture = serverURL + this.picture;
+				this.price = parseFloat(this.price).toFixed(2);
+				/*$.get(serverURL + "services/" + _id, (service, status) => {
+					this.name = service.name;
+					this.description = service.description;
+					this.price = service.price;
+					this.picture = serverURL + service.picture;
+				});*/
+
 				let user_id = Cookies.get("user-id");
-				if(user_id){
+				if (user_id) {
 					$.get(serverURL + "pets?client_id=" + user_id, (pets, status) => {
 						this.$.pet_select.innerHTML = "";
-						for(let i = 0; i < pets.length; i++){
+						for (let i = 0; i < pets.length; i++) {
 							this.$.pet_select.innerHTML += "<option value=\"" + pets[i]._id + ":" + pets[i].name + "\">" + pets[i].name + "</option>\n";
 						}
-						
+
 						$(this.$.pet_select).material_select();
-						
+
 						$(this.$.schedule).click(e => {
 							let str = $(this.$.pet_select).val();
 							console.log(str);
-							changePage(this, "schedule-service-page", { pet_id: str.substring(0, str.indexOf(":")), 
-																		pet_name: str.substring(str.indexOf(":") + 1) })
+							changePage(this, "schedule-service-page", {
+								pet_id: str.substring(0, str.indexOf(":")),
+								pet_name: str.substring(str.indexOf(":") + 1)
+							})
 						})
 					});
-				}else{
+				} else {
 					$(this.$.pet_select).hide();
-					
+
 					$(this.$.schedule).click(e => {
 						let obj = {};
 						obj.after_login_page = "detail-service-page";
-						
+
 						let str = $(this.$.pet_select).attr("value");
-						obj.after_login_data = { serice_id: this.serice_id };
+						obj.after_login_data = { service_id: this._id };
 						changePage(this, "login-page", obj);
 					})
 				}
-				
-				
+
+
 			},
-		    _handleRegistrarClick: function(e, detail){
-		    	changePage(this, "init-page");
+			_handleRegistrarClick: function (e, detail) {
+				changePage(this, "init-page");
 			}
-	    });
-  	</script>
+		});
+	</script>
 </dom-module>
