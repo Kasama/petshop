@@ -12,22 +12,22 @@
 						<div class="card-content">
 							<div class="row">
 								<div class="img-container col s12">
-									<img src="/img/pets.jpg" alt="Max" class="col s12" />
+									<img src="{{picture}}" alt="Max" class="col s12" />
 								</div>
 							</div>
 							<div class="row">
 								<div class="col s12">
-									<header class="card-title">Max</header>
-									<p><strong>Ra&ccedil;a</strong> Pitbull</p>
-									<p><strong>Idade</strong> 3 anos</p>
-									<div class="row">
+									<header class="card-title">{{name}}</header>
+									<p><strong>Ra&ccedil;a:</strong> {{race}}</p>
+									<p><strong>Idade:</strong> {{age}} anos</p>
+									<!--<div class="row">
 										<div class="col s6">
 											<a class="btn col s12" href="/register/pet.html">Alterar Informa&ccedil;ões</a>
 										</div>
 										<div class="col s6">
 											<a class="btn col s12" href="#">Remover Pet</a>
 										</div>
-									</div>
+									</div>-->
 								</div>
 							</div>
 						</div>
@@ -35,7 +35,7 @@
 				</div>
 			</section>
 			<section class="row">
-				<header class="card-title">Servi&ccedil;os Agendados para Max</header>
+				<header class="card-title">Servi&ccedil;os Agendados para {{name}}</header>
 				<div class="col s12">
 					<article class="card">
 						<div class="card-content">
@@ -45,9 +45,9 @@
 								</div>
 								<div class="col s6">
 									<header class="card-title">Passeio com Max</header>
-									<p><strong>Data</strong> 01/03/2017 - Sexta Feira</p>
-									<p><strong>Hora</strong> 14:00</p>
-									<p><strong>Custo</strong> R$ 40.00</p>
+									<p><strong>Data:</strong> 01/03/2017 - Sexta Feira</p>
+									<p><strong>Hora:</strong> 14:00</p>
+									<p><strong>Custo:</strong> R$ 40.00</p>
 									<div class="col s12">
 										<a class="btn col s12" href="/calendar.html">Alterar</a>
 									</div>
@@ -75,6 +75,18 @@
   	<script>
 	    Polymer({
 			is: 'detail-pet-page',
+			properties:{
+				_id: String,
+				name: String,
+				age: String,
+				race: String,
+				client: Object,
+				picture: String,
+			},
+
+			ready: function() {
+				this.picture = serverURL + this.picture;
+			},
 			
 		    _handleRegistrarClick: function(e, detail){
 		    	changePage(this, "init-page");

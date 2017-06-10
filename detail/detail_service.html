@@ -1,9 +1,16 @@
 <dom-module id="detail-service-page">
+<<<<<<< HEAD
   	<template> 
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 		<link rel="stylesheet" href="../mystyle.css">
 	    
+=======
+	<template>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+		<link rel="stylesheet" href="../mystyle.css">
+>>>>>>> origin/master
 
 		<main class="container">
 			<section class="row">
@@ -12,10 +19,15 @@
 						<div class="card-content">
 							<div class="row">
 								<div class="img-container col s6">
+<<<<<<< HEAD
 									<img src="{{service_picture}}" alt="Servi&ccedil;o" class="col s12" />
+=======
+									<img src="{{picture}}" alt="Servi&ccedil;o" class="col s12" />
+>>>>>>> origin/master
 								</div>
 								
 								<div class="col s6">
+<<<<<<< HEAD
 									<header class="card-title">{{service_name}}</header>
 									<p>{{service_description}}</p>
 									<h2>{{service_price}}</h2>
@@ -38,6 +50,15 @@
 										<input name="group1" type="radio" id="test4" disabled="disabled" />
 										<label for="test4">Brown</label>
 									</p>
+=======
+									<header class="card-title">{{name}}</header>
+									<p>{{description}}</p>
+									<h2>R$ {{price}}</h2>
+								</div>
+								<div class="col s6 input-field">
+									<select id="pet_select">
+									</select>
+>>>>>>> origin/master
 								</div>
 								
 							</div>
@@ -53,10 +74,11 @@
 		</main>
 	</template>
 
-  	<script>
-	    Polymer({
+	<script>
+		Polymer({
 			is: 'detail-service-page',
 			properties: {
+<<<<<<< HEAD
 				service_id:String,
 				service_name:String,
 				service_description:String,
@@ -79,26 +101,57 @@
 							this.$.pet_radio.innerHTML += "</p>\n";
 						}
 						
+=======
+				_id: String,
+				name: String,
+				description: String,
+				price: Number,
+				picture: String
+			},
+			ready: function () {
+				this.picture = serverURL + this.picture;
+				this.price = parseFloat(this.price).toFixed(2);
+				/*$.get(serverURL + "services/" + _id, (service, status) => {
+					this.name = service.name;
+					this.description = service.description;
+					this.price = service.price;
+					this.picture = serverURL + service.picture;
+				});*/
+
+				let user_id = Cookies.get("user-id");
+				if (user_id) {
+					$.get(serverURL + "pets?client_id=" + user_id, (pets, status) => {
+						this.$.pet_select.innerHTML = "";
+						for (let i = 0; i < pets.length; i++) {
+							this.$.pet_select.innerHTML += "<option value=\"" + pets[i]._id + ":" + pets[i].name + "\">" + pets[i].name + "</option>\n";
+						}
+
+						$(this.$.pet_select).material_select();
+
+>>>>>>> origin/master
 						$(this.$.schedule).click(e => {
 							//let str = $(this.$.pet_select).val();
 							let str = Polymer.dom(this.root).querySelector("input[name='pet_group']:checked").value;////this.$$("input[name='pet_group']:checked").val();
 							console.log(str);
-							changePage(this, "schedule-service-page", { pet_id: str.substring(0, str.indexOf(":")), 
-																		pet_name: str.substring(str.indexOf(":") + 1) })
+							changePage(this, "schedule-service-page", {
+								pet_id: str.substring(0, str.indexOf(":")),
+								pet_name: str.substring(str.indexOf(":") + 1)
+							})
 						})
 					});
-				}else{
+				} else {
 					$(this.$.pet_select).hide();
-					
+
 					$(this.$.schedule).click(e => {
 						let obj = {};
 						obj.after_login_page = "detail-service-page";
-						
+
 						let str = $(this.$.pet_select).attr("value");
-						obj.after_login_data = { serice_id: this.serice_id };
+						obj.after_login_data = { service_id: this._id };
 						changePage(this, "login-page", obj);
 					})
 				}
+<<<<<<< HEAD
 			},
 		    attached: function(){
 		    	$.get(serverURL + "services/" + this.service_id, (service, status) => {
@@ -107,7 +160,14 @@
 					this.service_price = "R$ " + service.price + ",00";
 					this.service_picture = serverURL + service.picture;
 		    	})
+=======
+
+
+			},
+			_handleRegistrarClick: function (e, detail) {
+				changePage(this, "init-page");
+>>>>>>> origin/master
 			}
-	    });
-  	</script>
+		});
+	</script>
 </dom-module>

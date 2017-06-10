@@ -1,4 +1,4 @@
-<dom-module id="query-product-page">
+<dom-module id="query-pet-page">
     <template>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
@@ -14,7 +14,7 @@
         <main class="container">
             <section class="row">
                 <ul id="list" class="collection with-header">
-                     <li class="collection-header"><h4>Produtos</h4></li>
+                     <li class="collection-header"><h4>Pets</h4></li>
                 </ul>
             </section>
         </main>
@@ -22,24 +22,29 @@
 
     <script>
         Polymer({
-            is: 'query-product-page',
+            is: 'query-pet-page',
             ready: function () {
                 let list = $(this.$.list);;
-                $.get(serverURL + "products", (products, status) => {
-                    for (let [i, product] of products.entries()) {
+                $.get(serverURL + "pets", (pets, status) => {
+                    for (let [i, pet] of pets.entries()) {
                         let item = $("<li>").addClass("collection-item avatar");
                         list.append(item);
 
-                        let avatar = $("<img>").addClass("circle").prop("src", serverURL + product.picture);
+                        let avatar = $("<img>").addClass("circle").prop("src", serverURL + pet.picture);
                         item.append(avatar);
                         
-                        let name = $("<a href=\"#\">").text(product.name).click(e => {
-                            changePage(this, "detail-product-page", product);
+                        let name = $("<a href=\"#\">").text(pet.name).click(e => {
+                            changePage(this, "detail-pet-page", pet);
                         });
-                        item.append(name);
+                        item.append(name, $("<span> de </span>"));
 
-                        let description = $("<p>").text(product.description);
-                        item.append(description);
+                        let client = $("<a href=\"#\">").text(pet.client.name).click(e => {
+                            changePage(this, "detail-client-page", pet.client);
+                        });
+                        item.append(client);
+
+                        item.append($("<p>" + pet.race + " de " + pet.age + " anos</p>"));
+
 
                         let secondary = $("<div>").addClass("secondary-content");
                         item.append(secondary);
@@ -47,17 +52,17 @@
                         let edit =  $("<a href=\"#\">").html("<i class=\"material-icons\">mode-edit</i>");
                         secondary.append(edit);
                         edit.click(e => {
-                            changePage(this, "register-product-page", product);
+                            changePage(this, "register-pet-page", pet);
                         });
 
                         let remove =  $("<a href=\"#\">").html("<i class=\"material-icons\">delete</i>");
                         secondary.append(remove);
                         remove.click(e => {
                             $.ajax({
-                                url: serverURL+"products/" + product._id,
+                                url: serverURL+"pets/" + pet._id,
                                 type: 'DELETE',
                                 success: function(result) {
-                                    Materialize.toast(product.name + ' foi removido!', 4000);
+                                    Materialize.toast(pet.name + ' foi removido!', 4000);
                                     item.remove();
                                 }
                             });
