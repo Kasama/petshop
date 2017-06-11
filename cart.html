@@ -54,6 +54,16 @@
 							</div>
 					</div>
 			</section>
+			<section id="no_items" class="row" hidden="true">
+				<div class="card">
+					<div class="card-content">
+						<span class="card-title">Finalizar Compra</span>
+						<div class="col s12">
+							<a>Você não tem nenhum produto no carrinho!</a>
+						</div>
+					</div>
+				</div>
+			</section>
     </main>
 		</template>
 		<script>
@@ -82,12 +92,13 @@
 						}
 						function updatePayment() {
 								const itens_in_cart = Cookies.getJSON('cart');
-								if (itens_in_cart === {}) {
-										$(poly.$.payment_confirm).removeClass('alive');
-										$(poly.$.payment_confirm).addClass('dead');
+								console.log(itens_in_cart)
+								if (itens_in_cart && Object.keys(itens_in_cart).length === 0 && itens_in_cart.constructor === Object) {
+										$(poly.$.payment_confirm).attr('hidden', true)
+										$(poly.$.no_items).attr('hidden', false)
 								} else {
-										$(poly.$.payment_confirm).removeClass('dead');
-										$(poly.$.payment_confirm).addClass('alive');
+										$(poly.$.payment_confirm).attr('hidden', false)
+										$(poly.$.no_items).attr('hidden', true)
 								}
 						}
 						function drawCard(product) {
@@ -120,6 +131,38 @@
 										drawCard(product);
 								}
 						});
+						
+						$(this.$.confirm).click(e=> {
+							let that = this;
+							$(this.$.confirm).attr("disabled", true);
+							
+							setTimeout(()=>{
+								$(that.$.confirm).attr("disabled", false);
+							}, 3000)
+							
+		                    $.ajax(serverURL + "products/buy/", {
+								cache: false,
+								method: 'POST',
+								data: {products: Cookies.get("cart")},
+								success: (result, status, xhr) => {
+									if (result.error){
+										Materialize.toast(result.error, 3000);
+									} else {
+										if(result.success){
+											Materialize.toast("Produto comprado com sucesso!", 3000);
+											Cookies.remove("cart");
+											changePage(that, "init-page");
+										}else{
+											let prod = result.product
+											Materialize.toast("Apenas " + prod.stock + " de " + prod.name + " em estoque!", 5000)
+										}
+									}
+								},
+								error: (xhr, status, error) => {
+									Materialize.toast('Erro inesperado: ' + JSON.stringify(error), 3000);
+								},
+							});
+		                });
 				}
 		});
 		</script>
