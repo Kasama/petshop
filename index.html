@@ -113,7 +113,8 @@
 	}
 	
 	function doLogout(){
-
+		Cookies.remove("cart");
+		
 		$('#login_page_button').toggle();
 		$('#login_page_side_button').toggle();
 		$('#register_page_button').toggle();
