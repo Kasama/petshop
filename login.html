@@ -58,7 +58,7 @@
 						data: {email: $(that.$.email).val(), password: $(that.$.password).val()},
 						success: (result, status, xhr) => {
 							if(result.success == false){
-								Materialize.toast('Usuário não registrado', 3000)
+								Materialize.toast('Usuário/Senha não encontrado', 3000)
 							}else{
 								sendMessage(this, "do-login", {user_id: result.model._id, is_admin: result.admin})
 								if(this.after_login_page){
