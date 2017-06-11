@@ -13,13 +13,13 @@
 								<div class="img-container col s6">
 									<img src="{{picture}}" alt="Servi&ccedil;o" class="col s12" />
 								</div>
-								
+
 								<div class="col s6">
 									<header class="card-title">{{name}}</header>
 									<p>{{description}}</p>
 									<h2>R$ {{price}}</h2>
 								</div>
-								
+
 								<div class="col s6 input-field" id="pet_radio">
 									<p>
 										<input name="group1" type="radio" id="test1" />
@@ -30,7 +30,7 @@
 										<label for="test2">Yellow</label>
 									</p>
 									<p>
-										<input class="with-gap" name="group1" type="radio" id="test3"  />
+										<input class="with-gap" name="group1" type="radio" id="test3" />
 										<label for="test3">Green</label>
 									</p>
 									<p>
@@ -61,18 +61,18 @@
 				price: Number,
 				picture: String
 			},
-			ready: function(){
-				let user_id = Cookies.get("user-id");
-				if(user_id){
+			ready: function () {
+				let user_id = Cookies.get("user-id")
+				if (user_id) {
 					$.get(serverURL + "pets?client_id=" + user_id, (pets, status) => {
 						this.$.pet_radio.innerHTML = "";
-						for(let i = 0; i < pets.length; i++){
+						for (let i = 0; i < pets.length; i++) {
 							this.$.pet_radio.innerHTML += "<p>\n";
 							this.$.pet_radio.innerHTML += "<input name='pet_group' value='" + pets[i]._id + ":" + pets[i].name + "' type='radio' " + (i == 0 ? " checked" : "") + " id='" + "radio_pet_" + i + "' />\n";
 							this.$.pet_radio.innerHTML += "<label for='" + "radio_pet_" + i + "'>" + pets[i].name + "</label>\n";
 							this.$.pet_radio.innerHTML += "</p>\n";
 						}
-						
+
 						$(this.$.schedule).click(e => {
 							let str = Polymer.dom(this.root).querySelector("input[name='pet_group']:checked").value;
 							changePage(this, "schedule-service-page", {
@@ -95,14 +95,15 @@
 					})
 				}
 			},
-		    attached: function(){
-		    	
-		    	$.get(serverURL + "services/" + this._id, (service, status) => {
-					this.name = service.name;
-					this.description = service.description;
-					this.price = parseFloat(service.price).toFixed(2);
-					this.picture = serverURL + service.picture;
-		    	})
+			attached: function () {
+				if (this._id) {
+					$.get(serverURL + "services/" + this._id, (service, status) => {
+						this.name = service.name;
+						this.description = service.description;
+						this.price = parseFloat(service.price).toFixed(2);
+						this.picture = serverURL + service.picture;
+					})
+				}
 			}
 		});
 	</script>

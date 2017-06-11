@@ -1,0 +1,76 @@
+<dom-module id="init-page-service-card">
+    <template>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+        <script src="/important_js.js"></script>
+
+        <style>
+            .card-content {
+                height: 200px;
+                overflow: hidden;
+            }
+
+            .card-image {
+                height: 200px;
+                overflow: hidden;
+            }
+
+            .card-image img {
+                height: 100%;
+                width: 100%;
+                object-fit: contain;
+            }
+        </style>
+
+        <div class="card">
+            <div class="card-image">
+                <img src="{{serverURL}}{{picture}}" alt="picture" />
+            </div>
+            <div class="card-content">
+                <span class="card-title"> {{name}} </span>
+                <span class="card-title purple-text">R$ {{price}} </span>
+                <p>{{description}}</p>
+            </div>
+            <div class="card-action">
+                <a href="#" id="details">Detalhes</a>
+            </div>
+        </div>
+
+    </template>
+
+
+    <script>
+        Polymer({
+            is: 'init-page-service-card',
+            properties: {
+                _id: String,
+                name: String,
+                description: String,
+                price: Number,
+                picture: String
+            },
+
+            ready: function () {
+                this.serverURL = serverURL;
+                $.get(serverURL + "services/" + this._id, function (data, status) {
+                    this._id = data._id;
+                    this.name = data.name;
+                    this.description = data.description;
+                    this.price = parseFloat(data.price).toFixed(2);
+                    this.picture = data.picture;
+                }.bind(this));
+
+                $(this.$.details).click(e => {
+                    changePage(this, "detail-service-page", {
+                        _id: this._id,
+                        name: this.name,
+                        description: this.description,
+                        price: this.price,
+                        picture: this.picture,
+                    })
+                })
+            }
+        });
+    </script>
+
+</dom-module>

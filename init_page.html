@@ -1,5 +1,6 @@
 <dom-module id="init-page">
   <link rel="import" href="/custom_components/init_page_card.html">
+  <link rel="import" href="/custom_components/init_page_service_card.html">
 
   <template>
     <!-- Materialize -->
@@ -27,7 +28,11 @@
     </div>
 
     <main id="the_content" class="container">
-      <h2 class="header red-text">OS MAIS COMPRADOS</h2>
+      <h2 class="header red-text">PRODUTOS MAIS COMPRADOS</h2>
+      <div id="productContainer"></div>
+
+      <h2 class="header red-text">SERVIÇOS MELHOR AVALIADOS</h2>
+      <div id="serviceContainer"></div>
     </main>
   </template>
 
@@ -42,8 +47,9 @@
         $(this.$.the_banner).parallax();
         $("html, body").animate({ scrollTop: "1px" });
         $("html, body").animate({ scrollTop: "0px" });
+
         $.get(serverURL + "products", (products, status) => {
-          let main = $(this.$.the_content);
+          let main = $(this.$.productContainer);
           let row = undefined;
           for (let [i, product] of products.entries()) {
             if (i % 3 === 0) {
@@ -53,6 +59,22 @@
 
             let card = $("<init-page-card>").addClass("col s4");
             card.prop("_id", product._id);
+            row.append(card);
+          }
+        });
+
+        $.get(serverURL + "services", (services, status) => {
+          
+          let main = $(this.$.serviceContainer);
+          let row = undefined;
+          for (let [i, service] of services.entries()) {
+            if (i % 3 === 0) {
+              row = $("<section>").addClass("row");
+              main.append(row);
+            }
+
+            let card = $("<init-page-service-card>").addClass("col s4");
+            card.prop("_id", service._id);
             row.append(card);
           }
         });

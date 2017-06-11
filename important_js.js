@@ -56,7 +56,12 @@ function createModel(where, form, fileButton) {
 				if (result.error){
 					Materialize.toast(result.error, 3000);
 				} else {
-					createPicture(where, result, fileButton[0].files[0]);
+					if(fileButton[0].files[0]) {
+						createPicture(where, result, fileButton[0].files[0]);
+					} else {
+						Materialize.toast('Editado com sucesso', 3000);
+						changePage(document.getElementById("main_element"), "init-page", {});
+					}
 				}
 			},
 			error: (xhr, status, error) => {
