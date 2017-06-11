@@ -183,13 +183,9 @@
 			
 			let curr_page = Cookies.getJSON("current-page-description");
 			
-			// TODO: remove this comment to reactivate pagecookie
-			/*
 			if(curr_page && curr_page.tag){
 				changeMainElement(curr_page.tag.replace("#", ""), curr_page.attributes);
 			}
-			*/
-			
 		});
 	})(jQuery);
 
@@ -235,7 +231,7 @@
 	</header>
 
 	<main id="main">
-		<my-cart-page id="main_element"/>
+		<init-page id="main_element"/>
 	</main>
 
 	<footer>
