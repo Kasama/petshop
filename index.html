@@ -87,7 +87,9 @@
 	
 	function doLogin(user_id, admin){
 		Cookies.set("user-id", user_id);
-		Cookies.set("is-admin", admin);
+		if(admin){
+			Cookies.set("is-admin", admin);
+		}
 		
 		console.log(admin)
 		console.log(Cookies.get("is-admin"))
@@ -99,7 +101,7 @@
 		$('#logout_button').toggle();
 		$('#logout_side_button').toggle();
 		
-		if(Cookies.get("is-admin")){
+		if(admin){
 			$('#admin_home_page_button').toggle();
 			$('#admin_home_page_side_button').toggle();
 		}else{
@@ -132,7 +134,7 @@
 		
 		
 		Cookies.set("user-id", "");
-		Cookies.set("is-admin", false);
+		Cookies.remove("is-admin");
 		changeMainElement("init-page");
 	}
 	
