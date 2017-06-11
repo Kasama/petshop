@@ -1,8 +1,8 @@
 <dom-module id="register-client-page">
-  	<template> 
-	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-	    <link href="../mystyle.css" rel="stylesheet">
+	<template>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+		<link href="../mystyle.css" rel="stylesheet">
 
 		<main class="container">
 			<section class="row">
@@ -14,38 +14,40 @@
 								<div class="row">
 									<div class="row">
 										<div class="input-field col s6">
-											<input placeholder="Nome" type="text" name="name" value="" id="Name" />
+											<input placeholder="Nome" type="text" name="name" value="" id="name" />
 										</div>
 										<div class="input-field col s6">
-											<input placeholder="Sobrenome" type="text" name="surname" value="" id="Sobrenome" />
+											<input placeholder="Sobrenome" type="text" name="surname" value="" id="surname" />
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input placeholder="Endereço" type="text" value="" name="address" id="Address" />
+											<input placeholder="Endereço" type="text" value="" name="address" id="address" />
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input placeholder="Telefone" type="tel" name="phone" value="" id="Phone" />
+											<input placeholder="Telefone" type="tel" name="phone" value="" id="phone" />
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input placeholder="Email" type="text" name="email" value="" id="Email" />
+											<input placeholder="Email" type="text" name="email" value="" id="email" />
 										</div>
 									</div>
-									<div class="row">
-										<div class="input-field col s12">
-											<input placeholder="Senha" type="password" name="password" value="" id="Password" />
+									<div id="passwordRows">
+										<div class="row">
+											<div class="input-field col s12">
+												<input placeholder="Senha" type="password" name="password" value="" id="password" />
+											</div>
+										</div>
+										<div class="row">
+											<div class="input-field col s12">
+												<input placeholder="Confirmar Senha" type="password" name="password_confirmation" value="" id="password_confirmation" />
+											</div>
 										</div>
 									</div>
-									<div class="row">
-										<div class="input-field col s12">
-											<input placeholder="Confirmar Senha" type="password" name="password_confirmation" value="" id="PasswordConfirm" />
-										</div>
-									</div>
-									<div class="row">
+									<div id="pictureRow" class="row">
 										<form>
 											<div class="file-field input-field col s9">
 												<div class="btn">
@@ -59,7 +61,7 @@
 										</form>
 									</div>
 									<div class="input-field s6 right">
-											<button class="btn submit" id="submit" type="submit" >Cadastrar →</button>
+										<button class="btn submit" id="submit" type="submit">Cadastrar →</button>
 									</div>
 								</div>
 							</form>
@@ -70,22 +72,49 @@
 		</main>
 	</template>
 
-  	<script>
+	<script>
 		Polymer({
-				is: 'register-client-page',
-				ready: function() {
-						imb = $(this.$.image_button);
-						imp = $(this.$.image_path);
+			is: 'register-client-page',
+			properties: {
+				client: {
+					_id: String,
+					name: String,
+					surname: String,
+					address: String,
+					phone: String,
+					email: String,
+					picture: String,
+				},
+				mode: String
+			},
+			ready: function () {
+				if (this.mode !== "edit") {
+					const imb = $(this.$.image_button);
+					const imp = $(this.$.image_path);
+					const image = $(this.$.image_button);
 
-						imb.change(function(){
-								imp[0].value = imb[0].value.substring(imb[0].value.lastIndexOf("\\") + 1)
-						});
-						$(this.$.form).submit(createModel(
-								'clients',
-								$(this.$.form),
-								imb
-						));
+					imb.change(function () {
+						imp[0].value = imb[0].value.substring(imb[0].value.lastIndexOf("\\") + 1)
+					});
+
+					$(this.$.form).submit(createModel(
+						'clients',
+						$(this.$.form),
+						$(this.$.image_button)
+					));
+				} else {
+					$(this.$.pictureRow).remove();
+					$(this.$.passwordRows).remove();
+
+					$(this.$.name).val(this.client.name);
+					$(this.$.surname).val(this.client.surname);
+					$(this.$.address).val(this.client.address);
+					$(this.$.phone).val(this.client.phone);
+					$(this.$.email).val(this.client.email);
+
+					$(this.$.form).submit(editModel('clients', this.client._id, $(this.$.form)));
 				}
+			}
 		});
-  	</script>
+	</script>
 </dom-module>
