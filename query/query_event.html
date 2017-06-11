@@ -33,6 +33,11 @@
 								<div class="card-content" id=event_list>
 								</div>
 							</div>
+							<div class="card-content" id="no_events">
+								<div class="row card-content">
+									<a>Nenhum evento hoje!</a>
+								</div>
+							</div>
 						</div>
 					</article>
 				</div>
@@ -67,8 +72,17 @@
 			},
 			updateList: function(date){
 				this.$.event_list.innerHTML = "";
+				
+				
+				
 				$.get(serverURL + "events?date=" + this.getDayFromString(date), (events, status) => {
 					let elem_list = this.$.event_list;
+					
+					if(events.length > 0){
+						$(this.$.no_events).attr('hidden', true)
+					}else{
+						$(this.$.no_events).attr('hidden', false)
+					}
 					
 					for(event of events){
 						//console.log(events)
@@ -86,6 +100,7 @@
 						
 						elem_list.appendChild(elem);
 					}
+					
 					
 				});
 			},

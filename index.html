@@ -178,7 +178,7 @@
 			});
 			
 			if(Cookies.get("user-id")){
-				doLogin(Cookies.get("user-id"));
+				doLogin(Cookies.get("user-id"), Cookies.get("is-admin"));
 			}
 			
 			let curr_page = Cookies.getJSON("current-page-description");
