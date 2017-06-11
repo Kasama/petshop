@@ -147,7 +147,6 @@
 			})
 			
 			window.addEventListener("popstate", function(e) {
-				// console.log(e.state);
 				if(e.state){
 					changeMainElement(e.state.tag.replace("#", ""), e.state.attributes, false);
 				}

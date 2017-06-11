@@ -47,7 +47,7 @@
                         let edit =  $("<a href=\"#\">").html("<i class=\"material-icons\">mode-edit</i>");
                         secondary.append(edit);
                         edit.click(e => {
-                            changePage(this, "register-admin-page", admin);
+                            changePage(this, "register-admin-page", {admin: admin, mode: "edit"});
                         });
 
                         let remove =  $("<a href=\"#\">").html("<i class=\"material-icons\">delete</i>");

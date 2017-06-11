@@ -65,3 +65,25 @@ function createModel(where, form, fileButton) {
 		return false;
 	};
 }
+
+function editModel(where, who, form) {
+	return (e) => {
+		e.preventDefault();
+		$.ajax(serverURL + where + '/' + who, {
+			cache: false,
+			method: 'PUT',
+			data: form.serialize(),
+			success: (result, status, xhr) => {
+				if (result.error){
+					Materialize.toast('Erro inesperado: ' + result.error, 3000);
+				} else {
+					Materialize.toast('Editado com sucesso', 3000);
+				}
+			},
+			error: (xhr, status, error) => {
+				Materialize.toast('Erro inesperado: ' + JSON.stringify(error), 3000);
+			},
+		});
+		return false;
+	};
+}

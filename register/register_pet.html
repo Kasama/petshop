@@ -15,20 +15,20 @@
 								<div class="row">
 									<div class="row">
 										<div class="input-field col s12">
-											<input placeholder="Nome" type="text" name="name" value="" id="Name">
+											<input placeholder="Nome" type="text" name="name" value="" id="name" />
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input placeholder="Idade" type="number" value="" name="age" id="Age" />
+											<input placeholder="Idade" type="number" value="" name="age" id="age" />
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input placeholder="Raça" type="text" name="race" value="" id="Race">
+											<input placeholder="Raça" type="text" name="race" value="" id="race" />
 										</div>
 									</div>
-									<div class="row">
+									<div id="pictureRow" class="row">
 										<form>
 											<div class="file-field input-field col s9">
 												<div class="btn">
@@ -59,23 +59,40 @@
 		Polymer({
 			is: 'register-pet-page',
 			properties: {
-				client_id: String,
+				client: {
+					_id: String,
+					name: String,
+					age: String,
+					race: String,
+					client: Object,
+					picture: String,
+				},
+				mode: String
 			},
 			ready: function () {
-				$(this.$.client_input).val(this.client_id);
+				if (this.mode !== "edit") {
+					const imb = $(this.$.image_button);
+					const imp = $(this.$.image_path);
+					const image = $(this.$.image_button);
 
-				imb = $(this.$.image_button);
-				imp = $(this.$.image_path);
+					imb.change(function () {
+						imp[0].value = imb[0].value.substring(imb[0].value.lastIndexOf("\\") + 1)
+					});
 
-				imb.change(function () {
-					imp[0].value = imb[0].value.substring(imb[0].value.lastIndexOf("\\") + 1)
-				});
+					$(this.$.form).submit(createModel(
+						'pets',
+						$(this.$.form),
+						$(this.$.image_button)
+					));
+				} else {
+					$(this.$.pictureRow).remove();
 
-				$(this.$.form).submit(createModel(
-					'pets',
-					$(this.$.form),
-					$(this.$.image_button)
-				));
+					$(this.$.name).val(this.pet.name);
+					$(this.$.age).val(this.pet.age);
+					$(this.$.race).val(this.pet.race);
+
+					$(this.$.form).submit(editModel('pets', this.pet._id, $(this.$.form)));
+				}
 			}
 		});
 	</script>

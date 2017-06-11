@@ -52,7 +52,7 @@
                         let edit =  $("<a href=\"#\">").html("<i class=\"material-icons\">mode-edit</i>");
                         secondary.append(edit);
                         edit.click(e => {
-                            changePage(this, "register-pet-page", pet);
+                            changePage(this, "register-pet-page", {pet: pet, mode:"edit"});
                         });
 
                         let remove =  $("<a href=\"#\">").html("<i class=\"material-icons\">delete</i>");
