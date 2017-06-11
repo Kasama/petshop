@@ -8,19 +8,26 @@ function sendMessage(that, name, additional_data = null){
 }
 
 function addToCart(product_id, quantity){
-	cart = Cookies.getJSON("cart");
-	
+	let ret;
+	let cart = Cookies.getJSON("cart");
+
 	if(!cart){
 		cart = {};
 	}
-	
+
 	if(cart[product_id]){
-		cart[product_id] += quantity;
+		ret = (cart[product_id] += quantity);
+		if (cart[product_id] <= 0) {
+			delete cart[product_id];
+			ret = 0;
+		}
 	}else{
-		cart[product_id] = quantity;
+		ret = cart[product_id] = quantity;
 	}
-	
+
 	Cookies.set("cart", cart);
+
+	return ret;
 }
 
 function createPicture(where, result, file) {

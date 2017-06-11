@@ -22,6 +22,12 @@
         width: 100%;
         /*object-fit: contain;*/
       }
+			.dead {
+					!important display: none;
+			}
+			.alive {
+					!important display: block;
+			}
     </style>
 
     <main class="container">
@@ -30,44 +36,91 @@
 							<div id="cart_itens"></div>
 					</div>
       </section>
+			<section id="payment_confirm" class="row">
+					<div class="card">
+							<div class="card-content">
+									<span class="card-title">Finalizar Compra</span>
+									<div class="col s12">
+											<div class="input-field col s8">
+													<input placeholder="Numero do Cartao" type="text" name="credit_card" value="" id="credit_card">
+											</div>
+											<div class="input-field col s2">
+													<input placeholder="DdS" type="text" name="security_number" value="" id="security_number">
+											</div>
+											<div class="input-field col s2">
+													<button href="#" class="btn col s12" id="confirm">Confirmar</button>
+											</div>
+									</div>
+							</div>
+					</div>
+			</section>
     </main>
-	</template>
-  <script>
-		function new_card() {
-				const card = $("<cart-card>", {class: 'card'});
-		}
-    Polymer({
-      is: 'my-cart-page',
-      ready: function () {
-					const cart_itens = $(this.$.cart_itens);
-					const itens_in_cart = Cookies.getJSON('cart');
-					const itens_in_cart_ids = []
-					console.log('using cookies ', JSON.stringify(itens_in_cart));
-					for (const item in itens_in_cart) {
-							itens_in_cart_ids.push(item);
-					}
-					console.log('using items: ', JSON.stringify(itens_in_cart_ids));
-					if (itens_in_cart_ids.length == 0) itens_in_cart_ids.push('');
-					const query_string = '?id=' + itens_in_cart_ids.reduce((str, i) => {
-							return str + '&id=' + i;
-					});
-					console.log('query: ', query_string);
-					$.get(serverURL + 'products' + query_string, (result, status) => {
-							for (const [i, product] of result.entries()) {
-									const card = $('<cart-card>').addClass('row col s12');
-									card.prop('_id', product._id);
-									card.prop('description', product.description);
-									card.prop('name', product.name);
-									card.prop('price', product.price);
-									card.prop('stock', product.stock);
-									card.prop('picture', product.picture);
-									card.prop('quantity', product.quantity);
-									card.prop('amount', itens_in_cart[product._id]);
-									card.prop('serverURL', serverURL);
-									cart_itens.append(card);
-							}
-					});
-      }
-    });
-  </script>
+		</template>
+		<script>
+		Polymer({
+				is: 'my-cart-page',
+				ready: function () {
+						const cart_itens = $(this.$.cart_itens);
+						const cards = $(this.$.cards);
+						const poly = this;
+						console.log("running page");
+						function createCards() {
+								const itens_in_cart = Cookies.getJSON('cart');
+								const itens_in_cart_ids = []
+								for (const item in itens_in_cart) {
+										itens_in_cart_ids.push(item);
+								}
+								if (itens_in_cart_ids.length == 0) itens_in_cart_ids.push('');
+								const query_string = '?id=' + itens_in_cart_ids.reduce((str, i) => {
+										return str + '&id=' + i;
+								});
+								$.get(serverURL + 'products' + query_string, (result, status) => {
+										for (const [i, product] of result.entries()) {
+												drawCard(product);
+										}
+								});
+						}
+						function updatePayment() {
+								const itens_in_cart = Cookies.getJSON('cart');
+								if (itens_in_cart === {}) {
+										$(poly.$.payment_confirm).removeClass('alive');
+										$(poly.$.payment_confirm).addClass('dead');
+								} else {
+										$(poly.$.payment_confirm).removeClass('dead');
+										$(poly.$.payment_confirm).addClass('alive');
+								}
+						}
+						function drawCard(product) {
+								const itens_in_cart = Cookies.getJSON('cart');
+								const oldCard = Polymer.dom(poly.root).querySelector('[id="' + product._id + '"]');
+								if (oldCard) {
+										const amount = itens_in_cart[product._id];
+										if (amount > 0) {
+												// oldCard.prop('amount', amount);
+												oldCard.amount = amount;
+										} else {
+												oldCard.remove();
+										}
+								} else {
+										const card = $('<cart-card id="' + product._id + '">').addClass('row col s12');
+										card.prop('product', product);
+										card.prop('amount', itens_in_cart[product._id]);
+										card.prop('serverURL', serverURL);
+										cart_itens.append(card);
+								}
+								updatePayment();
+						}
+
+						createCards();
+						updatePayment();
+
+						document.addEventListener('iron-signal', event => {
+								if(event.detail.name === "update-cart-cards"){
+										let product = event.detail.data.product;
+										drawCard(product);
+								}
+						});
+				}
+		});
+		</script>
 </dom-module>

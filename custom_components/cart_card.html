@@ -24,13 +24,13 @@
 
 				<div id="main_card" class="card horizontal">
 						<div class="card-image">
-								<img src="{{serverURL}}{{picture}}" alt="picture" />
+								<img src="{{serverURL}}{{product.picture}}" alt="picture" />
 						</div>
 						<div class="card-stacked">
 								<div class="card-content">
-										<span class="card-title"> {{name}} </span>
-										<span class="card-title purple-text">R$ {{price}} </span>
-										<p>{{description}}</p>
+										<span class="card-title"> {{product.name}} </span>
+										<span class="card-title purple-text">R$ {{product.price}} </span>
+										<p>{{product.description}}</p>
 										<hr>
 										<h5>No carrinho: {{amount}}</h5>
 										<div class="row">
@@ -49,27 +49,35 @@
 		Polymer({
 				is: 'cart-card',
 				properties: {
-						_id: String,
-						description: String,
-						name: String,
-						price: String,
-						stock: String,
-						picture: String,
-						quantity: String,
+						product: Object,
 						serverURL: String,
 						amount: Number,
 				},
 				ready: function () {
+						const poly = this;
 						$(this.$.details).click(e => {
 								changePage(this, "detail-product-page", {
-										_id: this._id,
-										description: this.description,
-										name: this.name,
-										price: this.price,
-										stock: this.stock,
-										picture: this.picture,
-										quantity: this.quantity,
+										_id: this.product._id,
+										description: this.product.description,
+										name: this.product.name,
+										price: this.product.price,
+										stock: this.product.stock,
+										picture: this.product.picture,
+										quantity: this.product.quantity,
 								});
+						});
+
+						function updateCart(amount) {
+								let qtd = addToCart(poly.product._id, amount);
+								sendMessage(poly, 'update-cart-cards', {product: poly.product});
+						}
+
+						$(this.$.add).click(e => {
+								updateCart(1);
+						});
+
+						$(this.$.remove).click(e => {
+								updateCart(-1);
 						});
 
 						$(window).on('resize', () => {
