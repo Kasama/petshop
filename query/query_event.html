@@ -1,0 +1,123 @@
+<dom-module id="query-event-page">
+	<link rel="import" href="/custom_components/query_event_card.html">
+
+	<template>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+	    <link href="../mystyle.css" rel="stylesheet">
+
+		<style>
+			.card-content {
+				min-height: 100px;
+			}
+			.card-image {
+				height: 250px;
+				overflow: hidden;
+			}
+			.card-image img {
+				height: 100%;
+				width: 100%;
+				object-fit: contain;
+			}
+		</style>
+	    
+		<main class="container">
+			<section class="row">
+				<div class="col s12 m12">
+					<article class="card">
+						<div class="card-content">
+							<div class="row card-content">
+								<input id="date_picker" type="date" class="datepicker">
+							</div>
+							<div class="row">
+								<div class="card-content" id=event_list>
+								</div>
+							</div>
+						</div>
+					</article>
+				</div>
+			</section>
+		</main>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'query-event-page',
+			properties:{
+				
+			},
+			dateToString: function(days_from_today){
+				let objToday = new Date();
+				objToday.setDate(new Date().getDate() + days_from_today);
+				
+				let dayOfMonth = objToday + ( objToday.getDate() < 10) ? '0' + objToday.getDate() : objToday.getDate(),
+					months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'),
+					curMonth = months[objToday.getMonth()],
+					curYear = objToday.getFullYear();
+				
+				let str = curMonth + " " + dayOfMonth + ", " + curYear;
+				return str;
+			},
+			getDayFromString: function(str){
+					str = (str.toString());
+					str = str.substring(str.indexOf(" ") + 1);
+					str = str.substring(0, str.lastIndexOf(":"));
+					str = str.substring(0, str.lastIndexOf(" "));
+					return str;
+			},
+			updateList: function(date){
+				this.$.event_list.innerHTML = "";
+				$.get(serverURL + "events?date=" + this.getDayFromString(date), (events, status) => {
+					let elem_list = this.$.event_list;
+					
+					for(event of events){
+						//console.log(events)
+						
+						let elem = document.createElement("query-event-card");
+						elem["id"] = event._id;
+						elem["_id"] = event._id;
+						elem["name"] = event.name;
+						elem["picture"] = serverURL + event.service.picture;
+						elem["slot"] = parseInt(event.slot);
+						elem["date"] = event.date;
+						
+						elem["hide_schedule_button"] = true;
+						elem["service_id"] = event.service._id;
+						
+						elem_list.appendChild(elem);
+					}
+					
+				});
+			},
+			ready: function(){
+				let that = this;
+				
+				document.addEventListener('iron-signal', event => {
+					if(event.detail.name === "query-event-delete"){
+						
+						let id_to_remove = event.detail.data._id
+						this.$[id_to_remove].remove();
+			   		}
+				});
+				
+				let picker = $(this.$.date_picker).pickadate({
+					selectMonths: true, // Creates a dropdown to control month
+					selectYears: 15, // Creates a dropdown of 15 years to control year
+				}).pickadate('picker');
+				
+				picker.set("select", new Date());
+				picker.on("set", (thingSet)=>{
+					if(thingSet.select){
+						newDate = new Date(thingSet.select);
+						that.updateList(newDate);
+					}
+				})
+				
+				this.updateList(new Date());
+			},
+			attached: function() {
+				
+			}
+		});
+	</script>
+</dom-module>

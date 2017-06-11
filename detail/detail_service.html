@@ -64,7 +64,6 @@
 			ready: function(){
 				let user_id = Cookies.get("user-id");
 				if(user_id){
-					//console.log(serverURL + "pets?client_id=" + user_id)
 					$.get(serverURL + "pets?client_id=" + user_id, (pets, status) => {
 						this.$.pet_radio.innerHTML = "";
 						for(let i = 0; i < pets.length; i++){
@@ -75,9 +74,7 @@
 						}
 						
 						$(this.$.schedule).click(e => {
-							//let str = $(this.$.pet_select).val();
-							let str = Polymer.dom(this.root).querySelector("input[name='pet_group']:checked").value;////this.$$("input[name='pet_group']:checked").val();
-							console.log(str);
+							let str = Polymer.dom(this.root).querySelector("input[name='pet_group']:checked").value;
 							changePage(this, "schedule-service-page", {
 								_id: this._id,
 								pet_id: str.substring(0, str.indexOf(":")),
