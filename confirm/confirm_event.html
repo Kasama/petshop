@@ -102,7 +102,7 @@
 								Materialize.toast(result.error, 3000);
 							} else {
 								Materialize.toast("Cadastrado", 3000);
-								changePage(that, "init-page");
+								changePage(that, "init-page", {});
 							}
 						},
 						error: (xhr, status, error) => {

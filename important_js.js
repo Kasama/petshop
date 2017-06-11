@@ -37,6 +37,7 @@ function createPicture(where, result, file) {
 			data: data,
 			success: (result, status, xhr) => {
 				Materialize.toast('Criado com sucesso', 3000);
+				changePage(document.getElementById("main_element"), "init-page", {});
 			},
 			error: (xhr, status, error) => {
 				Materialize.toast('Erro inesperado: ' + JSON.stringify(error), 3000);
@@ -69,6 +70,7 @@ function createModel(where, form, fileButton) {
 function editModel(where, who, form) {
 	return (e) => {
 		e.preventDefault();
+		console.log(serverURL + where + '/' + who);
 		$.ajax(serverURL + where + '/' + who, {
 			cache: false,
 			method: 'PUT',
@@ -78,6 +80,7 @@ function editModel(where, who, form) {
 					Materialize.toast('Erro inesperado: ' + result.error, 3000);
 				} else {
 					Materialize.toast('Editado com sucesso', 3000);
+					changePage(document.getElementById("main_element"), "init-page", {});
 				}
 			},
 			error: (xhr, status, error) => {

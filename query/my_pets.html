@@ -1,0 +1,81 @@
+<dom-module id="my-pets-page">
+    <template>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+        <link href="../mystyle.css" rel="stylesheet">                            
+
+        <style>
+            li.collection-item p {
+                padding-right: 80px;
+            }
+        </style>
+
+        <main class="container">
+            <section class="row">
+                <ul id="list" class="collection with-header">
+                     <li class="collection-header"><h4 class="header-text">Pets <a id="newPet" class="btn" href="#"><i class="material-icons">add</i></a></h4></li>
+                </ul>
+            </section>
+        </main>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'my-pets-page',
+            ready: function () {
+                let list = $(this.$.list);
+                let client_id = Cookies.get("user-id");
+
+                $(this.$.newPet).click(e=> {
+                    changePage(this, "register-pet-page", {pet: {client: {_id: client_id}}});
+                });
+
+                $.get(serverURL + "pets?client_id=" + client_id, (pets, status) => {
+                    for (let [i, pet] of pets.entries()) {
+                        let item = $("<li>").addClass("collection-item avatar");
+                        list.append(item);
+
+                        let avatar = $("<img>").addClass("circle").prop("src", serverURL + pet.picture);
+                        item.append(avatar);
+                        
+                        let name = $("<a href=\"#\">").text(pet.name).click(e => {
+                            changePage(this, "detail-pet-page", pet);
+                        });
+                        item.append(name, $("<span> de </span>"));
+
+                        let client = $("<a href=\"#\">").text(pet.client.name).click(e => {
+                            changePage(this, "detail-client-page", pet.client);
+                        });
+                        item.append(client);
+
+                        item.append($("<p>" + pet.race + " de " + pet.age + " anos</p>"));
+
+
+                        let secondary = $("<div>").addClass("secondary-content");
+                        item.append(secondary);
+
+                        let edit =  $("<a href=\"#\">").html("<i class=\"material-icons\">mode-edit</i>");
+                        secondary.append(edit);
+                        edit.click(e => {
+                            changePage(this, "register-pet-page", {pet: pet, mode:"edit"});
+                        });
+
+                        let remove =  $("<a href=\"#\">").html("<i class=\"material-icons\">delete</i>");
+                        secondary.append(remove);
+                        remove.click(e => {
+                            $.ajax({
+                                url: serverURL+"pets/" + pet._id,
+                                type: 'DELETE',
+                                success: function(result) {
+                                    Materialize.toast(pet.name + ' foi removido!', 4000);
+                                    item.remove();
+                                }
+                            });
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+</dom-module>

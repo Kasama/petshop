@@ -59,7 +59,7 @@
 		Polymer({
 			is: 'register-pet-page',
 			properties: {
-				client: {
+				pet: {
 					_id: String,
 					name: String,
 					age: String,
@@ -70,6 +70,7 @@
 				mode: String
 			},
 			ready: function () {
+				$(this.$.client_input).val(this.pet.client._id);
 				if (this.mode !== "edit") {
 					const imb = $(this.$.image_button);
 					const imp = $(this.$.image_path);
@@ -79,11 +80,12 @@
 						imp[0].value = imb[0].value.substring(imb[0].value.lastIndexOf("\\") + 1)
 					});
 
-					$(this.$.form).submit(createModel(
-						'pets',
-						$(this.$.form),
-						$(this.$.image_button)
-					));
+					$(this.$.form).submit(
+						createModel(
+							'pets',
+							$(this.$.form),
+							$(this.$.image_button)
+						));
 				} else {
 					$(this.$.pictureRow).remove();
 

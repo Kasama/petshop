@@ -47,6 +47,7 @@
 	<link rel="import" href="/query/query_pet.html">
 	<link rel="import" href="/query/query_client.html">
 	<link rel="import" href="/query/query_admin.html">
+	<link rel="import" href="/query/my_pets.html">
 	
 	<link rel="import" href="/register/schedule_service.html">
 	<link rel="import" href="/confirm/confirm_event.html">
@@ -90,9 +91,6 @@
 		if(admin){
 			Cookies.set("is-admin", admin);
 		}
-		
-		console.log(admin)
-		console.log(Cookies.get("is-admin"))
 		
 		$('#login_page_button').toggle();
 		$('#login_page_side_button').toggle();
@@ -241,7 +239,7 @@
 	</header>
 
 	<main id="main">
-		<register-admin-page id="main_element"/>
+		<admin-page id="main_element"/>
 	</main>
 
 	<footer>
