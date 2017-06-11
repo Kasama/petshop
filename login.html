@@ -46,14 +46,28 @@
 				after_login_data: Object,
 			},
 			ready: function() {
-				$(this.$.submit).click(e => {
-					sendMessage(this, "do-login", {user_id:"asd"})
-					if(this.after_login_page){
-						changePage(this, this.after_login_page, this.after_login_data)
-					}else{
-						changePage(this, "init-page")
-					}
-				})
+				$.ajax(serverURL + where + '/' + id + '/add', {
+					cache: false,
+					method: 'POST',
+					data: {email: 'algo@algo.com', password: '****'},
+					success: (result, status, xhr) => {
+						$(this.$.submit).click(e => {
+							if(result.success == false){
+								Materialize.toast('Usuário não registrado')
+							}else{
+								sendMessage(this, "do-login", {user_id: result.user._id, admim: result.admin})
+								if(this.after_login_page){
+									changePage(this, this.after_login_page, this.after_login_data)
+								}else{
+									changePage(this, "init-page")
+								}
+							}
+						})
+					},
+					error: (xhr, status, error) => {
+						Materialize.toast('Erro inesperado: ' + JSON.stringify(error), 3000);
+					},
+				});
 			}
 		});
 	</script>
