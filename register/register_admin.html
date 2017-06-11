@@ -97,13 +97,12 @@
 						imp[0].value = imb[0].value.substring(imb[0].value.lastIndexOf("\\") + 1)
 					});
 
-					$(this.$.form).submit(function () {
+					$(this.$.form).submit(
 						createModel(
 							'admins',
 							$(this.$.form),
 							$(this.$.image_button)
-						); changePage(that, "init-page", {});
-					});
+						));
 				} else {
 					$(this.$.pictureRow).remove();
 					$(this.$.passwordRows).remove();
