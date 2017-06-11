@@ -75,49 +75,67 @@
 		$("#main_element").remove();
 		
 		let page_description = {tag:tag, attributes:attributes}
-
+		
 		Cookies.set("current-page-description", page_description, { expires: 1 });
-
+		
 		let elem = createElement(tag, attributes);
 		document.getElementById("main").appendChild(elem);
-
+		
 		if(addToHistory){
 			history.pushState(page_description, null, "/" + tag);
 		}
 	}
 	
-	function doLogin(user_id){
+	function doLogin(user_id, admin){
 		Cookies.set("user-id", user_id);
+		if(admin){
+			Cookies.set("is-admin", admin);
+		}
+		
+		console.log(admin)
+		console.log(Cookies.get("is-admin"))
 		
 		$('#login_page_button').toggle();
-		$('#register_page_button').toggle();
-		$('#user_home_page_button').toggle();
-		$('#logout_button').toggle();
-		
 		$('#login_page_side_button').toggle();
+		$('#register_page_button').toggle();
 		$('#register_page_side_button').toggle();
-		$('#user_home_page_side_button').toggle();
+		$('#logout_button').toggle();
 		$('#logout_side_button').toggle();
 		
-		//ideally this would go to the user's homepage
-		//we don't have one yet, so it sends to the main
-		// TODO: send to user's homepage
-		//changeMainElement("init-page");
+		if(admin){
+			$('#admin_home_page_button').toggle();
+			$('#admin_home_page_side_button').toggle();
+		}else{
+			$('#user_pet_page_button').toggle();
+			$('#user_pet_page_side_button').toggle();
+			$('#user_cart_page_button').toggle();
+			$('#user_cart_page_side_button').toggle();
+		}
+		
 	}
 	
 	function doLogout(){
-		Cookies.set("user-id", "");
-		
+
 		$('#login_page_button').toggle();
-		$('#register_page_button').toggle();
-		$('#user_home_page_button').toggle();
-		$('#logout_button').toggle();
-		
 		$('#login_page_side_button').toggle();
+		$('#register_page_button').toggle();
 		$('#register_page_side_button').toggle();
-		$('#user_home_page_side_button').toggle();
+		$('#logout_button').toggle();
 		$('#logout_side_button').toggle();
 		
+		if(Cookies.get("is-admin")){
+			$('#admin_home_page_button').toggle();
+			$('#admin_home_page_side_button').toggle();
+		}else{
+			$('#user_pet_page_button').toggle();
+			$('#user_pet_page_side_button').toggle();
+			$('#user_cart_page_button').toggle();
+			$('#user_cart_page_side_button').toggle();
+		}
+		
+		
+		Cookies.set("user-id", "");
+		Cookies.remove("is-admin");
 		changeMainElement("init-page");
 	}
 	
@@ -126,9 +144,16 @@
 			$('.button-collapse').sideNav();
 			
 			$('#user_home_page_button').hide();
-			$('#logout_button').hide();
 			$('#user_home_page_side_button').hide();
+			$('#logout_button').hide();
 			$('#logout_side_button').hide();
+			$('#admin_home_page_button').hide();
+			$('#admin_home_page_side_button').hide();
+			$('#user_pet_page_button').hide();
+			$('#user_pet_page_side_button').hide();
+			$('#user_cart_page_button').hide();
+			$('#user_cart_page_side_button').hide();
+			
 			
 			document.addEventListener('iron-signal', event => {
 				if(event.detail.name === "change-signal"){
@@ -138,7 +163,7 @@
 		   		}else if(event.detail.name === "get-variable-value"){
 					// will it be used?
 		   		}else if(event.detail.name === "do-login"){
-		   			doLogin(event.detail.data.user_id);
+		   			doLogin(event.detail.data.user_id, event.detail.data.is_admin);
 		   		}
 			});
 			
@@ -182,8 +207,14 @@
 					</li>
 					<li id="login_page_button"><a class="page-changing-button" data-target="login-page">Login</a></li>
 					<li id="register_page_button"><a class="page-changing-button" data-target="register-client-page">Registrar</a></li>
-					<li id="user_home_page_button"><a class="page-changing-button" data-target="init-page">Home</a></li>
+					
+					<li id="admin_home_page_button"><a class="page-changing-button" data-target="admin-page">Home</a></li>
+					
+					<li id="user_pet_page_button"><a class="page-changing-button" data-target="my-pets-page">Meus Pets</a></li>
+					<li id="user_cart_page_button"><a class="page-changing-button" data-target="my-cart-page">Carrinho</a></li>
+					
 					<li id="logout_button"><a onclick="doLogout()">Logout</a></li>
+					
 					<li id="about_page_button"><a class="page-changing-button" data-target="about-page">Sobre</a></li>
 				</ul>
 
@@ -193,8 +224,14 @@
 					</li>
 					<li id="login_page_side_button"><a class="page-changing-button" data-target="login-page">Login</a></li>
 					<li id="register_page_side_button"><a class="page-changing-button" data-target="register-client-page">Registrar</a></li>
-					<li id="user_home_page_side_button"><a class="page-changing-button" data-target="init-page">Home</a></li>
+					
+					<li id="admin_home_page_side_button"><a class="page-changing-button" data-target="admin-page">Home</a></li>
+					
+					<li id="user_pet_page_side_button"><a class="page-changing-button" data-target="my-pets-page">Meus Pets</a></li>
+					<li id="user_cart_page_side_button"><a class="page-changing-button" data-target="my-cart-page">Carrinho</a></li>
+					
 					<li id="logout_side_button"><a onclick="doLogout()">Logout</a></li>
+					
 					<li id="about_page_side_button"><a class="page-changing-button" data-target="about-page">Sobre</a></li>
 				</ul>
 				<a href="#" data-activates="nav-mobile" class="button-collapse">
