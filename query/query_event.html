@@ -44,7 +44,7 @@
 		Polymer({
 			is: 'query-event-page',
 			properties:{
-				
+				date: Object
 			},
 			dateToString: function(days_from_today){
 				let objToday = new Date();
@@ -110,6 +110,7 @@
 					if(thingSet.select){
 						newDate = new Date(thingSet.select);
 						that.updateList(newDate);
+						that.date = newDate;
 					}
 				})
 				

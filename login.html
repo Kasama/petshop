@@ -15,12 +15,12 @@
 								<div class="row">
 									<div class="row">
 										<div class="input-field s3">
-											<input placeholder="Email" type="text" name="Email" value="" id="Email" />
+											<input placeholder="Email" type="text" name="Email" value="" id="email" />
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field s3">
-											<input placeholder="Password" type="password" name="Password" value="" id="Password" />
+											<input placeholder="Password" type="password" name="Password" value="" id="password" />
 										</div>
 										<div class="input-field s3 left">
 											<a class="btn" href="/register/client.html">Ainda não é cadastrado?</a>
@@ -46,27 +46,32 @@
 				after_login_data: Object,
 			},
 			ready: function() {
-				$.ajax(serverURL + where + '/' + id + '/add', {
-					cache: false,
-					method: 'POST',
-					data: {email: 'algo@algo.com', password: '****'},
-					success: (result, status, xhr) => {
-						$(this.$.submit).click(e => {
+				let that = this;
+				
+				
+				
+				$(this.$.submit).click(e => {
+					
+					$.ajax(serverURL + 'login/', {
+						cache: false,
+						method: 'POST',
+						data: {email: $(that.$.email).val(), password: $(that.$.password).val()},
+						success: (result, status, xhr) => {
 							if(result.success == false){
-								Materialize.toast('Usuário não registrado')
+								Materialize.toast('Usuário não registrado', 3000)
 							}else{
-								sendMessage(this, "do-login", {user_id: result.user._id, admim: result.admin})
+								sendMessage(this, "do-login", {user_id: result.model._id, is_admin: result.admin})
 								if(this.after_login_page){
 									changePage(this, this.after_login_page, this.after_login_data)
 								}else{
 									changePage(this, "init-page")
 								}
 							}
-						})
-					},
-					error: (xhr, status, error) => {
-						Materialize.toast('Erro inesperado: ' + JSON.stringify(error), 3000);
-					},
+						},
+						error: (xhr, status, error) => {
+							Materialize.toast('Erro inesperado: ' + JSON.stringify(error), 3000);
+						},
+					});
 				});
 			}
 		});
