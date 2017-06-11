@@ -54,6 +54,7 @@
       },
 
       ready: function () {
+        this.serverURL = serverURL;
         $.get(serverURL + "products/" + this._id, function (data, status) {
           this._id = data._id;
           this.description = data.description;
@@ -62,7 +63,6 @@
           this.stock = data.stock;
           this.picture = data.picture;
           this.quantity = data.quantity;
-          this.serverURL = serverURL;
         }.bind(this));
 
         $(this.$.details).click(e => {

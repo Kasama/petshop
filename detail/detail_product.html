@@ -48,23 +48,42 @@
 				price: String,
 				stock: String,
 				picture: String,
-				quantity: String,
+				quantity: {
+					type: String,
+					value: "1"
+				},
 			},
 
 			ready: function(){
-			    this.picture = serverURL + this.picture;
-				this.price = parseFloat(this.price).toFixed(2);
+			    
 			    $(this.$.add_button).click(e => {
 			    	if(Cookies.get("user-id")){
-				    	addToCart(this._id, parseInt($(this.$.quantity).val()));
-				    	Materialize.toast("Produto adicionado com sucesso!", 1000);
+			    		if(parseInt($(this.$.quantity).val())){
+					    	addToCart(this._id, parseInt($(this.$.quantity).val()));
+					    	Materialize.toast("Produto adicionado com sucesso!", 1000);
+					    }
 				    }else{
 				    	let obj = {};
 				    	obj.after_login_page = "detail-product-page";
-				    	obj.after_login_data = {_id:this._id, quantity:this.quantity};
+				    	obj.after_login_data = {
+				    		_id: this._id, 
+				    		
+				    		description: this.description,
+							name: this.name,
+							price: this.price,
+							stock: this.stock,
+							picture: this.picture.substring(this.picture.lastIndexOf("/") + 1),
+							
+				    		quantity: $(this.$.quantity).val()
+				    	};
 				    	changePage(this, "login-page", obj);
 				    }
 		        })
+			},
+			attached: function(){
+				this.picture = serverURL + this.picture;
+				this.price = parseFloat(this.price).toFixed(2);
+				$(this.$.quantity).val("1");
 			}
 	    });
   	</script>

@@ -48,6 +48,7 @@
 	<link rel="import" href="/query/query_pet.html">
 	<link rel="import" href="/query/query_client.html">
 	<link rel="import" href="/query/query_admin.html">
+	<link rel="import" href="/query/my_pets.html">
 	
 	<link rel="import" href="/register/schedule_service.html">
 	<link rel="import" href="/confirm/confirm_event.html">
@@ -91,9 +92,6 @@
 		if(admin){
 			Cookies.set("is-admin", admin);
 		}
-		
-		console.log(admin)
-		console.log(Cookies.get("is-admin"))
 		
 		$('#login_page_button').toggle();
 		$('#login_page_side_button').toggle();
@@ -202,9 +200,6 @@
 			<div class="nav-wrapper container">
 				<a data-target="init-page" id="logo-container" class="brand-logo page-changing-button" href="#">PetShop Animal</a>
 				<ul id="header_inner_container" class="right hide-on-med-and-down">
-					<li>
-						<input id="search" type="search" size=40 placeholder="Pesquisa" />
-					</li>
 					<li id="login_page_button"><a class="page-changing-button" data-target="login-page">Login</a></li>
 					<li id="register_page_button"><a class="page-changing-button" data-target="register-client-page">Registrar</a></li>
 					
@@ -219,9 +214,6 @@
 				</ul>
 
 				<ul id="nav-mobile" class="side-nav" style="transform:translateX(-100%);">
-					<li>
-						<input id="search-hidden" type="search" placeholder="Pesquisa" />
-					</li>
 					<li id="login_page_side_button"><a class="page-changing-button" data-target="login-page">Login</a></li>
 					<li id="register_page_side_button"><a class="page-changing-button" data-target="register-client-page">Registrar</a></li>
 					

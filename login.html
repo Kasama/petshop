@@ -48,8 +48,6 @@
 			ready: function() {
 				let that = this;
 				
-				
-				
 				$(this.$.submit).click(e => {
 					
 					$.ajax(serverURL + 'login/', {
@@ -58,13 +56,14 @@
 						data: {email: $(that.$.email).val(), password: $(that.$.password).val()},
 						success: (result, status, xhr) => {
 							if(result.success == false){
-								Materialize.toast('Usuário não registrado', 3000)
+								Materialize.toast('Usuário/Senha não encontrado', 3000)
 							}else{
-								sendMessage(this, "do-login", {user_id: result.model._id, is_admin: result.admin})
-								if(this.after_login_page){
-									changePage(this, this.after_login_page, this.after_login_data)
+								sendMessage(that, "do-login", {user_id: result.model._id, is_admin: result.admin})
+								if(that.after_login_page){
+									console.log(that.after_login_data)
+									changePage(that, that.after_login_page, that.after_login_data)
 								}else{
-									changePage(this, "init-page")
+									changePage(that, "init-page")
 								}
 							}
 						},
