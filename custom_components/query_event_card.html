@@ -60,8 +60,8 @@
 			},
 			ready: function(){
 				let that = this;
-				sendMessage(that, "query-event-delete", {_id:that._id});
-				/*
+				// sendMessage(that, "query-event-delete", {_id:that._id});
+
 				$(this.$.delete).click(e => {
 					$.ajax({
 						url: serverURL+"events/" + that._id,
@@ -69,10 +69,13 @@
 						success: function(result) {
 							Materialize.toast(that.name + ' foi removido!', 4000);
 							sendMessage(that, "query-event-delete", {_id:that._id});
+						},
+						error: function(err) {
+								Materialize.toast("Não foi possível remover o evento " + err.message, 3000);
 						}
 					});
 					
-				})*/
+				})
 			}
 		});
 	</script>
