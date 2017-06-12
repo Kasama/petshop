@@ -102,3 +102,10 @@ function editModel(where, who, form) {
 		return false;
 	};
 }
+
+function timelyDisable(button, time){
+	button.attr("disabled", true);
+	setTimeout(()=>{
+		button.attr("disabled", false);
+	}, time)
+}

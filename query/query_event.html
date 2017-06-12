@@ -73,8 +73,6 @@
 			updateList: function(date){
 				this.$.event_list.innerHTML = "";
 				
-				
-				
 				$.get(serverURL + "events?date=" + this.getDayFromString(date), (events, status) => {
 					let elem_list = this.$.event_list;
 					

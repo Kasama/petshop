@@ -134,12 +134,8 @@
 						
 						$(this.$.confirm).click(e=> {
 							let that = this;
-							$(this.$.confirm).attr("disabled", true);
 							
-							setTimeout(()=>{
-								$(that.$.confirm).attr("disabled", false);
-							}, 3000)
-							
+							timelyDisable($(this.$.confirm), 3000);
 		                    $.ajax(serverURL + "products/buy/", {
 								cache: false,
 								method: 'POST',

@@ -26,7 +26,7 @@
 											<a class="btn" href="/register/client.html">Ainda não é cadastrado?</a>
 										</div>
 										<div class="input-field s3 right">
-											<a class="btn" id="submit">Login →</a>
+											<button class="btn" id="submit" href="#">Login →</button>
 										</div>
 									</div>
 								</div>
@@ -47,8 +47,11 @@
 			},
 			ready: function() {
 				let that = this;
+				const button = $(this.$.submit);
 				
-				$(this.$.submit).click(e => {
+				button.click(e => {
+					
+					timelyDisable(button, 3000);
 					
 					$.ajax(serverURL + 'login/', {
 						cache: false,
@@ -60,10 +63,13 @@
 							}else{
 								sendMessage(that, "do-login", {user_id: result.model._id, is_admin: result.admin})
 								if(that.after_login_page){
-									console.log(that.after_login_data)
 									changePage(that, that.after_login_page, that.after_login_data)
 								}else{
-									changePage(that, "init-page")
+									if(result.admin){
+										changePage(that, "admin-page")
+									}else{
+										changePage(that, "init-page")
+									}
 								}
 							}
 						},
@@ -71,6 +77,8 @@
 							Materialize.toast('Erro inesperado: ' + JSON.stringify(error), 3000);
 						},
 					});
+					
+					return false;
 				});
 			}
 		});
