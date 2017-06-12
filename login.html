@@ -23,7 +23,7 @@
 											<input placeholder="Password" type="password" name="Password" value="" id="password" />
 										</div>
 										<div class="input-field s3 left">
-											<a class="btn" href="/register/client.html">Ainda não é cadastrado?</a>
+											<a class="btn" id="go_register">Ainda não é cadastrado?</a>
 										</div>
 										<div class="input-field s3 right">
 											<button class="btn" id="submit" href="#">Login →</button>
@@ -48,6 +48,10 @@
 			ready: function() {
 				let that = this;
 				const button = $(this.$.submit);
+				
+				$(this.$.go_register).click(e => {
+					changePage(that, "register-client-page");
+				});
 				
 				button.click(e => {
 					
