@@ -94,16 +94,17 @@
 					const imb = $(this.$.image_button);
 					const imp = $(this.$.image_path);
 					const image = $(this.$.image_button);
+					const form = $(this.$.form);
+					const submit_button = $(this.$.submit);
 
 					imb.change(function () {
 						imp[0].value = imb[0].value.substring(imb[0].value.lastIndexOf("\\") + 1)
 					});
-
-					$(this.$.form).submit(createModel(
-						'clients',
-						$(this.$.form),
-						$(this.$.image_button)
-					));
+					
+					form.submit((e)=>{
+						timelyDisable(submit_button, 3000);
+						createModel('clients', form, image)(e);
+					});
 				} else {
 					$(this.$.pictureRow).remove();
 					$(this.$.passwordRows).remove();
@@ -114,7 +115,13 @@
 					$(this.$.phone).val(this.client.phone);
 					$(this.$.email).val(this.client.email);
 					
-					$(this.$.form).submit(editModel('clients', this.client._id, $(this.$.form)));
+					const c_id = this.client._id;
+					const form = $(this.$.form);
+					
+					$(this.$.form).submit((e)=>{
+						timelyDisable(submit_button, 3000);
+						editModel('clients', c_id, form)(e);
+					});
 				}
 			}
 		});

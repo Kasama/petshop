@@ -61,7 +61,7 @@
 										</form>
 									</div>
 									<div class="input-field s6 right">
-										<input class="btn" type="submit" value="Cadastrar →" />
+										<input class="btn" type="submit" id="submit" value="Cadastrar →" />
 									</div>
 								</div>
 							</form>
@@ -92,17 +92,17 @@
 					const imb = $(this.$.image_button);
 					const imp = $(this.$.image_path);
 					const image = $(this.$.image_button);
-
+					const form = $(this.$.form);
+					const submit_button = $(this.$.submit);
+					
 					imb.change(function () {
 						imp[0].value = imb[0].value.substring(imb[0].value.lastIndexOf("\\") + 1)
 					});
 
-					$(this.$.form).submit(
-						createModel(
-							'admins',
-							$(this.$.form),
-							$(this.$.image_button)
-						));
+					form.submit((e)=>{
+						timelyDisable(submit_button, 3000);
+						createModel('admins', form, image)(e);
+					});
 				} else {
 					$(this.$.pictureRow).remove();
 					$(this.$.passwordRows).remove();
@@ -112,8 +112,17 @@
 					$(this.$.birthday).val(this.admin.birthday);
 					$(this.$.phone).val(this.admin.phone);
 					$(this.$.email).val(this.admin.email);
-
-					$(this.$.form).submit(editModel('admins', this.admin._id, $(this.$.form)));
+					
+					const form = $(this.$.form);
+					const submit_button = $(this.$.submit);
+					const a_id = this.admin._id
+					
+					form.submit((e)=>{
+						timelyDisable(submit_button, 3000);
+						editModel('admins', a_id, form)(e);
+					});
+					
+					$(this.$.form).submit();
 				}
 			}
 		});

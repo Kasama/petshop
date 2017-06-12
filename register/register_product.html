@@ -84,16 +84,17 @@
 					const imb = $(this.$.image_button);
 					const imp = $(this.$.image_path);
 					const image = $(this.$.image_button);
+					const form = $(this.$.form);
+					const submit_button = $(this.$.submit);
 
 					imb.change(function () {
 						imp[0].value = imb[0].value.substring(imb[0].value.lastIndexOf("\\") + 1)
 					});
 
-					$(this.$.form).submit(createModel(
-						'products',
-						$(this.$.form),
-						$(this.$.image_button)
-					));
+					form.submit((e)=>{
+						timelyDisable(submit_button, 3000)
+						createModel('products', form, image)(e);
+					});
 				} else {
 					$(this.$.pictureRow).remove();
 
@@ -102,8 +103,15 @@
 					$(this.$.price).val(this.product.price);
 					$(this.$.stock).val(this.product.stock);
 					$(this.$.quantity).val(this.product.quantity);
+					
+					const form = $(this.$.form);
+					const submit_button = $(this.$.submit);
+					const p_id = this.product._id;
 
-					$(this.$.form).submit(editModel('products', this.product._id, $(this.$.form)));
+					form.submit((e)=>{
+						timelyDisable(submit_button, 3000);
+						editModel('products', p_id, form)(e);
+					});
 				}
 			}
 		});

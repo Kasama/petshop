@@ -36,7 +36,6 @@
 	<link rel="import" href="/register/register_pet.html">
 	<link rel="import" href="/register/register_product.html">
 	<link rel="import" href="/register/register_service.html">
-	<link rel="import" href="/manage/manage_pets.html">
 	
 	<link rel="import" href="/detail/detail_product.html">
 	<link rel="import" href="/detail/detail_pet.html">
@@ -69,7 +68,7 @@
 		return elem;
 	}
 
-	const serverURL = 'http://25.97.187.219:3000/';
+	const serverURL = 'http://191.189.112.147:3000/';
 
 	function changeMainElement(tag, attributes = null, addToHistory = true){
 		console.log("loading " + tag);
@@ -87,11 +86,14 @@
 		}
 	}
 	
-	function doLogin(user_id, admin){
+	function doLogin(user_id, admin, user_name){
 		Cookies.set("user-id", user_id);
+		Cookies.set("user-name", user_name);
 		if(admin){
 			Cookies.set("is-admin", admin);
 		}
+		
+		$("#hello_user").html("Olá " + user_name + "!         ");
 		
 		$('#login_page_button').toggle();
 		$('#login_page_side_button').toggle();
@@ -132,8 +134,10 @@
 			$('#user_cart_page_side_button').toggle();
 		}
 		
+		$("#hello_user").html("");
 		
 		Cookies.set("user-id", "");
+		Cookies.remove("user-name");
 		Cookies.remove("is-admin");
 		changeMainElement("init-page");
 	}
@@ -162,7 +166,7 @@
 		   		}else if(event.detail.name === "get-variable-value"){
 					// will it be used?
 		   		}else if(event.detail.name === "do-login"){
-		   			doLogin(event.detail.data.user_id, event.detail.data.is_admin);
+		   			doLogin(event.detail.data.user_id, event.detail.data.is_admin, event.detail.data.user_name);
 		   		}
 			});
 			
@@ -178,7 +182,7 @@
 			});
 			
 			if(Cookies.get("user-id")){
-				doLogin(Cookies.get("user-id"), Cookies.get("is-admin"));
+				doLogin(Cookies.get("user-id"), Cookies.get("is-admin"), Cookies.get("user-name"));
 			}
 			
 			let curr_page = Cookies.getJSON("current-page-description");
@@ -197,6 +201,8 @@
 			<div class="nav-wrapper container">
 				<a data-target="init-page" id="logo-container" class="brand-logo page-changing-button" href="#">PetShop Animal</a>
 				<ul id="header_inner_container" class="right hide-on-med-and-down">
+					<li id="hello_user" style="margin-right: 10px"></li>
+				
 					<li id="login_page_button"><a class="page-changing-button" data-target="login-page">Login</a></li>
 					<li id="register_page_button"><a class="page-changing-button" data-target="register-client-page">Registrar</a></li>
 					

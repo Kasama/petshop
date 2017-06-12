@@ -44,7 +44,7 @@
 								</div>
 								<div class="row">
 									<div class="input-field s6 right">
-										<input class="btn" type="submit" value="Cadastrar →">
+										<input class="btn" type="submit" id="submit" value="Cadastrar →">
 									</div>
 								</div>
 							</form>
@@ -75,25 +75,31 @@
 					const imb = $(this.$.image_button);
 					const imp = $(this.$.image_path);
 					const image = $(this.$.image_button);
+					const form = $(this.$.form);
+					const submit_button = $(this.$.submit);
 
 					imb.change(function () {
 						imp[0].value = imb[0].value.substring(imb[0].value.lastIndexOf("\\") + 1)
 					});
 
-					$(this.$.form).submit(
-						createModel(
-							'pets',
-							$(this.$.form),
-							$(this.$.image_button)
-						));
+					form.submit((e)=>{
+						timelyDisable( submit_button,3000)
+						createModel('pets', form, image)(e);
+					});
 				} else {
 					$(this.$.pictureRow).remove();
 
 					$(this.$.name).val(this.pet.name);
 					$(this.$.age).val(this.pet.age);
 					$(this.$.race).val(this.pet.race);
-
-					$(this.$.form).submit(editModel('pets', this.pet._id, $(this.$.form)));
+					const form = $(this.$.form);
+					const submit_button = $(this.$.submit);
+					const p_id = this.pet._id;
+					
+					form.submit((e)=>{
+						timelyDisable(submit_button, 3000);
+						editModel('pets', p_id, form)(e);
+					});
 				}
 			}
 		});

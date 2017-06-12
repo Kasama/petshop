@@ -22,7 +22,7 @@
 										<input placeholder="Qtd" type="number" min="1" max="{{stock}}" id="quantity" name="Quantity" value="{{quantity}}" class="btn-sized" />
 									</div>
 									<div class="input-field col s9">
-										<a id="add_button" class="btn col s12">Adicionar</a>
+										<button id="add_button" class="btn col s12" href="#">Adicionar</button>
 									</div>
 								</div>
 							</div>
@@ -57,8 +57,10 @@
 			ready: function(){
 			    
 			    $(this.$.add_button).click(e => {
+			    	
 			    	if(Cookies.get("user-id")){
 			    		if(parseInt($(this.$.quantity).val())){
+			    			timelyDisable($(this.$.add_button), 1000);
 					    	addToCart(this._id, parseInt($(this.$.quantity).val()));
 					    	Materialize.toast("Produto adicionado com sucesso!", 1000);
 					    }
@@ -78,6 +80,7 @@
 				    	};
 				    	changePage(this, "login-page", obj);
 				    }
+				    return false;
 		        })
 			},
 			attached: function(){
