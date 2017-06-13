@@ -35,19 +35,24 @@
                         
                         let name = $("<a href=\"#\">").text(product.name).click(e => {
                             changePage(this, "detail-product-page", product);
+                            return false;
                         });
                         item.append(name);
 
-                        let description = $("<p>").text(product.description);
+                        let description = $("<p style='margin-top:10px'>").text(product.description);
                         item.append(description);
 
                         let secondary = $("<div>").addClass("secondary-content");
                         item.append(secondary);
-
+                        
+                        let sold =  $("<a href=\"#\">").html('<span class="new badge" data-badge-caption="sold">' + product.sold + '</span>');
+                        secondary.append(sold);
+                        
                         let edit =  $("<a href=\"#\">").html("<i class=\"material-icons\">mode-edit</i>");
                         secondary.append(edit);
                         edit.click(e => {
                             changePage(this, "register-product-page", {product: product, mode: "edit"});
+                            return false;
                         });
 
                         let remove =  $("<a href=\"#\">").html("<i class=\"material-icons\">delete</i>");
@@ -61,7 +66,9 @@
                                     item.remove();
                                 }
                             });
+                            return false;
                         });
+                        
                     }
                 });
             }
