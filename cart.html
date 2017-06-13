@@ -40,17 +40,21 @@
 		<section id="payment_confirm" class="row">
 			<div class="card">
 				<div class="card-content">
-					<span class="card-title">Finalizar Compra</span>
-					<span class="card-title">Total: R$ {{total_cost}}</span>
-					<div class="col s12">
-						<div class="input-field col s8">
-							<input placeholder="Numero do Cartao" type="text" name="credit_card" value="" id="credit_card">
-						</div>
-						<div class="input-field col s2">
-							<input placeholder="DdS" type="text" name="security_number" value="" id="security_number">
-						</div>
-						<div class="input-field col s2">
-							<button href="#" class="btn col s12" id="confirm">Confirmar</button>
+					<div class="row">
+						<span class="card-title">Finalizar Compra</span>
+						<span class="card-title">Total: R$ <a id="cost_label">0.00</a></span>
+					</div>
+					<div class="row">
+						<div class="col s12">
+							<div class="input-field col s8">
+								<input placeholder="Numero do Cartao" type="text" name="credit_card" value="" id="credit_card">
+							</div>
+							<div class="input-field col s2">
+								<input placeholder="DdS" type="text" name="security_number" value="" id="security_number">
+							</div>
+							<div class="input-field col s2">
+								<button href="#" class="btn col s12" id="confirm">Confirmar</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -72,10 +76,7 @@
 		Polymer({
 				is: 'my-cart-page',
 				properties: {
-					total_cost:{
-						type: String,
-						value: "0.00"
-					}
+					
 				},
 				ready: function () {
 					const cart_itens = $(this.$.cart_itens);
@@ -106,16 +107,17 @@
 								curr_cost += product.price * itens_in_cart[product._id]
 							}
 							
-							this.total_cost = curr_cost.toFixed(2);
+							poly.$.cost_label.innerHTML = curr_cost.toFixed(2);
 						});
 					}
 					function updatePayment() {
 						const itens_in_cart = Cookies.getJSON('cart');
-						console.log(itens_in_cart)
-						if (itens_in_cart && Object.keys(itens_in_cart).length === 0 && itens_in_cart.constructor === Object) {
+						if (!itens_in_cart || Object.keys(itens_in_cart).length === 0 && itens_in_cart.constructor === Object) {
+								console.log("asdasd")
 								$(poly.$.payment_confirm).attr('hidden', true)
 								$(poly.$.no_items).attr('hidden', false)
 						} else {
+								console.log("qweqwe")
 								$(poly.$.payment_confirm).attr('hidden', false)
 								$(poly.$.no_items).attr('hidden', true)
 						}
@@ -126,7 +128,7 @@
 						if (oldCard) {
 							const amount = itens_in_cart[product._id];
 							
-							this.total_cost = (parseFloat(this.total_cost) + ammount * product.price).toFixed(2);
+							poly.$.cost_label.innerHTML = (parseFloat(poly.$.cost_label.innerHTML) + ammount * product.price).toFixed(2);
 							
 							if (amount > 0) {
 								oldCard.amount = amount;
