@@ -65,6 +65,7 @@
 						picture: this.product.picture,
 						quantity: this.product.quantity,
 					});
+					return false;
 				});
 
 				function updateCart(amount) {
@@ -74,10 +75,12 @@
 
 				$(this.$.add).click(e => {
 					updateCart(1);
+					return false;
 				});
 
 				$(this.$.remove).click(e => {
 					updateCart(-1);
+					return false;
 				});
 
 				$(window).on('resize', () => {

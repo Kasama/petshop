@@ -57,7 +57,6 @@
 			ready: function(){
 			    
 			    $(this.$.add_button).click(e => {
-			    	
 			    	if(Cookies.get("user-id")){
 			    		if(parseInt($(this.$.quantity).val())){
 			    			timelyDisable($(this.$.add_button), 1000);

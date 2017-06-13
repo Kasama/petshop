@@ -63,7 +63,8 @@
 								_id: this._id,
 								pet_id: str.substring(0, str.indexOf(":")),
 								pet_name: str.substring(str.indexOf(":") + 1)
-							})
+							});
+							return false;
 						})
 					});
 				} else {
@@ -76,6 +77,7 @@
 						let str = $(this.$.pet_select).attr("value");
 						obj.after_login_data = { _id: this._id };
 						changePage(this, "login-page", obj);
+						return false;
 					})
 				}
 			},

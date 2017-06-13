@@ -35,6 +35,7 @@
                         
                         let name = $("<a href=\"#\">").text(client.name + " " + client.surname).click(e => {
                             changePage(this, "detail-client-page", client);
+                            return false;
                         });
                         item.append(name);
 
@@ -48,6 +49,7 @@
                         secondary.append(edit);
                         edit.click(e => {
                             changePage(this, "register-client-page", {client: client, mode: "edit"});
+                            return false;
                         });
 
                         let remove =  $("<a href=\"#\">").html("<i class=\"material-icons\">delete</i>");
@@ -61,6 +63,7 @@
                                     item.remove();
                                 }
                             });
+                            return false;
                         });
                     }
                 });

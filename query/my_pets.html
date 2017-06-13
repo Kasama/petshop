@@ -29,6 +29,7 @@
 
                 $(this.$.newPet).click(e=> {
                     changePage(this, "register-pet-page", {pet: {client: {_id: client_id}}});
+                    return false;
                 });
 
                 $.get(serverURL + "pets?client_id=" + client_id, (pets, status) => {
@@ -41,11 +42,13 @@
                         
                         let name = $("<a href=\"#\">").text(pet.name).click(e => {
                             changePage(this, "detail-pet-page", pet);
+                            return false;
                         });
                         item.append(name, $("<span> de </span>"));
 
                         let client = $("<a href=\"#\">").text(pet.client.name).click(e => {
                             changePage(this, "detail-client-page", pet.client);
+                            return false;
                         });
                         item.append(client);
 
@@ -59,6 +62,7 @@
                         secondary.append(edit);
                         edit.click(e => {
                             changePage(this, "register-pet-page", {pet: pet, mode:"edit"});
+                            return false;
                         });
 
                         let remove =  $("<a href=\"#\">").html("<i class=\"material-icons\">delete</i>");
@@ -72,6 +76,7 @@
                                     item.remove();
                                 }
                             });
+                            return false;
                         });
                     }
                 });
