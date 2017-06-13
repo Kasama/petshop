@@ -31,134 +31,155 @@
     </style>
 
     <main class="container">
-      <section class="row">
-					<div class="container">
-							<div id="cart_itens"></div>
-					</div>
-      </section>
-			<section id="payment_confirm" class="row">
-					<div class="card">
-							<div class="card-content">
-									<span class="card-title">Finalizar Compra</span>
-									<div class="col s12">
-											<div class="input-field col s8">
-													<input placeholder="Numero do Cartao" type="text" name="credit_card" value="" id="credit_card">
-											</div>
-											<div class="input-field col s2">
-													<input placeholder="DdS" type="text" name="security_number" value="" id="security_number">
-											</div>
-											<div class="input-field col s2">
-													<button href="#" class="btn col s12" id="confirm">Confirmar</button>
-											</div>
-									</div>
-							</div>
-					</div>
-			</section>
-			<section id="no_items" class="row" hidden="true">
-				<div class="card">
-					<div class="card-content">
-						<span class="card-title">Finalizar Compra</span>
-						<div class="col s12">
-							<a>Você não tem nenhum produto no carrinho!</a>
+		<section class="row">
+			<div class="container">
+				<div id="cart_itens">
+				</div>
+			</div>
+		</section>
+		<section id="payment_confirm" class="row">
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title">Finalizar Compra</span>
+					<span class="card-title">Total: R$ {{total_cost}}</span>
+					<div class="col s12">
+						<div class="input-field col s8">
+							<input placeholder="Numero do Cartao" type="text" name="credit_card" value="" id="credit_card">
+						</div>
+						<div class="input-field col s2">
+							<input placeholder="DdS" type="text" name="security_number" value="" id="security_number">
+						</div>
+						<div class="input-field col s2">
+							<button href="#" class="btn col s12" id="confirm">Confirmar</button>
 						</div>
 					</div>
 				</div>
-			</section>
+			</div>
+		</section>
+		<section id="no_items" class="row" hidden="true">
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title">Finalizar Compra</span>
+					<div class="col s12">
+						<a>Você não tem nenhum produto no carrinho!</a>
+					</div>
+				</div>
+			</div>
+		</section>
     </main>
 		</template>
 		<script>
 		Polymer({
 				is: 'my-cart-page',
+				properties: {
+					total_cost:{
+						type: String,
+						value: "0.00"
+					}
+				},
 				ready: function () {
-						const cart_itens = $(this.$.cart_itens);
-						const cards = $(this.$.cards);
-						const poly = this;
-						console.log("running page");
-						function createCards() {
-								const itens_in_cart = Cookies.getJSON('cart');
-								const itens_in_cart_ids = []
-								for (const item in itens_in_cart) {
-										itens_in_cart_ids.push(item);
-								}
-								if (itens_in_cart_ids.length == 0) itens_in_cart_ids.push('');
-								const query_string = '?id=' + itens_in_cart_ids.reduce((str, i) => {
-										return str + '&id=' + i;
-								});
-								$.get(serverURL + 'products' + query_string, (result, status) => {
-										for (const [i, product] of result.entries()) {
-												drawCard(product);
-										}
-								});
+					const cart_itens = $(this.$.cart_itens);
+					const cards = $(this.$.cards);
+					const poly = this;
+					console.log("running page");
+					function createCards() {
+						const itens_in_cart = Cookies.getJSON('cart');
+						const itens_in_cart_ids = []
+						
+						for (const item in itens_in_cart) {
+							itens_in_cart_ids.push(item);
 						}
-						function updatePayment() {
-								const itens_in_cart = Cookies.getJSON('cart');
-								console.log(itens_in_cart)
-								if (itens_in_cart && Object.keys(itens_in_cart).length === 0 && itens_in_cart.constructor === Object) {
-										$(poly.$.payment_confirm).attr('hidden', true)
-										$(poly.$.no_items).attr('hidden', false)
-								} else {
-										$(poly.$.payment_confirm).attr('hidden', false)
-										$(poly.$.no_items).attr('hidden', true)
-								}
+						
+						if (itens_in_cart_ids.length == 0) {
+							itens_in_cart_ids.push('');
 						}
-						function drawCard(product) {
-								const itens_in_cart = Cookies.getJSON('cart');
-								const oldCard = Polymer.dom(poly.root).querySelector('[id="' + product._id + '"]');
-								if (oldCard) {
-										const amount = itens_in_cart[product._id];
-										if (amount > 0) {
-												// oldCard.prop('amount', amount);
-												oldCard.amount = amount;
-										} else {
-												oldCard.remove();
-										}
-								} else {
-										const card = $('<cart-card id="' + product._id + '">').addClass('row col s12');
-										card.prop('product', product);
-										card.prop('amount', itens_in_cart[product._id]);
-										card.prop('serverURL', serverURL);
-										cart_itens.append(card);
-								}
-								updatePayment();
-						}
-
-						createCards();
-						updatePayment();
-
-						document.addEventListener('iron-signal', event => {
-								if(event.detail.name === "update-cart-cards"){
-										let product = event.detail.data.product;
-										drawCard(product);
-								}
+						
+						const query_string = '?id=' + itens_in_cart_ids.reduce((str, i) => {
+							return str + '&id=' + i;
 						});
 						
-						$(this.$.confirm).click(e=> {
-							let that = this;
+						$.get(serverURL + 'products' + query_string, (result, status) => {
+							const itens_in_cart = Cookies.getJSON('cart');
+							curr_cost = 0;
+							for (const [i, product] of result.entries()) {
+								drawCard(product);
+								curr_cost += product.price * itens_in_cart[product._id]
+							}
 							
-							timelyDisable($(this.$.confirm), 3000);
-		                    $.ajax(serverURL + "products/buy/", {
-								cache: false,
-								method: 'POST',
-								data: {products: Cookies.get("cart")},
-								success: (result, status, xhr) => {
-									if (result.error){
-										Materialize.toast(result.error, 3000);
-									} else {
-										if(result.success){
-											Materialize.toast("Produto comprado com sucesso!", 3000);
-											Cookies.remove("cart");
-											changePage(that, "init-page");
-										}else{
-											let prod = result.product
-											Materialize.toast("Apenas " + prod.stock + " de " + prod.name + " em estoque!", 5000)
-										}
+							this.total_cost = curr_cost.toFixed(2);
+						});
+					}
+					function updatePayment() {
+						const itens_in_cart = Cookies.getJSON('cart');
+						console.log(itens_in_cart)
+						if (itens_in_cart && Object.keys(itens_in_cart).length === 0 && itens_in_cart.constructor === Object) {
+								$(poly.$.payment_confirm).attr('hidden', true)
+								$(poly.$.no_items).attr('hidden', false)
+						} else {
+								$(poly.$.payment_confirm).attr('hidden', false)
+								$(poly.$.no_items).attr('hidden', true)
+						}
+					}
+					function drawCard(product, ammount = 0) {
+						const itens_in_cart = Cookies.getJSON('cart');
+						const oldCard = Polymer.dom(poly.root).querySelector('[id="' + product._id + '"]');
+						if (oldCard) {
+							const amount = itens_in_cart[product._id];
+							
+							this.total_cost = (parseFloat(this.total_cost) + ammount * product.price).toFixed(2);
+							
+							if (amount > 0) {
+								oldCard.amount = amount;
+							} else {
+								oldCard.remove();
+							}
+						} else {
+							const card = $('<cart-card id="' + product._id + '">').addClass('row col s12');
+							card.prop('product', product);
+							card.prop('amount', itens_in_cart[product._id]);
+							card.prop('serverURL', serverURL);
+							cart_itens.append(card);
+						}
+						updatePayment();
+					}
+					
+					createCards();
+					updatePayment();
+					
+					document.addEventListener('iron-signal', event => {
+						if(event.detail.name === "update-cart-cards"){
+							let product = event.detail.data.product;
+							drawCard(product, event.detail.data.how_much);
+						}
+					});
+					
+					$(this.$.confirm).click(e=> {
+						let that = this;
+						
+						timelyDisable($(this.$.confirm), 3000);
+	                    $.ajax(serverURL + "products/buy/", {
+							cache: false,
+							method: 'POST',
+							data: {products: Cookies.get("cart")},
+							success: (result, status, xhr) => {
+								if (result.error){
+									Materialize.toast(result.error, 3000);
+								} else {
+									if(result.success){
+										Materialize.toast("Produto comprado com sucesso!", 3000);
+										Cookies.remove("cart");
+										changePage(that, "init-page");
+									}else{
+										let prod = result.product
+										Materialize.toast("Apenas " + prod.stock + " de " + prod.name + " em estoque!", 5000)
 									}
-								},
-								error: (xhr, status, error) => {
-									Materialize.toast('Erro inesperado: ' + JSON.stringify(error), 3000);
-								},
-							});
-		                });
+								}
+							},
+							error: (xhr, status, error) => {
+								Materialize.toast('Erro inesperado: ' + JSON.stringify(error), 3000);
+							},
+						});
+	                });
 				}
 		});
 		</script>

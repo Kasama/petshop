@@ -1,93 +1,93 @@
 <dom-module id="cart-card">
-		<template>
-				<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-				<script src="/important_js.js"></script>
+	<template>
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+		<script src="/important_js.js"></script>
 
-				<style>
-				.card-content {
-						height: 100%;
-						overflow: hidden;
-				}
+		<style>
+			.card-content {
+				height: 100%;
+				overflow: hidden;
+			}
 
-				.card-image {
-						height: 300px;
-						overflow: hidden;
-				}
+			.card-image {
+				height: 300px;
+				overflow: hidden;
+			}
 
-				.card-image img {
-						height: 100%;
-						width: 100%;
-						object-fit: contain;
-				}
-				</style>
+			.card-image img {
+				height: 100%;
+				width: 100%;
+				object-fit: contain;
+			}
+		</style>
 
-				<div id="main_card" class="card horizontal">
-						<div class="card-image">
-								<img src="{{serverURL}}{{product.picture}}" alt="picture" />
-						</div>
-						<div class="card-stacked">
-								<div class="card-content">
-										<span class="card-title"> {{product.name}} </span>
-										<span class="card-title purple-text">R$ {{product.price}} </span>
-										<p>{{product.description}}</p>
-										<hr>
-										<h5>No carrinho: {{amount}}</h5>
-										<div class="row">
-												<button id="remove" class="col s4 btn red halfway-fab">-</button>
-												<div class="col s4"></div>
-												<button id="add" class="col s4 btn green halfway-fab">+</button>
-										</div>
-								</div>
-								<div class="card-action">
-										<a href="#" id="details">Detalhes</a>
-								</div>
-						</div>
+		<div id="main_card" class="card horizontal">
+			<div class="card-image">
+				<img src="{{serverURL}}{{product.picture}}" alt="picture" />
+			</div>
+			<div class="card-stacked">
+				<div class="card-content">
+					<span class="card-title"> {{product.name}} </span>
+					<span class="card-title purple-text">R$ {{product.price}} </span>
+					<p>{{product.description}}</p>
+					<hr>
+					<h5>No carrinho: {{amount}}</h5>
+					<div class="row">
+						<button id="remove" class="col s4 btn red halfway-fab">-</button>
+						<div class="col s4"></div>
+						<button id="add" class="col s4 btn green halfway-fab">+</button>
+					</div>
 				</div>
-		</template>
-		<script>
+				<div class="card-action">
+					<a href="#" id="details">Detalhes</a>
+				</div>
+			</div>
+		</div>
+	</template>
+	<script>
 		Polymer({
-				is: 'cart-card',
-				properties: {
-						product: Object,
-						serverURL: String,
-						amount: Number,
-				},
-				ready: function () {
-						const poly = this;
-						$(this.$.details).click(e => {
-								changePage(this, "detail-product-page", {
-										_id: this.product._id,
-										description: this.product.description,
-										name: this.product.name,
-										price: this.product.price,
-										stock: this.product.stock,
-										picture: this.product.picture,
-										quantity: this.product.quantity,
-								});
-						});
+			is: 'cart-card',
+			properties: {
+				product: Object,
+				serverURL: String,
+				amount: Number,
+			},
+			ready: function () {
+				const poly = this;
+				$(this.$.details).click(e => {
+					changePage(this, "detail-product-page", {
+						_id: this.product._id,
+						description: this.product.description,
+						name: this.product.name,
+						price: this.product.price,
+						stock: this.product.stock,
+						picture: this.product.picture,
+						quantity: this.product.quantity,
+					});
+				});
 
-						function updateCart(amount) {
-								let qtd = addToCart(poly.product._id, amount);
-								sendMessage(poly, 'update-cart-cards', {product: poly.product});
-						}
-
-						$(this.$.add).click(e => {
-								updateCart(1);
-						});
-
-						$(this.$.remove).click(e => {
-								updateCart(-1);
-						});
-
-						$(window).on('resize', () => {
-								if ($(window).width() > 1000) {
-										$(this.$.main_card).addClass('horizontal');
-								} else {
-										$(this.$.main_card).removeClass('horizontal');
-								}
-						});
+				function updateCart(amount) {
+					let qtd = addToCart(poly.product._id, amount);
+					sendMessage(poly, 'update-cart-cards', {product: poly.product, how_much:amount});
 				}
+
+				$(this.$.add).click(e => {
+					updateCart(1);
+				});
+
+				$(this.$.remove).click(e => {
+					updateCart(-1);
+				});
+
+				$(window).on('resize', () => {
+					if ($(window).width() > 1000) {
+						$(this.$.main_card).addClass('horizontal');
+					} else {
+						$(this.$.main_card).removeClass('horizontal');
+					}
+				});
+			}
 		});
-		</script>
+	</script>
 </dom-module>
