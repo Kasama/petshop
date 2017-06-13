@@ -47,6 +47,11 @@
 			},
 			ready: function () {
 				let user_id = Cookies.get("user-id")
+				
+				if(Cookies.get("is-admin")){
+					$(this.$.schedule).hide();
+				}
+				
 				if (user_id) {
 					$.get(serverURL + "pets?client_id=" + user_id, (pets, status) => {
 						this.$.pet_radio.innerHTML = "";
